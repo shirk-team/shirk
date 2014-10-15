@@ -2,6 +2,6 @@
 ===
 
 # Design
-`design.pdf` - main design document
+`team_design.pdf` - main design document
 
 `/design_individual` - design drafts for individual team members
