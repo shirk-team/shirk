@@ -21,14 +21,12 @@ var taskSchema = mongoose.Schema({
     
     completed: {
         type: Boolean,
-        required: true,
         default: false
     },
 
     priority: {
         type: Number,
         validate: [priorityValidator, 'Priority must be +/- 1 or 0.'],
-        required: true,
         default: 0
     },
 
