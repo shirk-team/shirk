@@ -15,4 +15,3 @@ var listSchema = mongoose.Schema({
 var List = mongoose.model('List', listSchema);
 
 module.exports.List = List;
-
