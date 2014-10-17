@@ -4,6 +4,7 @@
  */
 
 var express = require('express');
+var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -11,8 +12,8 @@ var mongoose = require('mongoose');
 var passport = require('./authentication.js');
 
 var app = express();
-app.use(express.static('public'));
-app.use(express.static('tests'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'tests')));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(session({secret: 'shirk', resave: true, saveUninitialized: true}));
