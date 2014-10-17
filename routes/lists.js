@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 // Models
-var List = require('./models/list'),
-  Task = require('./models/task'),
-  User = require('./models/user');
+var List = require('../models/list').List,
+  Task = require('../models/task').Task,
+  User = require('../models/user').User;
 
 /**
  * List Object Specification
@@ -27,7 +27,9 @@ var List = require('./models/list'),
  * Author: aandre@mit.edu
  */
 router.get('/', function (req, res) {
-
+  List.find({owner: req.user._id}, function (err, lists) {
+    res.send(lists);
+  });
 });
 
 
@@ -118,3 +120,5 @@ router.put('/:id', function (req, res) {
 router.delete('/:id', function (req, res) {
 
 });
+
+module.exports = router;

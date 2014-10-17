@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 // Models
-var List = require('./models/list'),
-  Task = require('./models/task'),
-  User = require('./models/user');
+var List = require('../models/list'),
+  Task = require('../models/task'),
+  User = require('../models/user');
 
 /**
  * Task Object Specification
@@ -118,3 +118,5 @@ router.put('/', function (req, res) {
 router.delete('/', function (req, res) {
 
 });
+
+module.exports = router;
