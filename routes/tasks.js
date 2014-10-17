@@ -110,7 +110,7 @@ router.put('/', function (req, res) {
  *   id - TaskID identifier string
  *
  * Response: {
- *   task: Task // removed Task
+ *   taskID: taskID
  * }
  *
  * Author: seropian@mit.edu

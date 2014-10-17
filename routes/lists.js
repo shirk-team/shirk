@@ -112,7 +112,7 @@ router.put('/:id', function (req, res) {
  *   id - ListID identifier string
  *
  * Response: {
- *   list: List // removed List
+ *   listID: listID
  * }
  *
  * Author: seropian@mit.edu
