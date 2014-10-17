@@ -18,7 +18,7 @@ var taskSchema = mongoose.Schema({
         ref: 'List',
         required: true
     },
-    
+
     completed: {
         type: Boolean,
         default: false

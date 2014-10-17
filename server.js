@@ -55,3 +55,9 @@ db.once('open', function callback () {
     app.listen(process.env.OPENSHIFT_NODEJS_PORT || 8080,
         process.env.OPENSHIFT_NODEJS_IP);
 });
+
+////////////
+// ROUTES //
+////////////
+app.use('/tasks', require('./routes/tasks'));
+app.use('/lists', require('./routes/lists'));
