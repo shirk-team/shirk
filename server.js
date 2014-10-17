@@ -41,6 +41,22 @@ app.get('/login', function(req, res, next) {
     })(req, res, next);
 });
 
+app.post('/login',
+  passport.authenticate('local'),
+  function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    res.redirect('/users/' + req.user.username);
+  });
+
+// Verify Authentication (each request)
+app.use(function (req, res, next) {
+    if (req.user == undefined || req.user == null) {
+        return res.status(403).json({error: "Only authenticated users may perform this reuqest."});
+    }
+    next();
+});
+
 if (process.env.OPENSHIFT_NODEJS_PORT) {
     // TODO: set up openshift DB and connect
 } else {
