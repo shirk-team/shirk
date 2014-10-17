@@ -1,3 +1,15 @@
+/**
+ * Authentication tests.
+ * @author seropian@mit.edu
+ */
+
+/**
+ * Send a login request and verify that the response is as expected.
+ * @param  {String} title The title of the test.    
+ * @param  {String} username The username to log in.
+ * @param  {String} password The password to log in.
+ * @param  {String} expectedResponse What the server should return.
+ */
 function testLogin(title, username, password, expectedResponse) {
     $.get('/login', {
             username: username,

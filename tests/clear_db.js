@@ -1,3 +1,8 @@
+/**
+ * Script to clear the test database.
+ * @author seropian@mit.edu
+ */
+
 var List = require('../models/list.js').List;
 var Task = require('../models/task.js').Task;
 

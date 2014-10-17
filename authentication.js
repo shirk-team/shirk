@@ -1,3 +1,8 @@
+/**
+ * Passport.js setup
+ * @author seropian@mit.edu
+ */
+
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('./models/user.js').User;
