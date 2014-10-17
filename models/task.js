@@ -32,7 +32,13 @@ var taskSchema = mongoose.Schema({
 
     notes: String,
 
-    deadline: Date
+    deadline: Date,
+
+    owner: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
+    }
 });
 
 /**

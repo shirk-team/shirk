@@ -9,6 +9,12 @@ var listSchema = mongoose.Schema({
     title: {
         type: String,
         required: true
+    },
+
+    owner: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
     }
 });
 
