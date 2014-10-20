@@ -36,3 +36,34 @@ login('admin', 'admin', 'List - GET /lists/', function(title) {
         }
     });
 });
+
+/**
+* Tests for creating and editing lists.
+*
+* @author tdivita@mit.edu
+**/
+// TODO(tdivita): Finish/make sure I did this right.
+login('admin', 'admin', 'List - POST /lists/', function(title) {
+    $.ajax({
+        url : '/lists/',
+        type: 'POST',
+        async: false,
+        data: {
+            list: {
+              title: "Brand New List"
+            }
+        }, 
+        success: function (data, textStatus, jqXHR) {
+            QUnit.test(title, function(assert) {
+                lists = data.lists;
+                assert.equal(lists.length, 1, 'Correct number of lists returned.');
+                assert.equal(lists[0].title, 'Homework', 'Correct list returned.');
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            QUnit.test(title + ' request failed', function(assert) {});
+        }
+    });
+});
+
+
