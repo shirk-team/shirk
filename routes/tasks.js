@@ -60,10 +60,8 @@ router.get('/', function (req, res) {
  */
 router.post('/', function (req, res) {
 	var newTask = new Task({
-		// TODO(tdivita): Where do we want to do validation for checking that this is nonempty and so on?
 		title: req.task.title,
 		notes: req.task.notes,
-		// TODO(tdivita): Where do we want to do validation for checking that this is nonempty and so on?
 		list: req.task.list,
 		owner: req.user._id
 	});

@@ -107,7 +107,6 @@ router.get('/:id', function (req, res) {
  * Author: tdivita@mit.edu
  */
 router.put('/:id', function (req, res) {
-	// TODO(tdivita): Where do we want to do validation for checking that title is nonempty and so on?
 	List.findByIdAndUpdate(req.params.id, { $set: {title: req.list.title}}, function (err, list) {
 		if (err) throw err;
 
