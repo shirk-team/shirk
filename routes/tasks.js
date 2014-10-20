@@ -166,13 +166,16 @@ function editTaskValuesIfProvided(taskToEdit, taskRequest) {
  *
  * Author: seropian@mit.edu
  */
+// TODO: test
 router.delete('/:id', function (req, res) {
     Task.findById(req.params.id, function(err, task) {
         if (err) return res.status(500).send(err);
+        if (!task) return res.status(404).send(req.params.id);
         if (task.owner !== req.user.id) return res.status(401).send('Unauthorized');
 
         task.remove(function(err) {
             if (err) return res.status(500).send(err);
+            res.status(200).json({taskID: req.params.id});
         });
     });
 });
