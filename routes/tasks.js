@@ -155,7 +155,7 @@ function editTaskValuesIfProvided(taskToEdit, taskRequest) {
 /**
  * DELETE /tasks/:id
  *
- * Descrition: Deletes the specified Task.
+ * Description: Deletes the specified Task.
  *
  * Path Params:
  *   id - TaskID identifier string
@@ -167,7 +167,14 @@ function editTaskValuesIfProvided(taskToEdit, taskRequest) {
  * Author: seropian@mit.edu
  */
 router.delete('/:id', function (req, res) {
+    Task.findById(req.params.id, function(err, task) {
+        if (err) return res.status(500).send(err);
+        if (task.owner !== req.user.id) return res.status(401).send('Unauthorized');
 
+        task.remove(function(err) {
+            if (err) return res.status(500).send(err);
+        });
+    });
 });
 
 module.exports = router;
