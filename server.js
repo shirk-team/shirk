@@ -41,6 +41,9 @@ app.get('/login', function(req, res, next) {
     })(req, res, next);
 });
 
+/**
+ * Login via passport and redirect to user's page.
+ */
 app.post('/login',
     passport.authenticate('local'), function(req, res) {
         // If this function gets called, authentication was successful.
@@ -48,6 +51,15 @@ app.post('/login',
         res.redirect('/users/' + req.user.username);
     }
 );
+
+/**
+ * Logout via passport and redirect to home page (login/signup page).
+ */
+// TODO: test
+app.post('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+});
 
 // Verify Authentication (each request)
 app.use(function (req, res, next) {
