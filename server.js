@@ -28,9 +28,8 @@ app.get('/', function(req, res, next) {
  * Try to log the user in.
  * Expects the request's body to contain username and password fields. If the
  * username and password provided match a user in the database, sends back
- * an empty object. Otherwise, sends back an object with an 'error' property
- * that contains a string with either 'Incorrect username.' or
- * 'Incorrect password.' based on why the login failed.
+ * an empty object. Otherwise, sends a 401 error code and the response text
+ * 'Incorrect username.' or 'Incorrect password.' based on why the login failed.
  */
 app.post('/login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
