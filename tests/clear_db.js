@@ -5,6 +5,7 @@
 
 var List = require('../models/list.js').List;
 var Task = require('../models/task.js').Task;
+var User = require('../models/user.js').User;
 
 var mongoose = require('mongoose');
 
@@ -17,7 +18,9 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     List.remove({}, function(err) {
         Task.remove({}, function(err) {
-            mongoose.connection.close();
+            User.remove({}, function(err) {
+                mongoose.connection.close();
+            });
         });
     });
 });
