@@ -52,7 +52,7 @@ app.post('/login',
 // Verify Authentication (each request)
 app.use(function (req, res, next) {
     if (req.user == undefined || req.user == null) {
-        return res.status(403).json({error: "Only authenticated users may perform this reuqest."});
+        return res.status(403).json({error: "Only authenticated users may perform this request."});
     }
     next();
 });
