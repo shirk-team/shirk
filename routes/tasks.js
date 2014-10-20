@@ -60,10 +60,8 @@ router.get('/', function (req, res) {
  */
 router.post('/', function (req, res) {
 	var newTask = new Task({
-		// TODO(tdivita): Where do we want to do validation for checking that this is nonempty and so on?
 		title: req.task.title,
 		notes: req.task.notes,
-		// TODO(tdivita): Where do we want to do validation for checking that this is nonempty and so on?
 		list: req.task.list,
 		owner: req.user._id
 	});
@@ -77,8 +75,7 @@ router.post('/', function (req, res) {
 	newTask.save(function(err) {
         if (err) throw err;
 
-        // TODO(tdivita): Do we want to redirect to the page of the newly created task here?
-        res.redirect('/tasks/' + String(newTask._id));
+        res.send(newTask);
     });
 });
 
@@ -127,8 +124,7 @@ router.put('/:id', function (req, res) {
 		task.save(function(err) {
 	        if (err) throw err;
 
-	        // TODO(tdivita): Do we want to redirect to the page of the newly edited task here? Alternatively, we could go to its list's page.
-	        res.redirect('/tasks/' + String(req.params.id));
+	        res.send(task);
 	    });
 	});
 });
