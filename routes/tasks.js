@@ -16,7 +16,8 @@ var List = require('../models/list'),
  *   list: ListID, // reference
  *   deadline: Date, (default: None)
  *   priority: Number, (options: -1/0/1, default: 0)
- *   completed: Boolean (default: false)
+ *   completed: Boolean (default: false),
+ *	 owner: UserID // only in response
  * }
  */
 
@@ -58,7 +59,27 @@ router.get('/', function (req, res) {
  * Author: tdivita@mit.edu
  */
 router.post('/', function (req, res) {
+	var newTask = new Task({
+		// TODO(tdivita): Where do we want to do validation for checking that this is nonempty and so on?
+		title: req.task.title,
+		notes: req.task.notes,
+		// TODO(tdivita): Where do we want to do validation for checking that this is nonempty and so on?
+		list: req.task.list,
+		owner: req.user._id
+	});
+	// Only set deadline and priority if they were provided, otherwise let them be decided by schema defaults.
+	if (req.task.deadline) {
+		newTask.deadline = req.task.deadline;
+	}
+	if (req.task.priority) {
+		newTask.priority = req.task.priority;
+	}
+	newTask.save(function(err) {
+        if (err) throw err;
 
+        // TODO(tdivita): Do we want to redirect to the page of the newly created task here?
+        res.redirect('/tasks/' + String(newTask._id));
+    });
 });
 
 /**
@@ -97,9 +118,39 @@ router.get('/:id', function (req, res) {
  *
  * Author: tdivita@mit.edu
  */
-router.put('/', function (req, res) {
+router.put('/:id', function (req, res) {
+	Task.findById(req.params.id, function (err, task) {
+		if (err) throw err;
 
+		// If values were set in the request, edit them in the database.
+		editTaskValuesIfProvided(task, req.task);
+		task.save(function(err) {
+	        if (err) throw err;
+
+	        // TODO(tdivita): Do we want to redirect to the page of the newly edited task here? Alternatively, we could go to its list's page.
+	        res.redirect('/tasks/' + String(req.params.id));
+	    });
+	});
 });
+
+/**
+* Helper function for editing tasks. Checks whether fields were provided in the request,
+* and sets them in the database document for the task if they were.
+*
+* Author: tdivita@mit.edu
+**/
+function editTaskValuesIfProvided(taskToEdit, taskRequest) {
+	/**
+	TODO(tdivita): Is there a better way to do this, where I could iterate over a list of properties somehow? I can think of ways that might
+	work, but they are reliant on the fact that the properties have the same names, which is eh. It also wouldn't get all the much shorter.
+	**/
+	if(taskRequest.title) taskToEdit.title = taskRequest.title;
+	if(taskRequest.notes) taskToEdit.notes = taskRequest.notes;
+	if(taskRequest.list) taskToEdit.list = taskRequest.list;
+	if(taskRequest.deadline) taskToEdit.deadline = taskRequest.deadline;
+	if(taskRequest.priority) taskToEdit.priority = taskRequest.priority;
+	if(taskRequest.completed) taskToEdit.completed = taskRequest.completed;
+}
 
 /**
  * DELETE /tasks/:id
@@ -115,7 +166,7 @@ router.put('/', function (req, res) {
  *
  * Author: seropian@mit.edu
  */
-router.delete('/', function (req, res) {
+router.delete('/:id', function (req, res) {
 
 });
 
