@@ -11,7 +11,7 @@ var User = require('./models/user.js').User;
  * Authenticating the user requires checking to see if the provided username,
  * password pair exist in the database. If authentication fails, passes on
  * user as false with an object with a 'message' property that is either
- * 'Incorrect username.' or 'Incorrect password.' based on why the login failed.
+ * 'Incorrect username' or 'Incorrect password' based on why the login failed.
  * If authentication succeeds, passes on the authenticated user.
  */
 passport.use(new LocalStrategy(
@@ -20,11 +20,11 @@ passport.use(new LocalStrategy(
             if (err) return done(err);
 
             if (!user) {
-                return done(null, false, {message: 'Incorrect username.'});
+                return done(null, false, {message: 'Incorrect username'});
             }
 
             if (user.password !== password) {
-                return done(null, false, {message: 'Incorrect password.'});
+                return done(null, false, {message: 'Incorrect password'});
             }
 
             return done(null, user);
