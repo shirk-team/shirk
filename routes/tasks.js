@@ -24,7 +24,7 @@ var List = require('../models/list'),
 /**
  * GET /tasks/
  *
- * Descrition: Retrieves all tasks, optionally filted by query parameters.
+ * Description: Retrieves all tasks, optionally filted by query parameters.
  *
  * Query Args:
  *   limit - max number of lasts to return (default: Infinite)
@@ -46,7 +46,7 @@ router.get('/', function (req, res) {
 /**
  * POST /tasks/
  *
- * Descrition: Create a new Task.
+ * Description: Create a new Task.
  *
  * Request: {
  *   task: Task
@@ -85,7 +85,7 @@ router.post('/', function (req, res) {
 /**
  * GET /tasks/:id
  *
- * Descrition: Retrieves the specified task.
+ * Description: Retrieves the specified task.
  *
  * Path Params:
  *   id - TaskID identifier string
@@ -103,7 +103,7 @@ router.get('/:id', function (req, res) {
 /**
  * PUT /tasks/:id
  *
- * Descrition: Modifies the specified Task.
+ * Description: Modifies the specified Task.
  *
  * Path Params:
  *   id - TaskID identifier string

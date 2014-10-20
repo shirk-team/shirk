@@ -37,7 +37,7 @@ router.get('/', function (req, res) {
 /**
  * POST /lists/
  *
- * Descrition: Create a new List.
+ * Description: Create a new List.
  *
  * Request: {
  *   list: List
@@ -64,7 +64,7 @@ router.post('/', function (req, res) {
 /**
  * GET /lists/:id
  *
- * Descrition: Retrieves the specified List and its
+ * Description: Retrieves the specified List and its
  *   associated Tasks.
  *
  * Path Params:
@@ -92,7 +92,7 @@ router.get('/:id', function (req, res) {
 /**
  * PUT /lists/:id
  *
- * Descrition: Modifies the specified List.
+ * Description: Modifies the specified List.
  *
  * Path Params:
  *   id - ListID identifier string
@@ -121,7 +121,7 @@ router.put('/:id', function (req, res) {
 /**
  * DELETE /lists/:id
  *
- * Descrition: Deletes the specified List and its associated Tasks.
+ * Description: Deletes the specified List and its associated Tasks.
  *
  * Path Params:
  *   id - ListID identifier string
