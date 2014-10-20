@@ -11,7 +11,8 @@ var List = require('../models/list').List,
  *
  * List: {
  *   _id: ListID, // only in response
- *   title: String
+ *   title: String,
+ *	 owner: UserID // only in response
  * }
  */
 
@@ -49,7 +50,15 @@ router.get('/', function (req, res) {
  * Author: tdivita@mit.edu
  */
 router.post('/', function (req, res) {
+	var newList = new List({
+		title: req.list.title,
+		owner: req.user._id});
+	newList.save(function(err) {
+        if (err) throw err;
 
+        // TODO(tdivita): Do we want to redirect to the page of the newly created list here? That seems to make sense to me.
+        res.redirect('/lists/' + String(newList._id));
+    });
 });
 
 /**
@@ -99,7 +108,13 @@ router.get('/:id', function (req, res) {
  * Author: tdivita@mit.edu
  */
 router.put('/:id', function (req, res) {
+	// TODO(tdivita): Where do we want to do validation for checking that title is nonempty and so on?
+	List.findByIdAndUpdate(req.params.id, { $set: {title: req.list.title}}, function (err, list) {
+		if (err) throw err;
 
+		// TODO(tdivita): Do we want to redirect to the newly edited list here?
+		res.redirect('/lists/' + String(req.params.id));
+	});
 });
 
 
