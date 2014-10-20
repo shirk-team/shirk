@@ -42,12 +42,12 @@ app.get('/login', function(req, res, next) {
 });
 
 app.post('/login',
-  passport.authenticate('local'),
-  function(req, res) {
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
-    res.redirect('/users/' + req.user.username);
-  });
+    passport.authenticate('local'), function(req, res) {
+        // If this function gets called, authentication was successful.
+        // `req.user` contains the authenticated user.
+        res.redirect('/users/' + req.user.username);
+    }
+);
 
 // Verify Authentication (each request)
 app.use(function (req, res, next) {
