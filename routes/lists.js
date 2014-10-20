@@ -135,7 +135,8 @@ router.delete('/:id', function (req, res) {
     List.findById(req.params.id, function(err, list) {
         if (err) return res.status(500).send(err);
         if (!list) return res.status(404).send(req.params.id);
-        if (list.owner !== req.user.id) return res.status(401).send('Unauthorized');
+        if (list.owner.toString() !== req.user._id.toString())
+            return res.status(401).send('Unauthorized');
 
         Task.find({list: list._id}).remove(function(err) {
             if (err) return res.status(500).send(err);

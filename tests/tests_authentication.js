@@ -18,25 +18,18 @@ function testLogin(title, username, password, expectedResponse) {
             password: password
         }, 
         success: function(data, textStatus, jqXHR) {
-            console.log('success', data, textStatus, jqXHR);
             QUnit.test(title, function(assert) {
-                // var responseKeys = Object.keys(data);
-                // var expectedResponseKeys = Object.keys(expectedResponse);
-
-                // assert.equal(responseKeys.length, expectedResponseKeys.length);
-
-                // expectedResponseKeys.forEach(function(key) {
-                //     assert.equal(expectedResponse[key], data[key]);
-                // });
-                // TODO: figure out what desired behavior is here
-                assert.ok(expectedResponse.error === undefined);
+                assert.equal(jqXHR.status, expectedResponse.status,
+                    'Correct status code.');
             });
         },
         error: function(jqXHR, textStatus, errorThrown) {
             QUnit.test(title, function(assert) {
                 if (expectedResponse.error !== undefined) {
-                    assert.equal(errorThrown, expectedResponse.error);
-                    assert.equal(jqXHR.status, expectedResponse.status);
+                    assert.equal(jqXHR.responseText, expectedResponse.error,
+                        'Correct error message.');
+                    assert.equal(jqXHR.status, expectedResponse.status,
+                        'Correct status code.');
                 }
             });
         },
@@ -44,19 +37,14 @@ function testLogin(title, username, password, expectedResponse) {
     });
 }
 
-testLogin('Authentication - Correct username and correct password', 'admin', 'admin', {});
+testLogin('Authentication - Correct username and correct password', 'admin',
+    'admin', {status: 200});
 
-testLogin('Authentication - Incorrect username and correct password', 'apple', 'admin', {
-    error: 'Unauthorized',
-    status: 401
-});
+testLogin('Authentication - Incorrect username and correct password', 'apple',
+    'admin', {error: 'Incorrect username', status: 401});
 
-testLogin('Authentication - Incorrect username and incorrect password', 'apple', 'apple', {
-    error: 'Unauthorized',
-    status: 401
-});
+testLogin('Authentication - Incorrect username and incorrect password', 'apple',
+    'apple', {error: 'Incorrect username', status: 401});
 
-testLogin('Authentication - Correct username and incorrect password', 'admin', 'apple', {
-    error: 'Unauthorized',
-    status: 401
-});
+testLogin('Authentication - Correct username and incorrect password', 'admin',
+    'apple', {error: 'Incorrect password', status: 401});

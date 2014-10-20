@@ -20,37 +20,29 @@ app.use(session({secret: 'shirk', resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get('/', function(req, res, next) {
+    res.json({});
+});
+
 /**
  * Try to log the user in.
  * Expects the request's body to contain username and password fields. If the
  * username and password provided match a user in the database, sends back
- * an empty object. Otherwise, sends back an object with an 'error' property
- * that contains a string with either 'Incorrect username.' or
- * 'Incorrect password.' based on why the login failed.
+ * an empty object. Otherwise, sends a 401 error code and the response text
+ * 'Incorrect username.' or 'Incorrect password.' based on why the login failed.
  */
-app.get('/login', function(req, res, next) {
+app.post('/login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
         if (err) return next(err);
 
-        if (!user) return res.json({error: info.message});
+        if (!user) return res.status(401).send(info.message);
 
         req.login(user, function(err) {
             if (err) return next(err);
-            return res.json({});
+            return res.status(200).redirect('/');
         });
     })(req, res, next);
 });
-
-/**
- * Login via passport and redirect to user's page.
- */
-app.post('/login',
-    passport.authenticate('local'), function(req, res) {
-        // If this function gets called, authentication was successful.
-        // `req.user` contains the authenticated user.
-        res.redirect('/users/' + req.user.username);
-    }
-);
 
 /**
  * Logout via passport and redirect to home page (login/signup page).
