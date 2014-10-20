@@ -28,9 +28,10 @@ var List = require('../models/list').List,
  * Author: aandre@mit.edu
  */
 router.get('/', function (req, res) {
-  List.find({owner: req.user._id}, function (err, lists) {
-    res.send(lists);
-  });
+    List.find({owner: req.user._id}, function (err, lists) {
+        if (err) res.status(500).send(err);
+        res.json({lists: lists});
+    });
 });
 
 

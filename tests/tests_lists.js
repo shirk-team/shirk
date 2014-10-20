@@ -1,26 +1,38 @@
 /**
- * Automated tests for Lists.
- * @author aandre@mit.edu
- */
+* Automated tests for Lists.
+* @author aandre@mit.edu
+*/
 
-function login (username, password) {
-  $.ajax({
-    url : "/login",
-    type: "GET",
-    data : {username: username, password: password}
-  });
-}
+function login (username, password, title, callback) {
+    $.ajax({
+        url : '/login',
+        type: 'POST',
+        data : {username: username, password: password},
+        success: function() {
+            callback(title);
+        },
+        error: function() {
+            //TODO: change to throw error once we figure out login stuff
+            callback(title);
+            // QUnit.test(title + ' login failed', function(assert) {});
+        }
+    });
+};
 
-test("List - GET /lists/", function () {
-  login('admin', 'admin');
-  var lists;
-  $.ajax({
-    url : "/lists/",
-    type: "GET",
-    async: false,
-    success: function (data, textStatus, jqXHR) {
-      lists = data.lists;
-    }
-  });
-  notDeepEqual(lists, [], "Lists for user 'admin'.");
+login('admin', 'admin', 'List - GET /lists/', function(title) {
+    $.ajax({
+        url : '/lists/',
+        type: 'GET',
+        async: false,
+        success: function (data, textStatus, jqXHR) {
+            QUnit.test(title, function(assert) {
+                lists = data.lists;
+                assert.equal(lists.length, 1, 'Correct number of lists returned.');
+                assert.equal(lists[0].title, 'Homework', 'Correct list returned.');
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            QUnit.test(title + ' request failed', function(assert) {});
+        }
+    });
 });
