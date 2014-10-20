@@ -121,7 +121,7 @@ router.put('/:id', function (req, res) {
 /**
  * DELETE /lists/:id
  *
- * Descrition: Deletes the specified List and its assoicated Tasks.
+ * Descrition: Deletes the specified List and its associated Tasks.
  *
  * Path Params:
  *   id - ListID identifier string
@@ -132,8 +132,20 @@ router.put('/:id', function (req, res) {
  *
  * Author: seropian@mit.edu
  */
+// TODO: test
 router.delete('/:id', function (req, res) {
+    List.findById(req.params.id, function(err, list) {
+        if (err) return res.json({error: err});
+        if (list.owner !== req.user.id) return res.status(401).send();
 
+        Task.find({list: list._id}).remove(function(err) {
+            if (err) return res.json({error: err});
+        });
+
+        list.remove(function(err) {
+            if (err) return res.json({error: err});
+        });
+    });
 });
 
 module.exports = router;
