@@ -9,7 +9,7 @@
 
 test('Task - GET /tasks/', function () {
     login('test1', 'test1');
-    clear_all();
+    clear_user();
 
     // Create Tasks
 
@@ -18,7 +18,7 @@ test('Task - GET /tasks/', function () {
 
 test('Task - GET /tasks/:id', function () {
     login('test1', 'test1');
-    clear_all();
+    clear_user();
 
     // Create Tasks
 
@@ -31,7 +31,7 @@ test('Task - GET /tasks/:id', function () {
 
 test('Task - POST /tasks/', function () {
     login('test1', 'test1');
-    clear_all();
+    clear_user();
 
     // Create Tasks
 
@@ -46,7 +46,7 @@ test('Task - PUT /tasks/:id', function () {
     // TODO(tdivita): Possibly add testing to make sure you can't just empty
     // the name (do for creation as well).
     login('test1', 'test1');
-    clear_all();
+    clear_user();
 
     // Create Task
 
@@ -61,7 +61,7 @@ test('Task - PUT /tasks/:id', function () {
 
 test('Task - DELETE /tasks/:id', function() {
     login ('test1', 'test1');
-    clear_all();
+    clear_user();
 
     // Create List
     var list = list_create('TestList1').list;
