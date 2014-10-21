@@ -88,7 +88,7 @@ test("List - PUT /lists/:id", function () {
 
     // Verify List (title should not have changed to empty)
     equal(list_get(list1._id).list.title, "New Name!",
-        "List "+ list1._id.toString() + " not successfully renamed from \'"
+        "List "+ list1._id.toString() + " not renamed from \'"
         + String(list1_edited.title) + "\' to the empty string.");
 
 });

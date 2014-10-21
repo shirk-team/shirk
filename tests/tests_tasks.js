@@ -110,16 +110,36 @@ test('Task - POST /tasks/', function () {
 /////////////////////
 
 test('Task - PUT /tasks/:id', function () {
-    // TODO(tdivita): Possibly add testing to make sure you can't just empty
-    // the name (do for creation as well).
+	// TODO: Finish by adding more edits and checks.
     login('test1', 'test1');
     clear_all();
 
-    // Create Task
+    // Create List
+    var list1 = list_create("ListOne").list;
 
-    // Edit Task
+    // Create Task
+    // title(req), list(req), completed(default=false), priority(default=0), notes, deadline, owner(req)
+    var task1 = task_create({
+        title: "Task One",
+        list: list1._id,
+        priority: -1,
+    }).task;
+
+    // Edit Task Title
+    var task1_edited = task_replace(task1._id, {title: "New Name!"}).task;
 
     // Verify Task
+    equal(task1_edited.title, "New Name!",
+        "Task "+ task1._id.toString() + " successfully renamed from \'"
+        + String(task1.title) + "\' to \'" + task1_edited.title + "\'.");
+
+    // Try to Empty List Title
+    task_replace(task1._id, {title: ""});
+
+    // Verify Task (title should not have changed to empty)
+    equal(task_get(task1._id).task.title, "New Name!",
+        "Task "+ task1._id.toString() + " not renamed from \'"
+        + String(task1_edited.title) + "\' to the empty string.");
 });
 
 /////////////////
