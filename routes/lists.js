@@ -1,4 +1,5 @@
 var express = require('express');
+var url = require('url');
 var router = express.Router();
 
 // Models
@@ -85,7 +86,9 @@ router.post('/', function (req, res) {
  * Author: aandre@mit.edu
  */
 router.get('/:id', function (req, res) {
-
+  // var query = url.parse(request.url, true).query;
+  // console.log (query);
+  res.send({});
 });
 
 
