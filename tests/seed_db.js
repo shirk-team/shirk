@@ -10,7 +10,7 @@ var Task = require('../models/task.js').Task;
 var async = require('async');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/testDb');
+mongoose.connect('mongodb://localhost/shirk');
 
 var db = mongoose.connection;
 

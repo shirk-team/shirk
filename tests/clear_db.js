@@ -9,7 +9,7 @@ var User = require('../models/user.js').User;
 
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/testDb');
+mongoose.connect('mongodb://localhost/shirk');
 
 var db = mongoose.connection;
 

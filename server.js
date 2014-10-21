@@ -1,6 +1,6 @@
 /**
  * Shirk server.
- * @author seropian@mit.edu
+ * @author seropian@mit.edu, aandre@mit.edu
  */
 
 var express = require('express');
@@ -19,9 +19,25 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(session({secret: 'shirk', resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+////////////////
+// CONNECT DB //
+////////////////
+var connection_string = 'localhost:27017/shirk';
+
+if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
+  connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ':' +
+        process.env.OPENSHIFT_MONGODB_DB_PASSWORD + '@' +
+        process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+        process.env.OPENSHIFT_MONGODB_DB_PORT + '/shirk';
+}
+
+mongoose.connect(connection_string);
 
 app.get('/', function(req, res, next) {
-    res.json({});
+    return res.json({});
 });
 
 /**
@@ -47,7 +63,7 @@ app.post('/login', function(req, res, next) {
 /**
  * Logout via passport and redirect to home page (login/signup page).
  */
-// TODO: test
+// TODO: should you be able to logout if you're not logged in?
 app.post('/logout', function(req, res){
     req.logout();
     res.redirect('/');
@@ -60,12 +76,6 @@ app.use(function (req, res, next) {
     }
     next();
 });
-
-if (process.env.OPENSHIFT_NODEJS_PORT) {
-    // TODO: set up openshift DB and connect
-} else {
-    mongoose.connect('mongodb://localhost/testDb');
-}
 
 var db = mongoose.connection;
 
