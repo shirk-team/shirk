@@ -20,16 +20,22 @@ test("List - GET /lists/", function () {
     lists.push(list_create("ListThree").list);
 
     // GET /lists/
-    var data;
-    $.ajax({
-        url : '/lists/',
-        type: 'GET',
-        async: false,
-        success: function (result, status, xhr) {
-            data = result;
-        }
-    });
-    deepEqual(data, {"lists": lists}, "Correct lists.");
+    var data = list_get('');
+    deepEqual(data, {"lists": lists}, "Correct lists retrieved.");
+});
+
+test("List - GET /lists/:id", function () {
+    login('test1', 'test1');
+    clear_all();
+
+    // Create Lists
+    var lists = Array();
+    lists.push(list_create("ListOne").list);
+    lists.push(list_create("ListTwo").list);
+
+    // GET /lists/:id
+    var data = list_get(lists[0]._id);
+    deepEqual(data, {list: lists[0], tasks: []}, "Correct list retrieved.");
 });
 
 ///////////////
@@ -93,5 +99,4 @@ test("List - DELETE /lists/:id", function() {
 
     equal(list_get(list1._id), null, "List "+ list1._id.toString() + " successfully deleted.");
     deepEqual(list_get(list2._id).list, list2, "List "+ list2._id.toString() + " not deleted (unaffected).");
-
 });
