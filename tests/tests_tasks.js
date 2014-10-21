@@ -9,7 +9,7 @@
 
 test('Task - GET /tasks/', function () {
     login('test1', 'test1');
-    clear_all();
+    clear_user();
 
     // Create Tasks
 
@@ -18,7 +18,7 @@ test('Task - GET /tasks/', function () {
 
 test('Task - GET /tasks/:id', function () {
     login('test1', 'test1');
-    clear_all();
+    clear_user();
 
     // Create Tasks
 
@@ -31,7 +31,7 @@ test('Task - GET /tasks/:id', function () {
 
 test('Task - POST /tasks/', function () {
     login('test1', 'test1');
-    clear_all();
+    clear_user();
 
     // Create a List to Hold the Tasks
     var list1 = list_create("ListOne").list;
@@ -112,7 +112,7 @@ test('Task - POST /tasks/', function () {
 test('Task - PUT /tasks/:id', function () {
 	// TODO: Finish by adding more edits and checks.
     login('test1', 'test1');
-    clear_all();
+    clear_user();
 
     // Create List
     var list1 = list_create("ListOne").list;
@@ -148,7 +148,7 @@ test('Task - PUT /tasks/:id', function () {
 
 test('Task - DELETE /tasks/:id', function() {
     login ('test1', 'test1');
-    clear_all();
+    clear_user();
 
     // Create List
     var list = list_create('TestList1').list;

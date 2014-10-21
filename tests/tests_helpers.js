@@ -1,12 +1,7 @@
 /**
  * Helper functions for automated tests.
- * @author aandre@mit.edu
+ * @author aandre@mit.edu, seropian@mit.edu
 */
-
-// $.ajaxSetup({
-//     contentType: "application/json",
-//     dataType: "json"
-// });
 
 ////////////////////////////
 // Authentication Helpers //
@@ -44,16 +39,47 @@ function logout () {
     });
 }
 
-function clear_all() {
+function clear_user() {
     $.ajax({
         url : '/clear',
         type: 'POST',
         async: false,
         success: function() {
-            console.log("CLEAR");
+            console.log("CLEAR USER");
         },
         error: errorHandler
     });
+}
+
+function clear_all() {
+    $.ajax({
+        url : '/clearAll',
+        type: 'POST',
+        async: false,
+        success: function() {
+            console.log("CLEAR ALL");
+        },
+        error: errorHandler
+    });
+}
+
+//////////////////////////
+// User Request Helpers //
+//////////////////////////
+function user_create(username, password) {
+    var data;
+    $.ajax({
+        url : '/users/',
+        type: 'POST',
+        async: false,
+        contentType: "application/json",
+        data: JSON.stringify({"username": username, "password": password}),
+        success: function (result, status, xhr) {
+            data = result;
+        },
+        error: errorHandler
+    });
+    return data;
 }
 
 //////////////////////////

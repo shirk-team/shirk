@@ -85,13 +85,30 @@ app.post('/clear', function(req, res){
     });
 });
 
+// Clears all data. (DEBUG)
+app.post('/clearAll', function(req, res){
+    List.remove({}, function(err) {
+        if(err) return res.status(500);
+        Task.remove({}, function(err) {
+            if(err) return res.status(500);
+            User.remove({}, function(err) {
+                if(err) return res.status(500);
+                return res.status(200).json({});
+            });
+        });
+    });
+});
+
 // Verify Authentication (each request)
-app.use(function (req, res, next) {
+var verifyUser = function (req, res, next) {
     if (req.user == undefined || req.user == null) {
         return res.status(403).json({error: "Only authenticated users may perform this request."});
     }
     next();
-});
+};
+
+app.all('/lists', verifyUser);
+app.all('/tasks', verifyUser);
 
 var db = mongoose.connection;
 
@@ -107,3 +124,4 @@ db.once('open', function callback () {
 ////////////
 app.use('/tasks', require('./routes/tasks'));
 app.use('/lists', require('./routes/lists'));
+app.use('/users', require('./routes/users'));

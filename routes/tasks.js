@@ -155,7 +155,6 @@ router.put('/:id', function (req, res) {
  *
  * Author: seropian@mit.edu
  */
-// TODO: test
 router.delete('/:id', function (req, res) {
     Task.findById(req.params.id, function(err, task) {
         if (err) return res.status(500).send(err);
