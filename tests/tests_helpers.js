@@ -1,16 +1,16 @@
 /**
  * Helper functions for automated tests.
- * @author aandre@mit.edu
+ * @author aandre@mit.edu, seropian@mit.edu
 */
-
-// $.ajaxSetup({
-//     contentType: "application/json",
-//     dataType: "json"
-// });
 
 ////////////////////////////
 // Authentication Helpers //
 ////////////////////////////
+
+function errorHandler (xhr, status, error) {
+    console.log(xhr, status, error);
+}
+
 function login (username, password) {
     $.ajax({
         url : '/login',
@@ -22,7 +22,8 @@ function login (username, password) {
         },
         success: function() {
             console.log("LOGIN - " + username);
-        }
+        },
+        error: errorHandler
     });
 }
 
@@ -33,19 +34,52 @@ function logout () {
         async: false,
         success: function() {
             console.log("LOGOUT");
-        }
+        },
+        error: errorHandler
     });
 }
 
-function clear_all() {
+function clear_user() {
     $.ajax({
         url : '/clear',
         type: 'POST',
         async: false,
         success: function() {
-            console.log("CLEAR");
-        }
+            console.log("CLEAR USER");
+        },
+        error: errorHandler
     });
+}
+
+function clear_all() {
+    $.ajax({
+        url : '/clearAll',
+        type: 'POST',
+        async: false,
+        success: function() {
+            console.log("CLEAR ALL");
+        },
+        error: errorHandler
+    });
+}
+
+//////////////////////////
+// User Request Helpers //
+//////////////////////////
+function user_create(username, password) {
+    var data;
+    $.ajax({
+        url : '/users/',
+        type: 'POST',
+        async: false,
+        contentType: "application/json",
+        data: JSON.stringify({"username": username, "password": password}),
+        success: function (result, status, xhr) {
+            data = result;
+        },
+        error: errorHandler
+    });
+    return data;
 }
 
 //////////////////////////
@@ -59,7 +93,8 @@ function lists_get() {
         async: false,
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -74,7 +109,8 @@ function list_create(name) {
         data: JSON.stringify({"list": {"title": name}}),
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -87,7 +123,8 @@ function list_get(listid) {
         async: false,
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -102,7 +139,8 @@ function list_rename(listid, name) {
         data: JSON.stringify({list: {title: name}}),
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -118,6 +156,7 @@ function list_delete(listid) {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             code = jqXHR.status;
+            errorHandler(jqXHR, textStatus, errorThrown);
         }
     });
     return {data: data, status: code};
@@ -134,7 +173,8 @@ function tasks_get() {
         async: false,
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -149,7 +189,8 @@ function task_create(task) {
         data: JSON.stringify({task: task}),
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -162,7 +203,8 @@ function task_get(taskid) {
         async: false,
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -177,7 +219,8 @@ function task_replace(taskid, task) {
         data: JSON.stringify({task: task}),
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -193,6 +236,7 @@ function task_delete(taskid) {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             code = jqXHR.status;
+            errorHandler(jqXHR, textStatus, errorThrown);
         }
     });
     return {data: data, status: code};

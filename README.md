@@ -3,11 +3,11 @@
 
 # Automated Tests
 ### Seed Database
-Populate the database with mock information, for the purpose of running controlled tests.
+Populate the database with mock users, for the purpose of running controlled tests.
 
 1. Create the folder /tests/test_db (this folder is git-ignored).
 2. Run <code>mongod --dbpath /tests/test_db</code>.
-3. Run <code>node /tests/seed_db.js</code> to seed the test database.
+3. Run <code>node /tests/seed_test_users.js</code> to seed the test database.
 
 ### Clear Database
 If you need to clear the test database, you can run 
@@ -17,5 +17,3 @@ If you need to clear the test database, you can run
 To run automated tests, start the server and visit
 <code>localhost:8080/tests.html</code>. You cannot run the tests
 without the server because cross-origin AJAX calls are prohibited.
-
-Please note, the database needs to be cleared and re-seeded for each run, since the deletion/modification operations are destructive.
