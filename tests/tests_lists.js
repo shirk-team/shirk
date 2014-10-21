@@ -1,6 +1,6 @@
 /**
  * Automated tests for Lists.
- * @author aandre@mit.edu, seropian@mit.edu
+ * @author aandre@mit.edu, seropian@mit.edu, tdivita@mit.edu
 */
 
 
@@ -32,11 +32,30 @@ test("List - GET /lists/", function () {
     deepEqual(data, {"lists": lists}, "Correct lists.");
 });
 
+///////////////
+// POST List //
+///////////////
+
+test("List - POST /lists/", function () {
+    login('test1', 'test1');
+    clear_all();
+
+    // Create Lists
+    var list1 = list_create("ListOne").list;
+    var list2 = list_create("ListTwo").list;
+    var list3 = list_create("ListThree").list;
+
+    // Verify List
+    deepEqual(list_get(list1._id).list, list1, "List "+ list1._id.toString() + " successfully created.");
+    deepEqual(list_get(list2._id).list, list2, "List "+ list2._id.toString() + " successfully created.");
+    deepEqual(list_get(list3._id).list, list3, "List "+ list3._id.toString() + " successfully created.");
+});
+
 /////////////////
 // DELETE List //
 /////////////////
 
-test("List - DELETE /list/:id", function() {
+test("List - DELETE /lists/:id", function() {
     login ('test1', 'test1');
     clear_all();
 
@@ -45,8 +64,8 @@ test("List - DELETE /list/:id", function() {
     var list2 = list_create("TestList2").list;
 
     // Verify List
-    deepEqual(list_get(list1._id).list, list1, "List "+ list1._id.toString() + "succesffully created.");
-    deepEqual(list_get(list2._id).list, list2, "List "+ list2._id.toString() + "succesffully created.");
+    deepEqual(list_get(list1._id).list, list1, "List "+ list1._id.toString() + " successfully created.");
+    deepEqual(list_get(list2._id).list, list2, "List "+ list2._id.toString() + " successfully created.");
 
     // Delete List 1
     list_delete(list1._id);
