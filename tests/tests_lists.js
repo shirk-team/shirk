@@ -91,11 +91,11 @@ test('List - DELETE /lists/:id', function() {
     login ('test1', 'test1');
     clear_all();
 
-    // Create Two List
+    // Create Two Lists
     var list1 = list_create('TestList1').list;
     var list2 = list_create('TestList2').list;
 
-    // Verify List
+    // Verify Lists
     deepEqual(list_get(list1._id).list, list1, 
         'List ' + list1._id.toString() + ' successfully created.');
     deepEqual(list_get(list2._id).list, list2, 
@@ -104,6 +104,7 @@ test('List - DELETE /lists/:id', function() {
     // Delete List 1
     list_delete(list1._id);
 
+    // Verify Deletion
     equal(list_get(list1._id), null, 
         'List ' + list1._id.toString() + ' successfully deleted.');
     deepEqual(list_get(list2._id).list, list2, 
