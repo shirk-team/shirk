@@ -27,7 +27,8 @@ function testLogin(title, username, password, errorMessage) {
         data: {
             username: username,
             password: password
-        }, 
+        },
+        async: false,
         success: checkOkay(title),
         error: function(jqXHR, textStatus, errorThrown) {
             QUnit.test(title, function(assert) {
@@ -46,6 +47,7 @@ function testLogin(title, username, password, errorMessage) {
 function testLogout(title, expectedResponse) {
     $.ajax('/logout', {
         success: checkOkay(title),
+        async: false,
         error: function(jqXHR, textStatus, errorThrown) {
             QUnit.test(title + ' failed and should not have',
                 function(assert) {});
@@ -55,15 +57,15 @@ function testLogout(title, expectedResponse) {
 }
 
 testLogin('Authentication - Login: correct username and correct password',
-    'admin', 'admin');
+    'test1', 'test1');
 
 testLogout('Authentication - Logout');
 
 testLogin('Authentication - Login: incorrect username and correct password',
-    'apple', 'admin', 'Incorrect username');
+    'apple', 'test1', 'Incorrect username');
 
 testLogin('Authentication - Login: incorrect username and incorrect password',
-    'apple', 'apple', 'Incorrect username');
+    'apple', 'passwd', 'Incorrect username');
 
 testLogin('Authentication - Login: correct username and incorrect password',
-    'admin', 'apple', 'Incorrect password');
+    'test1', 'apple', 'Incorrect password');
