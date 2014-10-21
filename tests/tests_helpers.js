@@ -108,16 +108,19 @@ function list_rename(listid, name) {
 }
 
 function list_delete(listid) {
-    var data;
+    var data, code;
     $.ajax({
         url : '/lists/' + listid,
         type: 'DELETE',
         async: false,
         success: function (result, status, xhr) {
             data = result;
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            code = jqXHR.status;
         }
     });
-    return data;
+    return {data: data, status: code};
 }
 
 //////////////////////////
@@ -180,14 +183,17 @@ function task_replace(taskid, task) {
 }
 
 function task_delete(taskid) {
-    var data;
+    var data, code;
     $.ajax({
         url : '/tasks/' + taskid,
         type: 'DELETE',
         async: false,
         success: function (result, status, xhr) {
             data = result;
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            code = jqXHR.status;
         }
     });
-    return data;
+    return {data: data, status: code};
 }
