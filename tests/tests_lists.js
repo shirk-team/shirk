@@ -35,3 +35,23 @@ test("List - GET /lists/", function () {
 /////////////////
 // DELETE List //
 /////////////////
+
+test("List - DELETE /list/:id", function() {
+    login ('test1', 'test1');
+    clear_all();
+
+    // Create Two List
+    var list1 = list_create("TestList1").list;
+    var list2 = list_create("TestList2").list;
+
+    // Verify List
+    deepEqual(list_get(list1._id).list, list1, "List "+ list1._id.toString() + "succesffully created.");
+    deepEqual(list_get(list2._id).list, list2, "List "+ list2._id.toString() + "succesffully created.");
+
+    // Delete List 1
+    list_delete(list1._id);
+
+    equal(list_get(list1._id), null, "List "+ list1._id.toString() + " successfully deleted.");
+    deepEqual(list_get(list2._id).list, list2, "List "+ list2._id.toString() + " not deleted (unaffected).");
+
+});
