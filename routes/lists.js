@@ -52,7 +52,7 @@ router.get('/', function (req, res) {
  */
 router.post('/', function (req, res) {
 	var newList = new List({
-		title: req.list.title,
+		title: req.body.list.title,
 		owner: req.user._id});
 	newList.save(function(err) {
         if (err) throw err;
@@ -108,7 +108,7 @@ router.get('/:id', function (req, res) {
  * Author: tdivita@mit.edu
  */
 router.put('/:id', function (req, res) {
-	List.findByIdAndUpdate(req.params.id, { $set: {title: req.list.title}}, function (err, list) {
+	List.findByIdAndUpdate(req.params.id, { $set: {title: req.body.list.title}}, function (err, list) {
 		if (err) throw err;
 
 		res.send(list);
