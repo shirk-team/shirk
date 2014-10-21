@@ -39,13 +39,10 @@ test('Task - POST /tasks/', function () {
 
     // Create Tasks
     // title(req), list(req), completed(default=false), priority(default=0), notes, deadline, owner(req)
-    var task1_content = {
-    	title: "Task One",
-    	list: list1._id
-    };
-
-    var task1 = task_create(task1_content); //.task;
-    console.log(task1);
+    var task1 = task_create({
+        title: 'Task One',
+        list: list1._id,
+    }).task;
 
     // Verify Tasks
     deepEqual(task_get(task1._id).task, task1,
