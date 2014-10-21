@@ -56,9 +56,8 @@ router.post('/', function (req, res) {
 		title: req.body.list.title,
 		owner: req.user._id});
 	newList.save(function(err) {
-        if (err) throw err;
-
-        res.send(newList);
+        if (err) return res.status(500).send(err);
+        return res.status(200).json({list: newList});
     });
 });
 
@@ -112,9 +111,8 @@ router.get('/:id', function (req, res) {
  */
 router.put('/:id', function (req, res) {
 	List.findByIdAndUpdate(req.params.id, { $set: {title: req.body.list.title}}, function (err, list) {
-		if (err) throw err;
-
-		res.send(list);
+        if (err) return res.status(500).send(err);
+        return res.status(200).json({list: list});
 	});
 });
 

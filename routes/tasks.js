@@ -73,9 +73,8 @@ router.post('/', function (req, res) {
 		newTask.priority = req.body.task.priority;
 	}
 	newTask.save(function(err) {
-        if (err) throw err;
-
-        res.send(newTask);
+        if (err) return res.status(500).send(err);
+        return res.status(200).json({task: newTask});
     });
 });
 
@@ -122,9 +121,8 @@ router.put('/:id', function (req, res) {
 		// If values were set in the request, edit them in the database.
 		editTaskValuesIfProvided(task, req.body.task);
 		task.save(function(err) {
-	        if (err) throw err;
-
-	        res.send(task);
+	        if (err) return res.status(500).send(err);
+	        return res.status(200).json({task: task});
 	    });
 	});
 });
