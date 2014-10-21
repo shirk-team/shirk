@@ -1,7 +1,36 @@
 /**
-* Automated tests for Lists.
-* @author aandre@mit.edu, seropian@mit.edu
+ * Automated tests for Lists.
+ * @author aandre@mit.edu, seropian@mit.edu
 */
+
+// Authentication Helpers
+function login (username, password) {
+    $.ajax({
+        url : '/login',
+        type: 'POST',
+        async: false,
+        data : {
+            username: username,
+            password: password
+        }
+    });
+}
+
+function logout () {
+    $.ajax({
+        url : '/logout',
+        type: 'POST',
+        async: false
+    });
+}
+
+/////////////////
+// DELETE List //
+/////////////////
+
+/**
+ * Deletion tests must be run in order, since they are destructive.
+ */
 
 $.ajax({
     url : '/login',
@@ -11,12 +40,10 @@ $.ajax({
         password: 'admin'
     },
     success: function() {
-        testGet();
+        getIDToDelete();
     },
     error: function() {
-        //TODO: change to throw error once we figure out login stuff
-        testGet();
-        // QUnit.test(title + ' login failed', function(assert) {});
+        getIDToDelete();
     }
 });
 
@@ -36,19 +63,19 @@ function testMethod(title, url, method, onSuccess, onError) {
     });
 }
 
-function testGet() {
-    var title = 'List - GET /lists/';
+function getIDToDelete() {
+    var title = 'List - DELETE /lists/:id';
 
     testMethod(title, '/lists/', 'GET', function(data) {
-        QUnit.test(title, function(assert) {
-            lists = data.lists;
-            assert.equal(lists.length, 1, 'Correct number of lists returned.');
-            assert.equal(lists[0].title, 'Homework', 'Correct list returned.');
-
-            testDeleteById(lists[0]._id);
-            // TODO: test GET /lists/:id next         
+            QUnit.test(title, function(assert) {
+                lists = data.lists;
+                if (lists.length == 0){
+                    alert('Please ensure you re-seed the test database after each run. The remanider of the DELETE tests are reliant on this.');
+                    return;
+                }
+                testDeleteById(lists[0]._id);
+            });
         });
-    });
 }
 
 function testDeleteById(id) {
@@ -66,7 +93,7 @@ function testDeleteById(id) {
 function testDeleteNoId() {
     var title = 'List - DELETE /lists/';
 
-    testMethod(title, '/lists/', 'DELETE', undefined, 
+    testMethod(title, '/lists/', 'DELETE', undefined,
         function (jqXHR, textStatus, errorThrown ) {
             QUnit.test(title, function(assert) {
                 assert.equal(jqXHR.status, 404, 'Correct status code.');
@@ -81,7 +108,7 @@ function testDeleteNoId() {
 function testDeleteBadId() {
     var title = 'List - DELETE /lists/617061706170617061706170';
 
-    testMethod(title, '/lists/617061706170617061706170', 'DELETE', undefined, 
+    testMethod(title, '/lists/617061706170617061706170', 'DELETE', undefined,
         function (jqXHR, textStatus, errorThrown ) {
             QUnit.test(title, function(assert) {
                 assert.equal(jqXHR.status, 404, 'Correct status code.');
@@ -90,32 +117,3 @@ function testDeleteBadId() {
         }
     );
 }
-
-/**
-* Tests for creating and editing lists.
-*
-* @author tdivita@mit.edu
-**/
-// TODO(tdivita): Finish/make sure I did this right.
-login('admin', 'admin', 'List - POST /lists/', function(title) {
-    $.ajax({
-        url : '/lists/',
-        type: 'POST',
-        async: false,
-        data: {
-            list: {
-              title: "Brand New List"
-            }
-        }, 
-        success: function (data, textStatus, jqXHR) {
-            QUnit.test(title, function(assert) {
-                lists = data.lists;
-                assert.equal(lists.length, 1, 'Correct number of lists returned.');
-                assert.equal(lists[0].title, 'Homework', 'Correct list returned.');
-            });
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            QUnit.test(title + ' request failed', function(assert) {});
-        }
-    });
-});
