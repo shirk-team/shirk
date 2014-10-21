@@ -124,10 +124,19 @@ router.get('/:id', function (req, res) {
  * Author: tdivita@mit.edu
  */
 router.put('/:id', function (req, res) {
-	List.findByIdAndUpdate(req.params.id, { $set: {title: req.body.list.title}}, function (err, list) {
+	// List.findByIdAndUpdate(req.params.id, { $set: {title: req.body.list.title}}, function (err, list) {
+ //        if (err) return res.status(500).send(err);
+ //        return res.status(200).json({list: list});
+	// });
+    List.findById(req.params.id, function (err, list) {
         if (err) return res.status(500).send(err);
-        return res.status(200).json({list: list});
-	});
+
+        list.title = req.body.list.title;
+        list.save(function(err) {
+            if (err) return res.status(500).send(err);
+            return res.status(200).json({list: list});
+        });
+    });
 });
 
 

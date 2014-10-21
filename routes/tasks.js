@@ -125,7 +125,7 @@ router.get('/:id', function (req, res) {
  */
 router.put('/:id', function (req, res) {
 	Task.findById(req.params.id, function (err, task) {
-		if (err) throw err;
+		if (err) return res.status(500).send(err);
 
 		// If values were set in the request, edit them in the database.
 		if(req.body.task.title) task.title = req.body.task.title;
