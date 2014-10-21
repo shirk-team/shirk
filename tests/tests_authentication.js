@@ -4,47 +4,66 @@
  */
 
 /**
+ * Check that a success response succeeded normally.
+ * @param {String} title The title of the test.
+ */
+function checkOkay(title) {
+    return function(data, textStatus, jqXHR) {
+        QUnit.test(title, function(assert) {
+            assert.equal(jqXHR.status, 200, 'Correct status code.');
+        });
+    }
+}
+
+/**
  * Send a login request and verify that the response is as expected.
  * @param  {String} title The title of the test.
  * @param  {String} username The username to log in.
  * @param  {String} password The password to log in.
  * @param  {String} expectedResponse What the server should return.
  */
-function testLogin(title, username, password, expectedResponse) {
-
+function testLogin(title, username, password, errorMessage) {
     $.ajax('/login', {
         data: {
             username: username,
             password: password
         }, 
-        success: function(data, textStatus, jqXHR) {
-            QUnit.test(title, function(assert) {
-                assert.equal(jqXHR.status, expectedResponse.status,
-                    'Correct status code.');
-            });
-        },
+        success: checkOkay(title),
         error: function(jqXHR, textStatus, errorThrown) {
             QUnit.test(title, function(assert) {
-                if (expectedResponse.error !== undefined) {
-                    assert.equal(jqXHR.responseText, expectedResponse.error,
-                        'Correct error message.');
-                    assert.equal(jqXHR.status, expectedResponse.status,
-                        'Correct status code.');
-                }
+                assert.equal(jqXHR.responseText, errorMessage,
+                    'Correct error message.');
+                assert.equal(jqXHR.status, 401, 'Correct status code.');
             });
         },
         type: 'POST'
     });
 }
 
-testLogin('Authentication - Correct username and correct password', 'admin',
-    'admin', {status: 200});
+/**
+ * Tests that logout succeeds.
+ */
+function testLogout(title, expectedResponse) {
+    $.ajax('/logout', {
+        success: checkOkay(title),
+        error: function(jqXHR, textStatus, errorThrown) {
+            QUnit.test(title + ' failed and should not have',
+                function(assert) {});
+        },
+        type: 'POST'
+    });
+}
 
-testLogin('Authentication - Incorrect username and correct password', 'apple',
-    'admin', {error: 'Incorrect username', status: 401});
+testLogin('Authentication - Login: correct username and correct password',
+    'admin', 'admin');
 
-testLogin('Authentication - Incorrect username and incorrect password', 'apple',
-    'apple', {error: 'Incorrect username', status: 401});
+testLogout('Authentication - Logout');
 
-testLogin('Authentication - Correct username and incorrect password', 'admin',
-    'apple', {error: 'Incorrect password', status: 401});
+testLogin('Authentication - Login: incorrect username and correct password',
+    'apple', 'admin', 'Incorrect username');
+
+testLogin('Authentication - Login: incorrect username and incorrect password',
+    'apple', 'apple', 'Incorrect username');
+
+testLogin('Authentication - Login: correct username and incorrect password',
+    'admin', 'apple', 'Incorrect password');
