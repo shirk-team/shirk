@@ -60,22 +60,21 @@ router.get('/', function (req, res) {
  */
 router.post('/', function (req, res) {
 	var newTask = new Task({
-		title: req.task.title,
-		notes: req.task.notes,
-		list: req.task.list,
+		title: req.body.task.title,
+		notes: req.body.task.notes,
+		list: req.body.task.list,
 		owner: req.user._id
 	});
 	// Only set deadline and priority if they were provided, otherwise let them be decided by schema defaults.
-	if (req.task.deadline) {
-		newTask.deadline = req.task.deadline;
+	if (req.body.task.deadline) {
+		newTask.deadline = req.body.task.deadline;
 	}
 	if (req.task.priority) {
-		newTask.priority = req.task.priority;
+		newTask.priority = req.body.task.priority;
 	}
 	newTask.save(function(err) {
-        if (err) throw err;
-
-        res.send(newTask);
+        if (err) return res.status(500).send(err);
+        return res.status(200).json({task: newTask});
     });
 });
 
@@ -120,11 +119,10 @@ router.put('/:id', function (req, res) {
 		if (err) throw err;
 
 		// If values were set in the request, edit them in the database.
-		editTaskValuesIfProvided(task, req.task);
+		editTaskValuesIfProvided(task, req.body.task);
 		task.save(function(err) {
-	        if (err) throw err;
-
-	        res.send(task);
+	        if (err) return res.status(500).send(err);
+	        return res.status(200).json({task: task});
 	    });
 	});
 });
