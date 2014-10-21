@@ -44,11 +44,13 @@ test("List - POST /lists/", function () {
     var list1 = list_create("ListOne").list;
     var list2 = list_create("ListTwo").list;
     var list3 = list_create("ListThree").list;
+    var list4 = list_create("");
 
     // Verify Lists
     deepEqual(list_get(list1._id).list, list1, "List "+ list1._id.toString() + " successfully created.");
     deepEqual(list_get(list2._id).list, list2, "List "+ list2._id.toString() + " successfully created.");
     deepEqual(list_get(list3._id).list, list3, "List "+ list3._id.toString() + " successfully created.");
+    equal(undefined, list4, "List not successfully created. Cannot have empty title.");
 });
 
 /////////////////////
@@ -56,7 +58,6 @@ test("List - POST /lists/", function () {
 /////////////////////
 
 test("List - PUT /lists/:id", function () {
-    // TODO(tdivita): Possibly add testing to make sure you can't just empty the name (do for creation as well).
     login('test1', 'test1');
     clear_all();
 
@@ -64,11 +65,18 @@ test("List - PUT /lists/:id", function () {
     var list1 = list_create("ListOne").list;
 
     // Edit List Title (the only editable attribute)
-    var list1_edited = list_rename(list1._id, "New Name!");
+    var list1_edited = list_rename(list1._id, "New Name!").list;
 
     // Verify List
-    equal(list1_edited.list.title, "New Name!", "List "+ list1._id.toString() + " successfully renamed from \'"
-        + String(list1.title) + "\' to \'" + list1_edited.list.title + "\'.");
+    equal(list1_edited.title, "New Name!", "List "+ list1._id.toString() + " successfully renamed from \'"
+        + String(list1.title) + "\' to \'" + list1_edited.title + "\'.");
+
+    // Try to Empty List Title
+    list_rename(list1._id, "");
+
+    // Verify List (title should not have changed to empty)
+    equal(list_get(list1._id).list.title, "New Name!", "List "+ list1._id.toString() + " not successfully renamed from \'"
+        + String(list1_edited.title) + "\' to the empty string.");
 
 });
 
