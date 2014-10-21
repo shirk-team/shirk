@@ -11,6 +11,11 @@
 ////////////////////////////
 // Authentication Helpers //
 ////////////////////////////
+
+function errorHandler (xhr, status, error) {
+    console.log(xhr, status, error);
+}
+
 function login (username, password) {
     $.ajax({
         url : '/login',
@@ -22,7 +27,8 @@ function login (username, password) {
         },
         success: function() {
             console.log("LOGIN - " + username);
-        }
+        },
+        error: errorHandler
     });
 }
 
@@ -33,7 +39,8 @@ function logout () {
         async: false,
         success: function() {
             console.log("LOGOUT");
-        }
+        },
+        error: errorHandler
     });
 }
 
@@ -44,7 +51,8 @@ function clear_all() {
         async: false,
         success: function() {
             console.log("CLEAR");
-        }
+        },
+        error: errorHandler
     });
 }
 
@@ -59,7 +67,8 @@ function lists_get() {
         async: false,
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -74,7 +83,8 @@ function list_create(name) {
         data: JSON.stringify({"list": {"title": name}}),
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -87,7 +97,8 @@ function list_get(listid) {
         async: false,
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -102,7 +113,8 @@ function list_rename(listid, name) {
         data: JSON.stringify({list: {title: name}}),
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -115,7 +127,8 @@ function list_delete(listid) {
         async: false,
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -131,7 +144,8 @@ function tasks_get() {
         async: false,
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -146,7 +160,8 @@ function task_create(task) {
         data: JSON.stringify({task: task}),
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -159,7 +174,8 @@ function task_get(taskid) {
         async: false,
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -174,7 +190,8 @@ function task_replace(taskid, task) {
         data: JSON.stringify({task: task}),
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }
@@ -187,7 +204,8 @@ function task_delete(taskid) {
         async: false,
         success: function (result, status, xhr) {
             data = result;
-        }
+        },
+        error: errorHandler
     });
     return data;
 }

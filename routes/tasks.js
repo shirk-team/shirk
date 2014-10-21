@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var ObjectId = require('mongoose').Schema.ObjectId;
 
 // Models
-var List = require('../models/list'),
-  Task = require('../models/task'),
-  User = require('../models/user');
+var List = require('../models/list').List;
+var Task = require('../models/task').Task;
+var User = require('../models/user').User;
 
 /**
  * Task Object Specification
@@ -65,12 +66,14 @@ router.post('/', function (req, res) {
 		list: req.body.task.list,
 		owner: req.user._id
 	});
-	// Only set deadline and priority if they were provided, otherwise let them be decided by schema defaults.
+
+	// Only set deadline and priority if they were provided, otherwise let them
+    // be decided by schema defaults.
 	if (req.body.task.deadline) newTask.deadline = req.body.task.deadline;
-	if (req.task.priority) newTask.priority = req.body.task.priority;
-	newTask.save(function(err, task) {
+	if (req.body.task.priority) newTask.priority = req.body.task.priority;
+	newTask.save(function(err) {
         if (err) return res.status(500).json(err);
-        return res.status(200).json({task: task});
+        return res.status(200).json({task: newTask});
     });
 });
 
@@ -89,7 +92,17 @@ router.post('/', function (req, res) {
  * Author: aandre@mit.edu
  */
 router.get('/:id', function (req, res) {
+    Task.findById(req.params.id, function (err, task) {
+        // Validate Result
+        if (err) return res.status(500).send(err);
+        if (!task) return res.status(404).send(req.params.id);
+    
+        // Check Tasl Ownership
+        if (task.owner.toString() !== req.user._id.toString())
+            return res.status(401).send('Unauthorized');
 
+        return res.json({task: task});
+    });
 });
 
 /**
@@ -147,7 +160,9 @@ router.delete('/:id', function (req, res) {
     Task.findById(req.params.id, function(err, task) {
         if (err) return res.status(500).send(err);
         if (!task) return res.status(404).send(req.params.id);
-        if (task.owner !== req.user.id) return res.status(401).send('Unauthorized');
+
+        if (task.owner.toString() !== req.user.id.toString())
+            return res.status(401).send('Unauthorized');
 
         task.remove(function(err) {
             if (err) return res.status(500).send(err);

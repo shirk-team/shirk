@@ -20,7 +20,7 @@ test('List - GET /lists/', function () {
     lists.push(list_create('ListThree').list);
 
     // GET /lists/
-    var data = list_get('');
+    var data = lists_get();
     deepEqual(data, {'lists': lists}, 'Correct lists retrieved.');
 });
 
