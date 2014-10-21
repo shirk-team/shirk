@@ -13,7 +13,7 @@ var List = require('../models/list').List,
  * List: {
  *   _id: ListID, // only in response
  *   title: String,
- *	 owner: UserID // only in response
+ *   owner: UserID // only in response
  * }
  */
 
@@ -55,8 +55,9 @@ router.post('/', function (req, res) {
 	var newList = new List({
 		title: req.body.list.title,
 		owner: req.user._id});
+
 	newList.save(function(err, list) {
-        if (err) return res.status(500).send(err);
+        if (err) return res.status(500).json(err);
         return res.status(200).json({list: list});
     });
 });

@@ -15,12 +15,18 @@ var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'tests')));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({secret: 'shirk', resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// Schemas
+var List = require('./models/list').List,
+  Task = require('./models/task').Task,
+  User = require('./models/user').User;
 
 ////////////////
 // CONNECT DB //
@@ -63,10 +69,20 @@ app.post('/login', function(req, res, next) {
 /**
  * Logout via passport and redirect to home page (login/signup page).
  */
-// TODO: should you be able to logout if you're not logged in?
 app.post('/logout', function(req, res){
     req.logout();
     res.redirect('/');
+});
+
+// Clears all user data. (DEBUG)
+app.post('/clear', function(req, res){
+    List.remove({owner: req.user._id}, function(err) {
+        if(err) return res.status(500);
+        Task.remove({owner: req.user._id}, function(err) {
+            if(err) return res.status(500);
+            return res.status(200).json({});
+        });
+    });
 });
 
 // Verify Authentication (each request)

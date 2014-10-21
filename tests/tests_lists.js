@@ -11,13 +11,15 @@
 
 test("List - GET /lists/", function () {
     login('test1', 'test1');
+    clear_all();
+    console.log('1');
 
     // Create Lists
     var lists = Array();
-    lists.push(list_create("ListOne"));
-    lists.push(list_create("ListTwo"));
-    lists.push(list_create("ListThree"));
-
+    lists.push(list_create("ListOne").list);
+    lists.push(list_create("ListTwo").list);
+    lists.push(list_create("ListThree").list);
+console.log('2');
     // GET /lists/
     var data;
     $.ajax({
@@ -28,8 +30,9 @@ test("List - GET /lists/", function () {
             data = result;
         }
     });
-
-    equal(data, {"lists": lists}, "Correct lists.");
+    console.log('3');
+    console.log(data.lists, lists, data.lists==lists);
+    deepEqual(data, {"lists": lists}, "Correct lists.");
 });
 
 /////////////////
