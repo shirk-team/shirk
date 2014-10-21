@@ -54,11 +54,11 @@ test("List - POST /lists/", function () {
 
     // Verify Lists
     deepEqual(list_get(list1._id).list, list1,
-        "List "+ list1._id.toString() + " successfully created.");
+        "List " + list1._id.toString() + " successfully created.");
     deepEqual(list_get(list2._id).list, list2,
-        "List "+ list2._id.toString() + " successfully created.");
+        "List " + list2._id.toString() + " successfully created.");
     deepEqual(list_get(list3._id).list, list3,
-        "List "+ list3._id.toString() + " successfully created.");
+        "List " + list3._id.toString() + " successfully created.");
     // Cannot create a list with an empty title, so this should have failed.
     equal(undefined, list4,
         "List not successfully created. Cannot have empty title.");
