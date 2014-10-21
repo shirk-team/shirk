@@ -66,15 +66,11 @@ router.post('/', function (req, res) {
 		owner: req.user._id
 	});
 	// Only set deadline and priority if they were provided, otherwise let them be decided by schema defaults.
-	if (req.body.task.deadline) {
-		newTask.deadline = req.body.task.deadline;
-	}
-	if (req.task.priority) {
-		newTask.priority = req.body.task.priority;
-	}
-	newTask.save(function(err) {
-        if (err) return res.status(500).send(err);
-        return res.status(200).json({task: newTask});
+	if (req.body.task.deadline) newTask.deadline = req.body.task.deadline;
+	if (req.task.priority) newTask.priority = req.body.task.priority;
+	newTask.save(function(err, task) {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json({task: task});
     });
 });
 
@@ -119,32 +115,18 @@ router.put('/:id', function (req, res) {
 		if (err) throw err;
 
 		// If values were set in the request, edit them in the database.
-		editTaskValuesIfProvided(task, req.body.task);
+		if(req.body.task.title) task.title = req.body.task.title;
+		if(req.body.task.notes) task.notes = req.body.task.notes;
+		if(req.body.task.list) task.list = req.body.task.list;
+		if(req.body.task.deadline) task.deadline = req.body.task.deadline;
+		if(req.body.task.priority) task.priority = req.body.task.priority;
+		if(req.body.task.completed) task.completed = req.body.task.completed;
 		task.save(function(err) {
 	        if (err) return res.status(500).send(err);
 	        return res.status(200).json({task: task});
 	    });
 	});
 });
-
-/**
-* Helper function for editing tasks. Checks whether fields were provided in the request,
-* and sets them in the database document for the task if they were.
-*
-* Author: tdivita@mit.edu
-**/
-function editTaskValuesIfProvided(taskToEdit, taskRequest) {
-	/**
-	TODO(tdivita): Is there a better way to do this, where I could iterate over a list of properties somehow? I can think of ways that might
-	work, but they are reliant on the fact that the properties have the same names, which is eh. It also wouldn't get all the much shorter.
-	**/
-	if(taskRequest.title) taskToEdit.title = taskRequest.title;
-	if(taskRequest.notes) taskToEdit.notes = taskRequest.notes;
-	if(taskRequest.list) taskToEdit.list = taskRequest.list;
-	if(taskRequest.deadline) taskToEdit.deadline = taskRequest.deadline;
-	if(taskRequest.priority) taskToEdit.priority = taskRequest.priority;
-	if(taskRequest.completed) taskToEdit.completed = taskRequest.completed;
-}
 
 /**
  * DELETE /tasks/:id
