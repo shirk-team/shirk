@@ -88,7 +88,20 @@ router.post('/', function (req, res) {
 router.get('/:id', function (req, res) {
   // var query = url.parse(request.url, true).query;
   // console.log (query);
-  res.send({});
+  List.findById(req.params.id, function (err, list) {
+    // Validate Result
+    if (err) return res.status(500).send(err);
+    if (!list) return res.status(404).send(req.params.id);
+    // Check List Ownership
+    if (list.owner.toString() !== req.user._id.toString())
+        return res.status(401).send('Unauthorized');
+
+    Task.find({list: list._id}, function (err, tasks) {
+      if (err) return res.status(500).send(err);
+      // Return List and its Tasks
+      return res.json({list: list, tasks: tasks});
+    });
+  });
 });
 
 
