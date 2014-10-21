@@ -10,9 +10,16 @@
 ///////////////
 
 test("List - GET /lists/", function () {
-    login('admin', 'admin');
+    login('test1', 'test1');
 
-    var data = null;
+    // Create Lists
+    var lists = Array();
+    lists.push(list_create("ListOne"));
+    lists.push(list_create("ListTwo"));
+    lists.push(list_create("ListThree"));
+
+    // GET /lists/
+    var data;
     $.ajax({
         url : '/lists/',
         type: 'GET',
@@ -22,16 +29,7 @@ test("List - GET /lists/", function () {
         }
     });
 
-    equal(data, {
-          "lists": [
-            {
-              "__v": 0,
-              "_id": "5445d4504c248c5c13d996db",
-              "owner": "5445d4504c248c5c13d996d7",
-              "title": "Homework"
-            }
-          ]
-        }, "Correct lists.");
+    equal(data, {"lists": lists}, "Correct lists.");
 });
 
 /////////////////

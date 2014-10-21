@@ -27,7 +27,7 @@ var List = require('../models/list'),
  * Description: Retrieves all tasks, optionally filted by query parameters.
  *
  * Query Args:
- *   limit - max number of lasts to return (default: Infinite)
+ *   limit - max number of tasks to return (default: Infinite)
  *   startDate - deadlines after Date (default: Any)
  *   endDate - deadlines before Date (default: Any)
  *   completed - completion status (options: 0 or 1, default: Any)
