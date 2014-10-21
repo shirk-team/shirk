@@ -17,7 +17,7 @@ var List = require('../models/list'),
  *   deadline: Date, (default: None)
  *   priority: Number, (options: -1/0/1, default: 0)
  *   completed: Boolean (default: false),
- *	 owner: UserID // only in response
+ *   owner: UserID // only in response
  * }
  */
 

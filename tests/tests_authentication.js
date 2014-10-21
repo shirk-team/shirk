@@ -12,7 +12,7 @@ function checkOkay(title) {
         QUnit.test(title, function(assert) {
             assert.equal(jqXHR.status, 200, 'Correct status code.');
         });
-    }
+    };
 }
 
 /**
