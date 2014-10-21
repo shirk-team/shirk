@@ -47,7 +47,7 @@ app.post('/login', function(req, res, next) {
 /**
  * Logout via passport and redirect to home page (login/signup page).
  */
-// TODO: test
+// TODO: should you be able to logout if you're not logged in?
 app.post('/logout', function(req, res){
     req.logout();
     res.redirect('/');
