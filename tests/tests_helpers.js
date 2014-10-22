@@ -129,6 +129,20 @@ function list_get(listid) {
     return data;
 }
 
+function list_get_filter(listid, querystring) {
+    var data;
+    $.ajax({
+        url : '/lists/' + listid + '?' + querystring.toString(),
+        type: 'GET',
+        async: false,
+        success: function (result, status, xhr) {
+            data = result;
+        },
+        error: errorHandler
+    });
+    return data;
+}
+
 function list_rename(listid, name) {
     var data;
     $.ajax({
@@ -169,6 +183,20 @@ function tasks_get() {
     var data;
     $.ajax({
         url : '/tasks/',
+        type: 'GET',
+        async: false,
+        success: function (result, status, xhr) {
+            data = result;
+        },
+        error: errorHandler
+    });
+    return data;
+}
+
+function tasks_get_filter(querystring) {
+    var data;
+    $.ajax({
+        url : '/tasks/?' + querystring.toString(),
         type: 'GET',
         async: false,
         success: function (result, status, xhr) {
