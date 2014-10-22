@@ -24,10 +24,6 @@ test('List - GET /lists/', function () {
     deepEqual(data, {'lists': lists}, 'All Lists retrieved correctly.');
 });
 
-var datestring = function (m, d, y) {
-    return (new Date(y, m, d)).toString();
-};
-
 test('List - GET /lists/:id', function () {
     login('test1', 'test1');
     clear_user();
@@ -114,7 +110,6 @@ test('List - GET /lists/:id', function () {
         "startDate=" + datestring(1, 20, 1970) + "&endDate=" + datestring(1,21,1970)),
          {list: lists[0], tasks: tasks[0].slice(10,13)},
         "Date Query - Tasks on and between 1-20-1970 and 1-21-1970.");
-
 });
 
 ///////////////
