@@ -149,7 +149,7 @@ router.put('/:id', function (req, res) {
         // Update the list title (with schema validation).
         list.title = req.body.list.title;
 
-        // Save the newly-created list and return it.
+        // Save the newly-edited list and return it.
         list.save(function(err) {
             if (err) return res.status(500).send(err);
             return res.status(200).json({list: list});
