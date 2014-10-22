@@ -125,16 +125,3 @@ db.once('open', function callback () {
 app.use('/tasks', require('./routes/tasks'));
 app.use('/lists', require('./routes/lists'));
 app.use('/users', require('./routes/users'));
-
-/** FOR TESTING PURPOSES ONLY */
-User.find({}).remove(function(err) {
-    if (err) console.log(err);
-
-    var testUser = new User({
-        username: 'test1',
-        password: 'test1'
-    });
-    testUser.save(function(err) {
-        if (err) console.log(err);
-    });
-});
