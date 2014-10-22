@@ -1,7 +1,7 @@
 # Project 3 - Shirk: A Forgiving Task Manager
 ===
 
-################################# Automated Tests #################################
+# Automated Tests 
 ### Seed Database
 Populate the database with mock users, for the purpose of running controlled tests.
 
@@ -18,15 +18,15 @@ To run automated tests, start the server and visit
 <code>localhost:8080/tests.html</code>. You cannot run the tests
 without the server because cross-origin AJAX calls are prohibited.
 
-############################### Who Worked on What ###############################
-API Design - all
-Schemas - Lily
-Users and Authentication - Lily
-Seed Database/Test Setup Stuff - Lily
-Other Test Structure Stuff - Andre
-File Structure - Lily/Andre
-Filtering Tasks - Andre (Andre's Feature)
-Deleting Lists and Tasks - Lily (Lily's Feature)
-Editing Lists and Tasks - Tricia (Tricia's Feature)
-Creating Lists and Tasks - Tricia
-Testing - all, for our own parts
+# Roles
+* API Design - all
+* Schemas - Lily
+* Users and Authentication - Lily
+* Seed Database/Test Setup Stuff - Lily
+* Other Test Structure Stuff - Andre
+* File Structure - Lily/Andre
+* Filtering Tasks - Andre (Andre's Feature)
+* Deleting Lists and Tasks - Lily (Lily's Feature)
+* Editing Lists and Tasks - Tricia (Tricia's Feature)
+* Creating Lists and Tasks - Tricia
+* Testing - all, for our own parts
