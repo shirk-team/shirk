@@ -185,16 +185,42 @@ test('List - DELETE /lists/:id', function() {
     deepEqual(list_get(list2._id).list, list2,
         'List ' + list2._id.toString() + ' successfully created.');
 
+    // Create Two Tasks
+    var task1 = task_create({
+        title: 'TestTask1',
+        list: list1._id,
+        notes: 'This is a test task.'
+    }).task;
+
+    var task2 = task_create({
+        title: 'TestTask2',
+        list: list2._id,
+        notes: ''
+    }).task;
+
+    // Verify Tasks
+    deepEqual(task_get(task1._id).task, task1,
+        'Task ' + task1._id.toString() + ' successfully created.');
+    deepEqual(task_get(task2._id).task, task2,
+        'Task ' + task2._id.toString() + ' successfully created.');
+
     // Delete List 1
     list_delete(list1._id);
 
     // Verify Lists
-    equal(list_get(list1._id), null, "List "+ list1._id.toString() + " successfully deleted.");
-    deepEqual(list_get(list2._id).list, list2, "List "+ list2._id.toString() + " not deleted (unaffected).");
+    equal(list_get(list1._id), null,
+        'List ' + list1._id.toString() + ' successfully deleted.');
+    equal(task_get(task1._id), null,
+        'Task ' + task1._id.toString() + ' successfully deleted.');
+    deepEqual(list_get(list2._id).list, list2,
+        'List ' + list2._id.toString() + ' not deleted (unaffected).');
+    deepEqual(task_get(task2._id).task, task2,
+        'Task ' + task2._id.toString() + ' not deleted (unaffected).');
 
-    // Delete Nonexitent Lists
-    equal(list_delete("").status, 404, "No ID provided; correct error code.");
-    equal(list_delete("617061706170617061706170").status, 404, "Task ID not found; correct error code.");
+    // Delete Nonexistent Lists
+    equal(list_delete('').status, 404, 'No ID provided; correct error code.');
+    equal(list_delete('617061706170617061706170').status, 404,
+        'Task ID not found; correct error code.');
 
     // Verify Deletion
     equal(list_get(list1._id), null,

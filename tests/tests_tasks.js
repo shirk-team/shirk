@@ -118,7 +118,6 @@ test('Task - POST /tasks/', function () {
     var list1 = list_create("ListOne").list;
 
     // Create Tasks
-    // title(req), list(req), completed(default=false), priority(default=0), notes, deadline, owner(req)
     // A task with just the minimum - a title and a list.
     var task1 = task_create({
         title: "Task One",
@@ -149,6 +148,7 @@ test('Task - POST /tasks/', function () {
         notes: "Notes notes notes",
         priority: -1,
         deadline: new Date(2014, 10, 25, 23, 59, 59, 999),
+        completed: true,
     }).task;
     // A task without an empty title set. This should fail to be created.
     var task6 = task_create({
@@ -196,7 +196,7 @@ test('Task - PUT /tasks/:id', function () {
     clear_user();
 
     // Create List
-    var list1 = list_create("ListOne").list;
+    var list1 = list_create("List One").list;
 
     // Create Task
     // title(req), list(req), completed(default=false), priority(default=0), notes, deadline, owner(req)
@@ -221,6 +221,34 @@ test('Task - PUT /tasks/:id', function () {
     equal(task_get(task1._id).task.title, "New Name!",
         "Task "+ task1._id.toString() + " not renamed from \'"
         + String(task1_edited.title) + "\' to the empty string.");
+
+    // Create Another List
+    var list2 = list_create("List Two").list;
+
+    // Edit Task List
+    task1_edited = task_replace(task1._id, {list: list2._id}).task;
+
+    // Verify Task
+    equal(task1_edited.list, list2._id,
+        "Task "+ task1._id.toString() + " successfully moved from list \'"
+        + String(task1.list) + "\' to \'" + task1_edited.list + "\'.");
+
+    // Try to Empty List Field
+    var task1_bad_edit = task_replace(task1_edited._id, {list: ""});
+
+    // Verify Task (list should not have changed to empty)
+    equal(task1_bad_edit.task.list, task1_edited.list,
+        "Task "+ task1._id.toString() + " not moved from \'"
+        + String(task1_edited.list) + "\' to the empty string list.");
+
+    // Mark Task Completed
+    var task2 = task_create({
+        title: "Task Two",
+        list: list1._id,
+    }).task;
+    var task2_completed = task_replace(task2._id, {completed: true}).task;
+    equal(task2_completed.completed, true,
+    	"Task "+ task2._id.toString() + " successfully marked completed.");
 });
 
 /////////////////
