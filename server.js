@@ -24,9 +24,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Schemas
-var List = require('./models/list').List,
-  Task = require('./models/task').Task,
-  User = require('./models/user').User;
+var List = require('./models/list').List;
+var Task = require('./models/task').Task;
+var User = require('./models/user').User;
 
 ////////////////
 // CONNECT DB //
@@ -42,6 +42,18 @@ if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 
 mongoose.connect(connection_string);
 
+var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error:'));
+
+db.once('open', function callback () {
+    app.listen(process.env.OPENSHIFT_NODEJS_PORT || 8080,
+        process.env.OPENSHIFT_NODEJS_IP);
+});
+
+/**
+ * TODO: In Phase 3, render a home page.
+ */
 app.get('/', function(req, res, next) {
     return res.json({});
 });
@@ -74,7 +86,7 @@ app.post('/logout', function(req, res){
     res.redirect('/');
 });
 
-// Clears all user data. (DEBUG)
+// Clears all data for the current user. Used for testing.
 app.post('/clear', function(req, res){
     List.remove({owner: req.user._id}, function(err) {
         if(err) return res.status(500);
@@ -85,7 +97,7 @@ app.post('/clear', function(req, res){
     });
 });
 
-// Clears all data. (DEBUG)
+// Clears all data. Used for testing.
 app.post('/clearAll', function(req, res){
     List.remove({}, function(err) {
         if(err) return res.status(500);
@@ -99,25 +111,18 @@ app.post('/clearAll', function(req, res){
     });
 });
 
-// Verify Authentication (each request)
+// Verify Authentication (each request pertaining to lists and tasks)
 var verifyUser = function (req, res, next) {
     if (req.user == undefined || req.user == null) {
-        return res.status(403).json({error: "Only authenticated users may perform this request."});
+        return res.status(403).json({
+            error: 'Only authenticated users may perform this request.'
+        });
     }
     next();
 };
 
 app.all('/lists', verifyUser);
 app.all('/tasks', verifyUser);
-
-var db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'connection error:'));
-
-db.once('open', function callback () {
-    app.listen(process.env.OPENSHIFT_NODEJS_PORT || 8080,
-        process.env.OPENSHIFT_NODEJS_IP);
-});
 
 ////////////
 // ROUTES //
