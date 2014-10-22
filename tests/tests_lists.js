@@ -79,11 +79,11 @@ test('List - GET /lists/:id', function () {
         "'priority' Query - Normal priorities.");
 
     // Test Filtering Params - Completed
-    var completedID = task_create({title: "Completed Task", list: lists[0]._id})._id;
+    var completedID = task_create({title: "Completed Task", list: lists[0]._id}).task._id;
     console.log(completedID);
     tasks[0].push(task_replace(completedID, {title: "Completed Task", list: lists[0]._id, completed: true}));
 
-    deepEqual(list_get_filter(lists[0]._id, "completed=1"), {list: lists[0], tasks: [tasks[0][8]]},
+    deepEqual(list_get_filter(lists[0]._id, "completed=1"), {list: lists[0], tasks: [tasks[0][8].task]},
         "'completed' Query - Completed Tasks");
 
     // Test Filtering Params - Dates
