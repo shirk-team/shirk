@@ -2,7 +2,7 @@
 ===
 
 # Automated Tests
-To run the tests, visit [shirk-aandre.rhcloud.com/tests.html](shirk-aandre.rhcloud.com/tests.html).
+To run the tests, visit [shirk-aandre.rhcloud.com/tests.html](http://shirk-aandre.rhcloud.com/tests.html).
 
 NOTE: the tests are not safe to be run concurrently! Only one TA should visit
 this URL at a time.
