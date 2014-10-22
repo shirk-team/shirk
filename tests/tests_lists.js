@@ -24,6 +24,10 @@ test('List - GET /lists/', function () {
     deepEqual(data, {'lists': lists}, 'All Lists retrieved correctly.');
 });
 
+var datestring = function (m, d, y) {
+    return (new Date(y, m, d)).toString();
+};
+
 test('List - GET /lists/:id', function () {
     login('test1', 'test1');
     clear_user();
@@ -79,13 +83,37 @@ test('List - GET /lists/:id', function () {
         "'priority' Query - Normal priorities.");
 
     // Test Filtering Params - Completed
-    // task_create({title: "Completed Task", list: lists[0]._id, completed: 1});
-    // tasks[0].push(task_create({title: "Completed Task", list: lists[0]._id, completed: 1}).task);
+    var completedID = task_create({title: "Completed Task", list: lists[0]._id})._id;
+    console.log(completedID);
+    tasks[0].push(task_replace(completedID, {title: "Completed Task", list: lists[0]._id, completed: true}));
 
-    // deepEqual(list_get_filter(lists[0]._id, "completed=1"), {list: lists[0], tasks: [tasks[0][8]]},
-    //     "'completed' Query - Completed Tasks");
+    deepEqual(list_get_filter(lists[0]._id, "completed=1"), {list: lists[0], tasks: [tasks[0][8]]},
+        "'completed' Query - Completed Tasks");
 
     // Test Filtering Params - Dates
+    tasks[0].push(task_create({title: "Dated 1-19-1970", list: lists[0]._id, deadline: new Date(1970, 1, 19)}).task);
+    tasks[0].push(task_create({title: "Dated 1-20-1970", list: lists[0]._id, deadline: new Date(1970, 1, 20)}).task);
+    tasks[0].push(task_create({title: "Dated 1-20-1970", list: lists[0]._id, deadline: new Date(1970, 1, 20)}).task);
+    tasks[0].push(task_create({title: "Dated 1-21-1970", list: lists[0]._id, deadline: new Date(1970, 1, 21)}).task);
+    tasks[0].push(task_create({title: "Dated 1-22-1970", list: lists[0]._id, deadline: new Date(1970, 1, 22)}).task);
+    tasks[0].push(task_create({title: "Dated 1-22-2008", list: lists[0]._id, deadline: new Date(2008, 1, 22)}).task);
+
+    deepEqual(list_get_filter(lists[0]._id,
+        "endDate=" + datestring(1, 20, 1970) + "&startDate=" + datestring(1, 20, 1970)),
+         {list: lists[0], tasks: tasks[0].slice(10,12)},
+        "Date Query - Tasks on 1-20-1970.");
+    deepEqual(list_get_filter(lists[0]._id,
+        "endDate=" + datestring(1, 20, 1970)),
+         {list: lists[0], tasks: tasks[0].slice(9,12)},
+        "Date Query - Tasks on and before 1-20-1970.");
+    deepEqual(list_get_filter(lists[0]._id,
+        "startDate=" + datestring(1, 21, 1970)),
+         {list: lists[0], tasks: tasks[0].slice(12,15)},
+        "Date Query - Tasks on and after 1-21-1970.");
+    deepEqual(list_get_filter(lists[0]._id,
+        "startDate=" + datestring(1, 20, 1970) + "&endDate=" + datestring(1,21,1970)),
+         {list: lists[0], tasks: tasks[0].slice(10,13)},
+        "Date Query - Tasks on and between 1-20-1970 and 1-21-1970.");
 
 });
 

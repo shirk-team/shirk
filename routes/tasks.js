@@ -96,7 +96,7 @@ router.get('/:id', function (req, res) {
         // Validate Result
         if (err) return res.status(500).send(err);
         if (!task) return res.status(404).send(req.params.id);
-    
+
         // Check Tasl Ownership
         if (task.owner.toString() !== req.user._id.toString())
             return res.status(401).send('Unauthorized');
