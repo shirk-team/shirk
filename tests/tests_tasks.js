@@ -41,7 +41,6 @@ test('Task - POST /tasks/', function () {
     var task1 = task_create({
         title: "Task One",
         list: list1._id,
-        completed: true,
     }).task;
     // A task that also has a note attached.
     var task2 = task_create({
