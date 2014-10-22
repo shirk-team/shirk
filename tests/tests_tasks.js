@@ -189,7 +189,6 @@ test('Task - POST /tasks/', function () {
 /////////////////////
 
 test('Task - PUT /tasks/:id', function () {
-	// TODO: Finish by adding more edits and checks.
     login('test1', 'test1');
     clear_user();
 
@@ -197,7 +196,6 @@ test('Task - PUT /tasks/:id', function () {
     var list1 = list_create("List One").list;
 
     // Create Task
-    // title(req), list(req), completed(default=false), priority(default=0), notes, deadline, owner(req)
     var task1 = task_create({
         title: "Task One",
         list: list1._id,
@@ -212,7 +210,7 @@ test('Task - PUT /tasks/:id', function () {
         "Task "+ task1._id.toString() + " successfully renamed from \'"
         + String(task1.title) + "\' to \'" + task1_edited.title + "\'.");
 
-    // Try to Empty List Title
+    // Try to Empty Task Title
     task_replace(task1._id, {title: ""});
 
     // Verify Task (title should not have changed to empty)
@@ -223,7 +221,7 @@ test('Task - PUT /tasks/:id', function () {
     // Create Another List
     var list2 = list_create("List Two").list;
 
-    // Edit Task List
+    // Edit Task's List
     task1_edited = task_replace(task1._id, {list: list2._id}).task;
 
     // Verify Task
