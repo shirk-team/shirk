@@ -167,17 +167,17 @@ test('Task - DELETE /tasks/:id', function() {
     }).task;
 
     // Verify Tasks
-    deepEqual(task_get(task1._id).task, task1, 
+    deepEqual(task_get(task1._id).task, task1,
         'Task ' + task1._id.toString() + ' successfully created.');
-    deepEqual(task_get(task2._id).task, task2, 
+    deepEqual(task_get(task2._id).task, task2,
         'Task ' + task2._id.toString() + ' successfully created.');
-    
+
     // Delete Task 1
     task_delete(task1._id);
 
     // Verify Deletion
-    equal(task_get(task1._id), null, 
+    equal(task_get(task1._id), null,
         'Task ' + task1._id.toString() + ' successfully deleted.');
-    deepEqual(task_get(task2._id).task, task2, 
+    deepEqual(task_get(task2._id).task, task2,
         'Task ' + task2._id.toString() + ' not deleted (unaffected).');
 });
