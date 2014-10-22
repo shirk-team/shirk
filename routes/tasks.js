@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var url = require('url');
 var ObjectId = require('mongoose').Schema.ObjectId;
 
 // Models
@@ -41,7 +42,27 @@ var User = require('../models/user').User;
  * Author: aandre@mit.edu
  */
 router.get('/', function (req, res) {
+  // parse (optional) query parameters
+  var args = url.parse(req.url, true).query;
+  var query = {"owner": req.user._id};
 
+  if (args.priority) query['priority'] = parseInt(args.priority, 10);
+  if (args.completed) query['completed'] = Boolean(args.completed);
+  if (args.startDate || args.endDate) {
+    query.deadline = {};
+    if (args.startDate) query.deadline["$gte"] = new Date(args.startDate);
+    if (args.endDate) query.deadline["$lte"] = new Date(args.endDate);
+  }
+
+  // find Tasks
+  var taskQuery = Task.find(query);
+  if (args.limit) taskQuery.limit(parseInt(args.limit, 10));
+  taskQuery.exec(function (err, tasks) {
+    if (err) return res.status(500).send(err);
+
+    // Return List and its Tasks
+    return res.json({tasks: tasks});
+  });
 });
 
 /**

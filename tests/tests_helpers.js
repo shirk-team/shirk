@@ -20,9 +20,6 @@ function login (username, password) {
             username: username,
             password: password
         },
-        success: function() {
-            console.log("LOGIN - " + username);
-        },
         error: errorHandler
     });
 }
@@ -32,9 +29,6 @@ function logout () {
         url : '/logout',
         type: 'POST',
         async: false,
-        success: function() {
-            console.log("LOGOUT");
-        },
         error: errorHandler
     });
 }
@@ -44,9 +38,6 @@ function clear_user() {
         url : '/clear',
         type: 'POST',
         async: false,
-        success: function() {
-            console.log("CLEAR USER");
-        },
         error: errorHandler
     });
 }
@@ -56,9 +47,6 @@ function clear_all() {
         url : '/clearAll',
         type: 'POST',
         async: false,
-        success: function() {
-            console.log("CLEAR ALL");
-        },
         error: errorHandler
     });
 }
@@ -269,3 +257,11 @@ function task_delete(taskid) {
     });
     return {data: data, status: code};
 }
+
+//////////////////
+// Misc Helpers //
+//////////////////
+
+var datestring = function (m, d, y) {
+    return (new Date(y, m, d)).toString();
+};

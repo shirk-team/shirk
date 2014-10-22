@@ -11,18 +11,99 @@ test('Task - GET /tasks/', function () {
     login('test1', 'test1');
     clear_user();
 
-    // Create Tasks
+    // Create Lists
+    var lists = Array();
+    lists.push(list_create('ListOne').list);
+    lists.push(list_create('ListTwo').list);
 
     // GET /tasks/
+    deepEqual(tasks_get(), {tasks: []}, "No tasks after list creation.");
+
+    // Create Tasks
+    var tasks = Array();
+    tasks.push(Array()); // tasks[0] in lists[0]
+    tasks.push(Array()); // tasks[1] in lists[1]
+
+    tasks[0].push(task_create({title: "Task 0-1", list: lists[0]._id}).task);
+    tasks[0].push(task_create({title: "Task 0-2", list: lists[0]._id}).task);
+    tasks[0].push(task_create({title: "Task 0-3", list: lists[0]._id}).task);
+    tasks[1].push(task_create({title: "Task 1-1", list: lists[1]._id}).task);
+    tasks[1].push(task_create({title: "Task 1-2", list: lists[1]._id}).task);
+    tasks[1].push(task_create({title: "Task 1-3", list: lists[1]._id}).task);
+    tasks[1].push(task_create({title: "Task 1-4", list: lists[1]._id}).task);
+
+    // Vertify All Tasks
+    deepEqual(tasks_get(), {tasks: tasks[0].concat(tasks[1])},
+        "All tasks retrieved from both lists.");
+
+    // // Test Filtering Params - Limit
+    deepEqual(tasks_get_filter("limit=2"), {tasks: tasks[0].slice(0,2)},
+        "'limit' Query - Correct number returned.");
+
+    // // Test Filtering Params - Priority
+    tasks[0].push(task_create({title: "Priority Normal", list: lists[0]._id, priority: 0}).task);
+    tasks[0].push(task_create({title: "Priority High 1", list: lists[0]._id, priority: 1}).task);
+    tasks[0].push(task_create({title: "Priority High 2", list: lists[0]._id, priority: 1}).task);
+    tasks[0].push(task_create({title: "Priority Low 1", list: lists[0]._id, priority: -1}).task);
+    tasks[0].push(task_create({title: "Priority Low 2", list: lists[0]._id, priority: -1}).task);
+
+    deepEqual(tasks_get(), {tasks: tasks[0].slice(0,3).concat(tasks[1]).concat(tasks[0].slice(3,8))},
+        "'priority' Query - Mixed priorities; all returned.");
+    deepEqual(tasks_get_filter("priority=-1"), {tasks: [tasks[0][6], tasks[0][7]]},
+        "'priority' Query - Low priorities.");
+    deepEqual(tasks_get_filter("priority=1"), {tasks: [tasks[0][4], tasks[0][5]]},
+        "'priority' Query - High priorities.");
+    deepEqual(tasks_get_filter("priority=0"), {tasks: tasks[0].slice(0,3).concat(tasks[1]).concat(tasks[0].slice(3,4))},
+        "'priority' Query - Normal priorities.");
+
+    // Test Filtering Params - Completed
+    var completedID = task_create({title: "Completed Task", list: lists[0]._id})._id;
+    console.log(completedID);
+    tasks[0].push(task_replace(completedID, {title: "Completed Task", list: lists[0]._id, completed: true}));
+
+    deepEqual(tasks_get_filter(lists[0]._id, "completed=1"), {tasks: [tasks[0][8]]},
+        "'completed' Query - Completed Tasks");
+
+    // Test Filtering Params - Dates
+    tasks[0].push(task_create({title: "Dated 1-19-1970", list: lists[0]._id, deadline: new Date(1970, 1, 19)}).task);
+    tasks[0].push(task_create({title: "Dated 1-20-1970", list: lists[0]._id, deadline: new Date(1970, 1, 20)}).task);
+    tasks[0].push(task_create({title: "Dated 1-20-1970", list: lists[0]._id, deadline: new Date(1970, 1, 20)}).task);
+    tasks[0].push(task_create({title: "Dated 1-21-1970", list: lists[0]._id, deadline: new Date(1970, 1, 21)}).task);
+    tasks[0].push(task_create({title: "Dated 1-22-1970", list: lists[0]._id, deadline: new Date(1970, 1, 22)}).task);
+    tasks[0].push(task_create({title: "Dated 1-22-2008", list: lists[0]._id, deadline: new Date(2008, 1, 22)}).task);
+
+    deepEqual(tasks_get_filter(
+        "endDate=" + datestring(1, 20, 1970) + "&startDate=" + datestring(1, 20, 1970)),
+         {tasks: tasks[0].slice(10,12)},
+        "Date Query - Tasks on 1-20-1970.");
+    deepEqual(tasks_get_filter(
+        "endDate=" + datestring(1, 20, 1970)),
+         {tasks: tasks[0].slice(9,12)},
+        "Date Query - Tasks on and before 1-20-1970.");
+    deepEqual(tasks_get_filter(
+        "startDate=" + datestring(1, 21, 1970)),
+         {tasks: tasks[0].slice(12,15)},
+        "Date Query - Tasks on and after 1-21-1970.");
+    deepEqual(tasks_get_filter(
+        "startDate=" + datestring(1, 20, 1970) + "&endDate=" + datestring(1,21,1970)),
+         {tasks: tasks[0].slice(10,13)},
+        "Date Query - Tasks on and between 1-20-1970 and 1-21-1970.");
 });
 
 test('Task - GET /tasks/:id', function () {
     login('test1', 'test1');
     clear_user();
 
-    // Create Tasks
+    // Create Two Tasks in One Lists
+    var list = list_create('AList').list;
+    var task1 = task_create({title: "TaskOne", list: list._id}).task;
+    var task2 = task_create({title: "TaskTwo", list: list._id}).task;
 
-    // GET /tasks/:id
+    deepEqual(task_get(task1._id).task, task1,
+      "Task " + task1._id.toString() + " retrieved by ID.");
+
+    deepEqual(task_get(task2._id).task, task2,
+      "Task " + task2._id.toString() + " retrieved by ID.");
 });
 
 ///////////////
