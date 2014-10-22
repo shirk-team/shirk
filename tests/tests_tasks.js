@@ -41,6 +41,7 @@ test('Task - POST /tasks/', function () {
     var task1 = task_create({
         title: "Task One",
         list: list1._id,
+        completed: true,
     }).task;
     // A task that also has a note attached.
     var task2 = task_create({
@@ -67,6 +68,7 @@ test('Task - POST /tasks/', function () {
         notes: "Notes notes notes",
         priority: -1,
         deadline: new Date(2014, 10, 25, 23, 59, 59, 999),
+        completed: true,
     }).task;
     // A task without an empty title set. This should fail to be created.
     var task6 = task_create({
@@ -158,6 +160,15 @@ test('Task - PUT /tasks/:id', function () {
     equal(task1_bad_edit.task.list, task1_edited.list,
         "Task "+ task1._id.toString() + " not moved from \'"
         + String(task1_edited.list) + "\' to the empty string list.");
+
+    // Mark Task Completed
+    var task2 = task_create({
+        title: "Task Two",
+        list: list1._id,
+    }).task;
+    var task2_completed = task_replace(task2._id, {completed: true}).task;
+    equal(task2_completed.completed, true,
+    	"Task "+ task2._id.toString() + " successfully marked completed.");
 });
 
 /////////////////

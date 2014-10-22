@@ -67,10 +67,11 @@ router.post('/', function (req, res) {
 		owner: req.user._id
 	});
 
-	// Only set deadline and priority if they were provided, otherwise let them
+	// Only set deadline, priority, and completed if they were provided, otherwise let them
     // be decided by schema defaults.
 	if (req.body.task.deadline) newTask.deadline = req.body.task.deadline;
 	if (req.body.task.priority) newTask.priority = req.body.task.priority;
+	if (req.body.task.completed) newTask.completed = req.body.task.completed;
 	newTask.save(function(err) {
         if (err) return res.status(500).json(err);
         return res.status(200).json({task: newTask});
@@ -128,12 +129,12 @@ router.put('/:id', function (req, res) {
 		if (err) return res.status(500).send(err);
 
 		// If values were set in the request, edit them in the database.
-		if(req.body.task.title) task.title = req.body.task.title;
-		if(req.body.task.notes) task.notes = req.body.task.notes;
-		if(req.body.task.list) task.list = req.body.task.list;
-		if(req.body.task.deadline) task.deadline = req.body.task.deadline;
-		if(req.body.task.priority) task.priority = req.body.task.priority;
-		if(req.body.task.completed) task.completed = req.body.task.completed;
+		if (req.body.task.title) task.title = req.body.task.title;
+		if (req.body.task.notes) task.notes = req.body.task.notes;
+		if (req.body.task.list) task.list = req.body.task.list;
+		if (req.body.task.deadline) task.deadline = req.body.task.deadline;
+		if (req.body.task.priority) task.priority = req.body.task.priority;
+		if (req.body.task.completed) task.completed = req.body.task.completed;
 		task.save(function(err) {
 	        if (err) return res.status(500).send(err);
 	        return res.status(200).json({task: task});
