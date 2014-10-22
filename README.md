@@ -10,15 +10,15 @@ this URL at a time.
 NOTE: the tests might take a little while to run (~10 seconds).
 
 
-############################### Who Worked on What ###############################
-API Design - all
-Schemas - Lily
-Users and Authentication - Lily
-Seed Database/Test Setup Stuff - Lily
-Other Test Structure Stuff - Andre
-File Structure - Lily/Andre
-Filtering Tasks - Andre (Andre's Feature)
-Deleting Lists and Tasks - Lily (Lily's Feature)
-Editing Lists and Tasks - Tricia (Tricia's Feature)
-Creating Lists and Tasks - Tricia
-Testing - all, for our own parts
+# Roles
+* API Design - all
+* Schemas - Lily
+* Users and Authentication - Lily
+* Seed Database/Test Setup Stuff - Lily
+* Other Test Structure Stuff - Andre
+* File Structure - Lily/Andre
+* Filtering Tasks - Andre (Andre's Feature)
+* Deleting Lists and Tasks - Lily (Lily's Feature)
+* Editing Lists and Tasks - Tricia (Tricia's Feature)
+* Creating Lists and Tasks - Tricia
+* Testing - all, for our own parts
