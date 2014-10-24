@@ -52,10 +52,12 @@ router.get('/', function (req, res) {
  * Author: tdivita@mit.edu
  */
 router.post('/', function (req, res) {
+    // Create a new list with the provided title, belonging to the current user.
 	var newList = new List({
 		title: req.body.list.title,
 		owner: req.user._id});
 
+    // Save the newly-created list and return it.
 	newList.save(function(err, list) {
         if (err) return res.status(500).json(err);
         return res.status(200).json({list: list});
@@ -86,38 +88,40 @@ router.post('/', function (req, res) {
  * Author: aandre@mit.edu
  */
 router.get('/:id', function (req, res) {
-  // parse (optional) query parameters
-  var args = url.parse(req.url, true).query;
-  var query = {};
+    // parse (optional) query parameters
+    var args = url.parse(req.url, true).query;
+    var query = {};
 
-  if (args.priority) query['priority'] = parseInt(args.priority, 10);
-  if (args.completed) query['completed'] = Boolean(args.completed);
-  if (args.startDate || args.endDate) {
-    query.deadline = {};
-    if (args.startDate) query.deadline["$gte"] = new Date(args.startDate);
-    if (args.endDate) query.deadline["$lte"] = new Date(args.endDate);
-  }
+    if (args.priority) query['priority'] = parseInt(args.priority, 10);
+    if (args.completed) query['completed'] = Boolean(args.completed);
+    if (args.startDate || args.endDate) {
+        query.deadline = {};
+        if (args.startDate) query.deadline['$gte'] = new Date(args.startDate);
+        if (args.endDate) query.deadline['$lte'] = new Date(args.endDate);
+    }
 
-  // find List
-  List.findById(req.params.id, function (err, list) {
-    // Validate Result
-    if (err) return res.status(500).send(err);
-    if (!list) return res.status(404).send(req.params.id);
-    // Check List Ownership
-    if (list.owner.toString() !== req.user._id.toString())
-        return res.status(401).send('Unauthorized');
+    // find List
+    List.findById(req.params.id, function (err, list) {
+        // Validate Result
+        if (err) return res.status(500).send(err);
+        if (!list) return res.status(404).send(req.params.id);
 
-    query['list'] = list._id;
+        // Check List Ownership
+        if (list.owner.toString() !== req.user._id.toString())
+            return res.status(401).send('Unauthorized');
 
-    // find corresponding Tasks
-    var taskQuery = Task.find(query);
-    if (args.limit) taskQuery.limit(parseInt(args.limit, 10));
-    taskQuery.exec(function (err, tasks) {
-      if (err) return res.status(500).send(err);
-      // Return List and its Tasks
-      return res.json({list: list, tasks: tasks});
+        query['list'] = list._id;
+
+        // find corresponding Tasks
+        var taskQuery = Task.find(query);
+        if (args.limit) taskQuery.limit(parseInt(args.limit, 10));
+        taskQuery.exec(function (err, tasks) {
+            if (err) return res.status(500).send(err);
+
+            // Return List and its Tasks
+            return res.json({list: list, tasks: tasks});
+        });
     });
-  });
 });
 
 
@@ -140,14 +144,14 @@ router.get('/:id', function (req, res) {
  * Author: tdivita@mit.edu
  */
 router.put('/:id', function (req, res) {
-	// List.findByIdAndUpdate(req.params.id, { $set: {title: req.body.list.title}}, function (err, list) {
- //        if (err) return res.status(500).send(err);
- //        return res.status(200).json({list: list});
-	// });
+    // Find the specified list to edit.
     List.findById(req.params.id, function (err, list) {
         if (err) return res.status(500).send(err);
 
+        // Update the list title (with schema validation).
         list.title = req.body.list.title;
+
+        // Save the newly-edited list and return it.
         list.save(function(err) {
             if (err) return res.status(500).send(err);
             return res.status(200).json({list: list});

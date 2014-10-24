@@ -42,27 +42,27 @@ var User = require('../models/user').User;
  * Author: aandre@mit.edu
  */
 router.get('/', function (req, res) {
-  // parse (optional) query parameters
-  var args = url.parse(req.url, true).query;
-  var query = {"owner": req.user._id};
+    // parse (optional) query parameters
+    var args = url.parse(req.url, true).query;
+    var query = {"owner": req.user._id};
 
-  if (args.priority) query['priority'] = parseInt(args.priority, 10);
-  if (args.completed) query['completed'] = Boolean(args.completed);
-  if (args.startDate || args.endDate) {
-    query.deadline = {};
-    if (args.startDate) query.deadline["$gte"] = new Date(args.startDate);
-    if (args.endDate) query.deadline["$lte"] = new Date(args.endDate);
-  }
+    if (args.priority) query['priority'] = parseInt(args.priority, 10);
+    if (args.completed) query['completed'] = Boolean(args.completed);
+    if (args.startDate || args.endDate) {
+        query.deadline = {};
+        if (args.startDate) query.deadline["$gte"] = new Date(args.startDate);
+        if (args.endDate) query.deadline["$lte"] = new Date(args.endDate);
+    }
 
-  // find Tasks
-  var taskQuery = Task.find(query);
-  if (args.limit) taskQuery.limit(parseInt(args.limit, 10));
-  taskQuery.exec(function (err, tasks) {
-    if (err) return res.status(500).send(err);
+    // find Tasks
+    var taskQuery = Task.find(query);
+    if (args.limit) taskQuery.limit(parseInt(args.limit, 10));
+    taskQuery.exec(function (err, tasks) {
+        if (err) return res.status(500).send(err);
 
-    // Return List and its Tasks
-    return res.json({tasks: tasks});
-  });
+        // Return List and its Tasks
+        return res.json({tasks: tasks});
+    });
 });
 
 /**
@@ -81,6 +81,7 @@ router.get('/', function (req, res) {
  * Author: tdivita@mit.edu
  */
 router.post('/', function (req, res) {
+    // Create a new task with the provided title, notes, and list, belonging to the current user.
 	var newTask = new Task({
 		title: req.body.task.title,
 		notes: req.body.task.notes,
@@ -93,6 +94,8 @@ router.post('/', function (req, res) {
 	if (req.body.task.deadline) newTask.deadline = req.body.task.deadline;
 	if (req.body.task.priority) newTask.priority = req.body.task.priority;
 	if (req.body.task.completed) newTask.completed = req.body.task.completed;
+
+	// Save the newly-created task and return it.
 	newTask.save(function(err) {
         if (err) return res.status(500).json(err);
         return res.status(200).json({task: newTask});
@@ -146,6 +149,7 @@ router.get('/:id', function (req, res) {
  * Author: tdivita@mit.edu
  */
 router.put('/:id', function (req, res) {
+    // Find the specified task to edit.
 	Task.findById(req.params.id, function (err, task) {
 		if (err) return res.status(500).send(err);
 
@@ -156,6 +160,8 @@ router.put('/:id', function (req, res) {
 		if (req.body.task.deadline) task.deadline = req.body.task.deadline;
 		if (req.body.task.priority) task.priority = req.body.task.priority;
 		if (req.body.task.completed) task.completed = req.body.task.completed;
+
+		// Save the newly-edited task and return it.
 		task.save(function(err) {
 	        if (err) return res.status(500).send(err);
 	        return res.status(200).json({task: task});
