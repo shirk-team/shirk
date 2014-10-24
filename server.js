@@ -23,7 +23,9 @@ app.use(passport.session());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Schemas
+/////////////
+// Schemas //
+/////////////
 var List = require('./models/list').List;
 var Task = require('./models/task').Task;
 var User = require('./models/user').User;
@@ -51,12 +53,21 @@ db.once('open', function callback () {
         process.env.OPENSHIFT_NODEJS_IP);
 });
 
-/**
- * TODO: In Phase 3, render a home page.
- */
-app.get('/', function(req, res, next) {
-    return res.json({});
+//////////
+// HOME //
+//////////
+
+app.get('/', function (req, res) {
+  if (req.user == undefined || req.user == null) {
+    res.render('login'); // unathenticated
+  } else {
+    res.render('main');  // authenticated
+  }
 });
+
+//////////
+// AUTH //
+//////////
 
 /**
  * Try to log the user in.
@@ -86,6 +97,30 @@ app.post('/logout', function(req, res){
     res.redirect('/');
 });
 
+// Verify Authentication (each request pertaining to lists and tasks)
+var verifyUser = function (req, res, next) {
+    if (req.user == undefined || req.user == null) {
+        return res.status(403).json({
+            error: 'Only authenticated users may perform this request.'
+        });
+    }
+    next();
+};
+
+app.all('/lists', verifyUser);
+app.all('/tasks', verifyUser);
+
+////////////
+// ROUTES //
+////////////
+app.use('/tasks', require('./routes/tasks'));
+app.use('/lists', require('./routes/lists'));
+app.use('/users', require('./routes/users'));
+
+///////////
+// DEBUG //
+///////////
+
 // Clears all data for the current user. Used for testing.
 app.post('/clear', function(req, res){
     List.remove({owner: req.user._id}, function(err) {
@@ -110,23 +145,3 @@ app.post('/clearAll', function(req, res){
         });
     });
 });
-
-// Verify Authentication (each request pertaining to lists and tasks)
-var verifyUser = function (req, res, next) {
-    if (req.user == undefined || req.user == null) {
-        return res.status(403).json({
-            error: 'Only authenticated users may perform this request.'
-        });
-    }
-    next();
-};
-
-app.all('/lists', verifyUser);
-app.all('/tasks', verifyUser);
-
-////////////
-// ROUTES //
-////////////
-app.use('/tasks', require('./routes/tasks'));
-app.use('/lists', require('./routes/lists'));
-app.use('/users', require('./routes/users'));
