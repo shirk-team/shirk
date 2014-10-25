@@ -45,11 +45,7 @@ function signup(username, password) {
             username: username,
             password: password
         },
-        success: function(data, status, xhr) {
-            var doc = document.open('text/html', 'replace');
-            doc.write(data);
-            doc.close();
-        },
+        success: overwritePage,
         error: function(xhr, status, error) {
             if (xhr.responseText.indexOf('dup key') !== -1) {
                 $('#username').addClass('error');
@@ -67,11 +63,7 @@ function login(username, password) {
             username: username,
             password: password
         },
-        success: function(data, status, xhr) {
-            var doc = document.open('text/html', 'replace');
-            doc.write(data);
-            doc.close();
-        },
+        success: overwritePage,
         error: function(xhr, status, error) {
             if (xhr.responseText === 'Incorrect username') {
                 $('#username').addClass('error');
