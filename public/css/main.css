@@ -1,7 +1,58 @@
-body {
+/* LAYOUT */
+html, body{
   height: 100%;
 }
 
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif/*rtl:prepend:"Droid Arabic Kufi","Droid Sans", */;
+  overflow: hidden;
+}
+
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 68px;
+
+  background-color: #555;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: lightgrey;
+}
+
+main {
+  position: fixed;
+  top: 68px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+
+  width: 750px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+div.main-content {
+  height: 100%;
   width: 100%;
+}
+
+h1#logo {
+  font-size: 1.5em;
+}
+
+.listing {
+  margin: 0 !important;
+  height: 100% !important;
+}
+
+#col-left {
+  width: 40% !important;
+}
+
+#col-right {
+  width: 60% !important;
 }

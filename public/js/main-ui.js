@@ -12,17 +12,17 @@ function create_elem(elem, id, classes) {
 // LISTS //
 ///////////
 function list_add(title, listid) {
-  var item = create_elem("div", listid, "item list");
+  var item = create_elem("div", listid, "item item_list");
   var content = create_elem("div", "", "content");
   var header = create_elem("div", "", "header");
   header.html(title);
   content.append(header);
   item.append(content);
-  $('#lists').append(item);
+  $('#list_lists').append(item);
 }
 
 function list_remove(listid) {
-  $('.list#' + listid).remove();
+  $('.item_list#' + listid).remove();
 }
 
 ///////////
@@ -30,5 +30,6 @@ function list_remove(listid) {
 ///////////
 
 $(document).ready(function () {
-
+  // Logout Label
+  $('.button#logout').popup({content: "Logout", position: "bottom center"});
 });

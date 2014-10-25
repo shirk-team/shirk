@@ -7,7 +7,7 @@
     <script type="text/javascript" src="/vendor/semantic-ui/javascript/semantic.min.js"></script>
 
     <link rel='stylesheet' href='/vendor/semantic-ui/css/semantic.min.css' />
-    <link rel='stylesheet' href='/css/login.css' />
+    <link rel='stylesheet' href='/css/main.css' />
 
     <script type="text/javascript" src="/js/helpers.js"></script>
     <script type="text/javascript" src="/js/main-ui.js"></script>
@@ -19,11 +19,11 @@
       <div class="ui two column grid middle aligned">
         <!-- Shirk Logo -->
         <div class="column left aligned">
-          <h1 id="shirk-logo" class="ui header">Shirk</h1>
+          <h1 id="logo" class="ui header">Shirk</h1>
         </div>
         <!-- Logout Button -->
         <div class="column right aligned">
-          <div id="logout" class="ui button">
+          <div id="logout" class="ui button small inverted red">
             <span>
               <i class="ui icon sign out"></i>
             </span>
@@ -32,55 +32,51 @@
       </div>
     </header>
 
-    <div class="ui two column grid">
-      <!-- Lists -->
-      <div class="column left aligned">
-        <div class="ui segment">
-          <!-- Title -->
-          <div class="ui ribbon teal label">
-            <i class="ui icon list"></i>
-            Lists
-          </div>
-          <div id="lists" class="ui divided selection list">
-            <!-- Lists -->
-            <div class="item">
-              <div class="content">
-                <div class="header">Hello</div>
-              </div>
+    <main>
+      <div class="main-content">
+      <div class="ui two column grid listing">
+
+        <!-- Lists - Left Column -->
+        <div id="col-left" class="column listing">
+          <div class="ui raised segment listing">
+            <!-- Title -->
+            <div class="ui ribbon teal label">
+              <i class="ui icon list"></i>
+              Lists
             </div>
-            <div class="item">
-              <div class="content">
-                <div class="header">Hello</div>
-              </div>
+            <div id="list_lists" class="ui divided selection list">
+              <!-- "List" Items Appended Here -->
             </div>
-            <div class="item">
-              <div class="content">
-                <div class="header">Hello</div>
+            <!-- Add/Remove Button -->
+            <div class="ui icon buttons">
+              <div class="ui button" id="list_add">
+                <i class="icon add sign box green"></i>
               </div>
-            </div>
-            <div class="item">
-              <div class="content">
-                <div class="header">Hello</div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="content">
-                <div class="header">Hello</div>
+              <div class="ui button" id="list_remove">
+                <i class="icon minus sign alternate red"></i>
               </div>
             </div>
           </div>
         </div>
-          <!-- Add/Remove Button -->
-          <div class="ui icon buttons">
-            <div class="ui button" id="list_add">
-              <i class="icon add sign box green"></i>
+
+        <!-- Tasks - Right Column -->
+        <div id="col-right" class="column listing">
+          <div class="ui piled segment listing">
+            <!-- Title -->
+            <div class="ui ribbon teal label">
+              <i class="ui icon checked checkbox"></i>
+              Tasks
             </div>
-            <div class="ui button" id="list_remove">
-              <i class="icon minus sign alternate red"></i>
+
+            <div id="list_tasks" class="ui divided selection list">
+              <!-- "Task" Items Appended Here -->
             </div>
           </div>
+        </div>
+
       </div>
-    </div>
+      </div>
+    </main>
 
 
   </body>
