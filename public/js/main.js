@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#logout').click(function() {
+    $('.button#logout').click(function() {
         $.ajax({
             url : '/logout',
             type: 'POST',
