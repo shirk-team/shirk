@@ -62,7 +62,7 @@ function userAJAX(username, password, url, onError) {
  * @param  {String} password The password for the new account.
  */
 function signup(username, password) {
-    userAJAX(username, password, '/users/', function(xhr, status, error) {
+    userAJAX(username, password, '/users', function(xhr, status, error) {
         if (xhr.responseText.indexOf('dup key') !== -1) {
             showError('username', 'username taken');
         }
