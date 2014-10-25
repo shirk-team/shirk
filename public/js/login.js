@@ -46,16 +46,15 @@ function signup(username, password) {
             password: password
         },
         success: function(data, status, xhr) {
-            console.log('SUCCESS');
-            console.log(data);
-            console.log(status);
-            console.log(xhr);
+            var doc = document.open('text/html', 'replace');
+            doc.write(data);
+            doc.close();
         },
         error: function(xhr, status, error) {
-            console.log('ERROR');
-            console.log(xhr);
-            console.log(status);
-            console.log(error);
+            if (xhr.responseText.indexOf('dup key') !== -1) {
+                $('#username').addClass('error');
+                $('#username').append('<div class="ui red pointing label">Username Taken</div>');
+            }
         },
         type: 'POST'
     });
