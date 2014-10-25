@@ -5,14 +5,44 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="/vendor/jquery-2.1.1.js"></script>
     <script type="text/javascript" src="/vendor/semantic-ui/javascript/semantic.min.js"></script>
+
+    <!-- font that Semantic uses -->
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700" rel="stylesheet" type="text/css">
+    
     <link rel='stylesheet' href='/vendor/semantic-ui/css/semantic.min.css' />
     <link rel='stylesheet' href='/css/login.css' />
     <script type="text/javascript" src="/js/login-ui.js"></script>
     <script type="text/javascript" src="/js/login.js"></script>
   </head>
-  <body>
-    <h1>Shirk</h1>
-    <h2>Login</h2>
-    <p>Rendered with page.</p>
+  <body class="ui page">
+
+    <h1 id="title" class="ui header">Shirk</h1>
+
+    <h3 id="subtitle" class="ui header">A Forgiving Task Manager</h3>
+
+    <!-- Login/Signup Form -->
+    <div id="login-signup-form" class="ui form segment">
+      <!-- Username Field -->
+      <div class="field">
+        <div class="ui left icon input">
+          <input type="text" placeholder="Username">
+          <i class="user icon"></i>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="field">
+        <div class="ui left icon input">
+          <input type="password" placeholder="Password">
+          <i class="lock icon"></i>
+        </div>
+      </div>
+
+      <!-- Login/Signup Buttons -->
+      <div id="user-buttons">
+        <div id="signup-button" class="ui blue submit button">Signup</div>
+        <div id="login-button" class="ui blue submit button">Login</div>
+      </div>
+    </div>
   </body>
 </html>

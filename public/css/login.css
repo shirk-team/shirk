@@ -1,4 +1,33 @@
-h1 {
-  font-size: 3em;
-  color: blue;
-};
+body {
+    /* source: Semantic UI */
+    font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif/*rtl:prepend:"Droid Arabic Kufi","Droid Sans", */;
+    padding: 6em;
+    text-align: center;
+}
+
+#title {
+    font-size: 5em;
+}
+
+#subtitle {
+    color: dimgray;
+    font-size: 1.5em;
+}
+
+#login-signup-form {
+    margin: 2em auto;
+    width: 18em;
+}
+
+.button {
+    width: 7em;
+}
+
+#login-button {
+    margin-left: .5em;
+}
+
+#signup-button {
+    margin-right: .5em;
+}
+
