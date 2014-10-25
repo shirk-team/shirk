@@ -33,18 +33,9 @@ function logout () {
     });
 }
 
-function clear_user() {
+function clear() {
     $.ajax({
         url : '/clear',
-        type: 'POST',
-        async: false,
-        error: errorHandler
-    });
-}
-
-function clear_all() {
-    $.ajax({
-        url : '/clearAll',
         type: 'POST',
         async: false,
         error: errorHandler

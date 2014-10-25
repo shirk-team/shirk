@@ -117,9 +117,9 @@ app.use('/tasks', require('./routes/tasks'));
 app.use('/lists', require('./routes/lists'));
 app.use('/users', require('./routes/users'));
 
-///////////
-// DEBUG //
-///////////
+/////////////
+// TESTING //
+/////////////
 
 // Clears all data for the current user. Used for testing.
 app.post('/clear', function(req, res){
@@ -128,20 +128,6 @@ app.post('/clear', function(req, res){
         Task.remove({owner: req.user._id}, function(err) {
             if(err) return res.status(500);
             return res.status(200).json({});
-        });
-    });
-});
-
-// Clears all data. Used for testing.
-app.post('/clearAll', function(req, res){
-    List.remove({}, function(err) {
-        if(err) return res.status(500);
-        Task.remove({}, function(err) {
-            if(err) return res.status(500);
-            User.remove({}, function(err) {
-                if(err) return res.status(500);
-                return res.status(200).json({});
-            });
         });
     });
 });

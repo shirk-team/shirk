@@ -4,20 +4,27 @@
  */
 
 /**
- * This function tests the creation of new users and also serves to seed the
- * user database for the rest of the tests.
+ * Tests the creation of new users and also serves to seed the user database for
+ * the rest of the tests. In order to be repeatable, this test must first
+ * delete the user it is going to create, to avoid duplicate user errors when
+ * running the test twice in a row.
  */
-test('User - POST /users/', function () {
-    clear_all();
+$.ajax({
+    url: '/users',
+    type: 'DELETE',
+    async: false,
+}).done(function() {
+    test('User - POST /users/', function () {
+        console.log('USER TESTING');
+        ok(user_create('test2', 'test2'), 'User is successfully created.');
 
-    ok(user_create('test1', 'test1'), 'User is successfully created.');
+        equal(user_create('test2', 'test3'), undefined,
+            'Duplicate username is not allowed.');
 
-    equal(user_create('test1', 'test2'), undefined,
-        'Duplicate username is not allowed.');
-
-    equal(user_create('test2', ''), undefined,
-        'Blank password is not allowed.');
-    
-    equal(user_create('', 'test2'), undefined,
-        'Blank username is not allowed.');
+        equal(user_create('test3', ''), undefined,
+            'Blank password is not allowed.');
+        
+        equal(user_create('', 'test3'), undefined,
+            'Blank username is not allowed.');
+    });
 });

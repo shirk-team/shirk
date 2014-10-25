@@ -11,7 +11,7 @@
 
 test('List - GET /lists/', function () {
     login('test1', 'test1');
-    clear_user();
+    clear();
 
     // Create Lists
     var lists = Array();
@@ -26,7 +26,7 @@ test('List - GET /lists/', function () {
 
 test('List - GET /lists/:id', function () {
     login('test1', 'test1');
-    clear_user();
+    clear();
 
     // Create Lists
     var lists = Array();
@@ -135,7 +135,7 @@ test('List - GET /lists/:id', function () {
 
 test('List - POST /lists/', function () {
     login('test1', 'test1');
-    clear_user();
+    clear();
 
     // Create Lists
     var list1 = list_create('ListOne').list;
@@ -161,7 +161,7 @@ test('List - POST /lists/', function () {
 
 test('List - PUT /lists/:id', function () {
     login('test1', 'test1');
-    clear_user();
+    clear();
 
     // Create List
     var list1 = list_create('ListOne').list;
@@ -190,7 +190,7 @@ test('List - PUT /lists/:id', function () {
 
 test('List - DELETE /lists/:id', function() {
     login ('test1', 'test1');
-    clear_user();
+    clear();
 
     // Create Two Lists
     var list1 = list_create('TestList1').list;

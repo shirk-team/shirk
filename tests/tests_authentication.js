@@ -56,6 +56,8 @@ function testLogout(title, expectedResponse) {
     });
 }
 
+user_create('test1', 'test1');
+
 testLogin('Authentication - Login: correct username and correct password',
     'test1', 'test1');
 

@@ -34,4 +34,26 @@ router.post('/', function (req, res) {
     });
 });
 
+/**
+ * DELETE /users/
+ *
+ * Description: Delete test user (used only for the sake of testing)
+ *
+ * Author: seropian@mit.edu
+ */
+router.delete('/', function (req, res) {
+    User.findOne({username: 'test2'}, function(err, user) {
+        if (err) return res.status(500).send(error);
+
+        if (user) {
+            user.remove(function(err) {
+                if (err) return res.status(500).send(error);
+                res.status(200).send();
+            });
+        } else {
+            res.status(200).send();
+        }
+    });
+});
+
 module.exports = router;
