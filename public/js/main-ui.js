@@ -94,4 +94,7 @@ $(document).ready(function () {
 
   // Hide Message
   message_hide();
+
+  // Hide List Headers (Add and Title)
+  $(".list_header").hide(0);
 });
