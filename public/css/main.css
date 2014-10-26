@@ -56,3 +56,11 @@ h1#logo {
 #col-right {
   width: 60% !important;
 }
+
+.icon.square {
+    border-radius: .5em;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
