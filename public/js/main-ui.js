@@ -14,9 +14,9 @@ function create_elem(elem, id, classes) {
 ///////////
 
 function list_add(title, listid) {
-  var item = create_elem("div", listid, "item item_list");
+  var item = create_elem("div", listid, "item item_list"); // new row
   var content = create_elem("div", "", "content");
-  var header = create_elem("div", "", "header");
+  var header = create_elem("div", "", "header"); // list title
   header.html(title);
   content.append(header);
   item.append(content);
@@ -36,9 +36,9 @@ function tasks_clear() {
 }
 
 function task_add(title, taskid, priority, deadline, notes) {
-  var item = create_elem("div", taskid, "item item_task");
-  var icon = create_elem("i", "", "icon empty checkbox");
-  var content = create_elem("div", "", "content");
+  var item = create_elem("div", taskid, "item item_task"); // new row
+  var icon = create_elem("i", "", "icon empty checkbox"); // checkbox
+  var content = create_elem("div", "", "content"); // title
   content.html(title);
   item.append(icon);
   item.append(content);
@@ -46,10 +46,9 @@ function task_add(title, taskid, priority, deadline, notes) {
 }
 
 function task_status(taskid, complete) {
-  var item = $('.item_task#' + taskid);
-  var icon = item.children("i.icon").first();
-  var content = item.children("div.content").first();
-  console.log(icon);
+  var item = $('.item_task#' + taskid); // select row
+  var icon = item.children("i.icon").first(); // checkbox
+  var content = item.children("div.content").first(); // title text
   if (complete) {
     icon.removeClass("empty");
     icon.addClass("checked");
@@ -72,7 +71,7 @@ function message_show(msg) {
 
 function message_hide() {
   $('#message-box').hide(0);
-  $('#message-text').html("");
+  $('#message-text').html(""); // clear message
 }
 
 
