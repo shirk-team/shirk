@@ -56,3 +56,12 @@ h1#logo {
 #col-right {
   width: 60% !important;
 }
+
+/* TASKS */
+
+
+/* LISTS */
+
+.selected_list {
+  background-color: lightgray !important;
+}
