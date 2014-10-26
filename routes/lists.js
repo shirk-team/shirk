@@ -93,7 +93,7 @@ router.get('/:id', function (req, res) {
     var query = {};
 
     if (args.priority) query['priority'] = parseInt(args.priority, 10);
-    if (args.completed) query['completed'] = Boolean(args.completed);
+    if (args.completed) query['completed'] = Boolean(args.completed === "1");
     if (args.startDate || args.endDate) {
         query.deadline = {};
         if (args.startDate) query.deadline['$gte'] = new Date(args.startDate);
