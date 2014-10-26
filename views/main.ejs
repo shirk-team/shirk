@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Shirk - Main</title>
+    <title>Shirk</title>
     <meta charset="UTF-8">
     <script type="text/javascript" src="/vendor/jquery-2.1.1.js"></script>
     <script type="text/javascript" src="/vendor/semantic-ui/javascript/semantic.min.js"></script>
@@ -10,6 +10,7 @@
     <link rel='stylesheet' href='/css/main.css' />
 
     <script type="text/javascript" src="/js/helpers.js"></script>
+    <script type="text/javascript" src="/js/main-client.js"></script>
     <script type="text/javascript" src="/js/main-ui.js"></script>
     <script type="text/javascript" src="/js/main.js"></script>
   </head>
@@ -48,14 +49,14 @@
               <!-- "List" Items Appended Here -->
             </div>
             <!-- Add/Remove Button -->
-            <div class="ui icon buttons">
+            <!-- <div class="ui icon buttons">
               <div class="ui button" id="list_add">
                 <i class="icon add sign box green"></i>
               </div>
               <div class="ui button" id="list_remove">
                 <i class="icon minus sign alternate red"></i>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -68,7 +69,13 @@
               Tasks
             </div>
 
-            <div id="list_tasks" class="ui divided selection list">
+            <!-- Message -->
+            <div id="message-box" class="ui icon message">
+              <i class="checkmark icon"></i>
+                <div id="message-text" class="content"></div>
+            </div>
+
+            <div id="list_tasks" class="ui divided list">
               <!-- "Task" Items Appended Here -->
             </div>
           </div>
