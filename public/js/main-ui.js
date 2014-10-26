@@ -45,6 +45,8 @@ function task_add(title, taskid, priority, deadline, notes) {
   $('#list_tasks').append(item);
 }
 
+// TODO(tdivita): Task Add Button Behaviors
+
 function task_status(taskid, complete) {
   var item = $('.item_task#' + taskid); // select row
   var icon = item.children("i.icon").first(); // checkbox

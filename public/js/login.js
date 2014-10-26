@@ -15,7 +15,22 @@ $(document).ready(function() {
             if ($(this).text() === 'Signup') {
                 signup(username, password);
             } else {
-                login(username, password)
+                login(username, password);
+            }
+        }
+    });
+    $('#password').keypress(function(event) {
+        if (event.which === 13) {
+            event.preventDefault();
+            // Clear errors from previous login/signup attempts
+            $('.ui.red.pointing.label').remove();
+            $('.error').removeClass('error');
+
+            var username = checkField('username');
+            var password = checkField('password');
+
+            if (username && password) {
+                login(username, password);
             }
         }
     });
