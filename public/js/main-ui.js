@@ -27,6 +27,15 @@ function list_remove(listid) {
   $('.item_list#' + listid).remove();
 }
 
+function list_select(listid) {
+  $('.selected_list').removeClass('selected_list'); // clear selection
+  $('.item_list#' + listid).addClass('selected_list');
+}
+
+function list_selected_get() {
+  return $('.selected_list').first().attr('id');
+}
+
 ///////////
 // TASKS //
 ///////////
@@ -66,13 +75,15 @@ function task_remove(taskid) {
   $('.item_task#' + taskid).remove();
 }
 
-function message_show(msg) {
-  $('#message-text').html(msg);
+function message_show(title, message) {
+  $('#message-title').html(title);
+  $('#message-text').html(message);
   $('#message-box').show(0);
 }
 
 function message_hide() {
   $('#message-box').hide(0);
+  $('#message-title').html(""); // clear title
   $('#message-text').html(""); // clear message
 }
 
