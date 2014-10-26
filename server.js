@@ -61,7 +61,7 @@ app.get('/', function (req, res) {
   if (req.user == undefined || req.user == null) {
     res.render('login'); // unathenticated
   } else {
-    res.render('main');  // authenticated
+    res.render('main', {username: req.user.username});  // authenticated
   }
 });
 
