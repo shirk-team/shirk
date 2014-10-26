@@ -30,7 +30,7 @@ router.post('/', function (req, res) {
     
     user.save(function(err) {
         if (err) return res.status(400).send(err);
-        return res.status(200).render('main');
+        return res.status(200).render('main', {username: req.body.username});
     });
 });
 
