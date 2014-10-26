@@ -41,7 +41,12 @@ $(document).ready(function() {
       }
     });
   });
-});
 
-// TODO(tdivita): Listener for Task Add Button
+  // When the Add Task button is clicked, display a task creation popup
+  $('#add-task').popup({
+    inline: true,
+    on: "click",
+    position: "bottom center"
+  });
+});
 
