@@ -26,6 +26,8 @@ $(document).ready(function() {
     list_select(listid); // highlight selected
     // Retrieve and Display
     list_get_filter(listid, "completed=0", function (result, status, xhr) {
+      $("#task-list-title-input").val(result.list.title); // list title
+      $(".list_header").show(0);
       var tasks = result.tasks;
 
       if (tasks.length == 0)
