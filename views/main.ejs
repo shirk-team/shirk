@@ -65,17 +65,30 @@
         <!-- Tasks - Right Column -->
         <div id="col-right" class="column listing">
           <div class="ui piled segment listing">
-            <!-- Title -->
-            <div class="ui ribbon teal label">
-              <i class="ui icon checked checkbox"></i>
-              Tasks
-            </div>
 
-            <!-- Task Add Button -->
-            <div id="add-task" class="ui button small">
-              <span>
-                <i class="ui icon add"></i>
-              </span>
+            <div class="ui three column grid middle aligned">
+              <!-- Title -->
+              <div class="column left aligned no-margin">
+                <div class="ui ribbon teal label">
+                  <i class="ui icon checked checkbox"></i>
+                  Tasks
+                </div>
+              </div>
+
+              <!-- List Title -->
+              <div class="column center aligned ui action input no-margin">
+                <input id="task-list-title-input" type="text" placeholder="List Title">
+                <div class="ui icon button"><i class="save icon"></i></div>
+              </div>
+
+              <!-- Task Add Button -->
+              <div class="column right aligned no-margin">
+                <div id="add-task" class="ui button tiny inverted blue">
+                  <span>
+                    <i class="ui icon add"></i>
+                  </span>
+                </div>
+              </div>
             </div>
 
             <!-- Message -->

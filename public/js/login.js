@@ -19,6 +19,10 @@ $(document).ready(function() {
             }
         }
     });
+    /**
+     * When the enter key is pressed, check if all required fields are filled out.
+     * If so, send a login request to the server.
+     */
     $('#password').keypress(function(event) {
         if (event.which === 13) {
             event.preventDefault();

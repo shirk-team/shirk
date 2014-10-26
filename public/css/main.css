@@ -49,10 +49,19 @@ h1#logo {
   height: 100% !important;
 }
 
+.no-margin {
+  margin: 0 !important;
+}
+
 #col-left {
   width: 40% !important;
 }
 
 #col-right {
   width: 60% !important;
+}
+
+#task-list-title-input {
+  border: 0;
+  text-align: center;
 }
