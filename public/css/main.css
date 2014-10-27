@@ -40,13 +40,24 @@ div.main-content {
   width: 100%;
 }
 
+#seg-left {
+  overflow-y: auto;
+}
+
 h1#logo {
   font-size: 1.5em;
 }
 
-.listing {
+.no-margin {
   margin: 0 !important;
+}
+
+.full-height {
   height: 100% !important;
+}
+
+.autoscroll {
+  overflow: auto;
 }
 
 #col-left {
@@ -61,6 +72,14 @@ h1#logo {
     border-radius: .5em;
 }
 
-.no-margin {
-    margin: 0 !important;
+/* TASKS */
+
+#task-list-title-input {
+  text-align: center;
+}
+
+/* LISTS */
+
+.selected_list {
+  background-color: lightgray !important;
 }

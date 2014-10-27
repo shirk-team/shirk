@@ -61,7 +61,6 @@ function task_get(taskid, callback) {
 }
 
 function task_put(taskid, data, callback) {
-    console.log(data);
     $.ajax({
         url: '/tasks/' + taskid,
         type: 'PUT',

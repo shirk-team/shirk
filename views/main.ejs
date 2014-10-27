@@ -39,44 +39,96 @@
 
     <main>
       <div class="main-content">
-      <div class="ui two column grid listing">
+      <div class="ui two column grid no-margin full-height">
 
         <!-- Lists - Left Column -->
-        <div id="col-left" class="column listing">
-          <div class="ui raised segment listing">
-            <!-- Title -->
+        <div id="col-left" class="column no-margin full-height">
+          <div class="ui raised segment autoscroll no-margin full-height">
+            <!-- `Filters` Label -->
+            <div class="ui ribbon teal label">
+              <i class="ui icon list"></i>
+              Filters
+            </div>
+            <div id="list_filters" class="ui celled animated selection list">
+              <!-- Filters -->
+              <div id="filter_shirked" class="item item_filter">
+                <i class="icon warning"></i>
+                <div class="content">
+                  <div class="header">Shirked</div>
+                </div>
+              </div>
+              <div id="filter_today" class="item item_filter">
+                <i class="icon bullseye"></i>
+                <div class="content">
+                  <div class="header">Today</div>
+                </div>
+              </div>
+              <div id="filter_next7" class="item item_filter">
+                <i class="icon time"></i>
+                <div class="content">
+                  <div class="header">Next 7 Days</div>
+                </div>
+              </div>
+              <div id="filter_next30" class="item item_filter">
+                <i class="icon time"></i>
+                <div class="content">
+                  <div class="header">Next 30 Dya</div>
+                </div>
+              </div>
+            </div>
+            <!-- `Lists` Label -->
             <div class="ui ribbon teal label">
               <i class="ui icon list"></i>
               Lists
             </div>
-            <div id="list_lists" class="ui divided selection list">
+            <div id="list_lists" class="ui celled selection list">
               <!-- "List" Items Appended Here -->
             </div>
-            <!-- Add/Remove Button -->
-            <!-- <div class="ui icon buttons">
-              <div class="ui button" id="list_add">
-                <i class="icon add sign box green"></i>
-              </div>
-              <div class="ui button" id="list_remove">
-                <i class="icon minus sign alternate red"></i>
-              </div>
-            </div> -->
           </div>
         </div>
 
         <!-- Tasks - Right Column -->
-        <div id="col-right" class="column listing">
-          <div class="ui piled segment listing">
-            <!-- Title -->
-            <div class="ui ribbon teal label">
-              <i class="ui icon checked checkbox"></i>
-              Tasks
+        <div id="col-right" class="column no-margin full-height">
+          <div class="ui piled segment autoscroll no-margin full-height">
+
+            <div class="ui column grid middle aligned">
+              <div class="row">
+
+                <!-- `Tasks` Label -->
+                <div class="five wide column left aligned no-margin">
+                  <div class="ui ribbon teal label">
+                    <i class="ui icon checked checkbox"></i>
+                    Tasks
+                  </div>
+                </div>
+
+                <!-- List Title -->
+                <div class="eight wide column center aligned no-margin">
+                  <div class="ui action input list_header">
+                    <input id="task-list-title-input" type="text" placeholder="List Title">
+                    <div class="ui icon button"><i class="save icon"></i></div>
+                  </div>
+                </div>
+
+                <!-- Task Add Button -->
+                <div class="three wide column right aligned no-margin">
+                  <div id="add-task" class="ui button tiny inverted blue list_header">
+                    <span>
+                      <i class="ui icon add"></i>
+                    </span>
+                  </div>
+                </div>
+
+              </div>
             </div>
 
             <!-- Message -->
             <div id="message-box" class="ui icon message">
               <i class="checkmark icon"></i>
-                <div id="message-text" class="content"></div>
+                <div class="content">
+                  <div class="header" id="message-title"></div>
+                  <p id="message-text"></p>
+                </div>
             </div>
 
             <div id="list_tasks" class="ui divided list">

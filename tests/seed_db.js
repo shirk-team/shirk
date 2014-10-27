@@ -29,7 +29,10 @@ function seedDb() {
 
             addHousework(function(err) {
                 if (err) throw err;
-                mongoose.connection.close();
+
+                addEmptyList(function(err) {
+                    mongoose.connection.close();
+                });
             });
         });
     });
@@ -137,6 +140,14 @@ function addHousework(callback) {
 
         saveThings(tasks, callback);
     });
+}
+
+function addEmptyList(callback) {
+    var emptylist = new List({
+        title: 'EmptyList',
+        owner: users[0] // user 'admin'
+    });
+    emptylist.save(callback);
 }
 
 var saveThings = function(things, callback) {
