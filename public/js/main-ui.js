@@ -172,6 +172,13 @@ function attachJQuery() {
 
   $(document).on('click', '.save-deadline', function() {
     var newDeadline = $(this).siblings().val();
+
+    if (newDeadline == '') {
+      $(this).removeClass('black inverted');
+    } else {
+      $(this).addClass('black inverted');
+    }
+    
     var id = $(this).attr('task');
 
     // TODO: error handling
