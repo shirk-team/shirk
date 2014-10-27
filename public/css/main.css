@@ -62,10 +62,14 @@ h1#logo {
 
 #col-left {
   width: 40% !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 #col-right {
   width: 60% !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .icon.square {
@@ -82,4 +86,9 @@ h1#logo {
 
 .selected_list {
   background-color: lightgray !important;
+}
+
+.ui.popup .ui.button {
+  display: block;
+  width: inherit;
 }

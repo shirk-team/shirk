@@ -10,7 +10,11 @@ templates['task'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(d
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.notes : stack1), depth0))
     + "</textarea><button class='ui button save-notes' task='"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
-    + "'>SAVE</button></div>\"></i>\n      <i class=\"icon square calendar\"></i>\n      <i class=\"icon square circle blank\"></i>\n    </span>\n</div>";
+    + "'>SAVE</button></div>\"></i>\n      <i class=\"icon square calendar popup-button edit-deadline\" data-html=\"<div class='ui form'><input placeholder='MM/DD/YYYY' value="
+    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.deadline : stack1), depth0))
+    + "></input><button class='ui button save-deadline' task='"
+    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
+    + "'>SAVE</button></div>\"></i>\n      <i class=\"icon square circle blank\"></i>\n    </span>\n</div>";
 },"useData":true});
 templates['tasks'] = template({"1":function(depth0,helpers,partials,data) {
   var stack1, buffer = "";

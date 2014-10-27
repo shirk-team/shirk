@@ -77,6 +77,9 @@ function reloadTasks(listid) {
       message_hide();
 
     for (var i = 0; i < tasks.length; i++) {
+      if (tasks[i].deadline) {
+        tasks[i].deadline = new Date(tasks[i].deadline).toLocaleDateString();
+      }
       tasks[i] = {"task": tasks[i]};
     }
     $('#list_tasks').html(Handlebars.templates['tasks']({tasks: tasks}));
