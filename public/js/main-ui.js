@@ -115,8 +115,8 @@ function attachJQuery() {
   });
 
   $('.popup-button').popup({
-      position:"bottom center",
-      on: "click"
+    position:"bottom center",
+    on: "click"
   });
 
   $('.ui.dropdown.edit-priority').dropdown({onChange: function(value, text) {
@@ -154,6 +154,13 @@ function attachJQuery() {
 
   $(document).on('click', '.save-notes', function() {
     var newNotes = $(this).siblings().val();
+    
+    if (newNotes == '') {
+      $(this).removeClass('black inverted');
+    } else {
+      $(this).addClass('black inverted');
+    }
+
     var id = $(this).attr('task');
 
     // TODO: error handling
