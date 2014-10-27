@@ -24,16 +24,16 @@ templates['task'] = template({"1":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
   return "        <i class=\"icon square text file outline popup-button edit-notes black inverted\" data-html=\"<div class='ui form'><textarea>"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.notes : stack1), depth0))
-    + "</textarea><div class='ui icon button save'><i class='ui save-notes icon save' task='"
+    + "</textarea><div class='ui icon button save-notes' task="
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
-    + "'></i></div></div>\"></i>\n";
+    + "><i class='ui icon save'></i></div></div>\"></i>\n";
 },"11":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
   return "        <i class=\"icon square text file outline popup-button edit-notes\" data-html=\"<div class='ui form'><textarea>"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.notes : stack1), depth0))
-    + "</textarea><div class='ui icon button save'><i class='ui save-notes icon save' task='"
+    + "</textarea><div class='ui icon button save-notes' task="
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
-    + "'></i></div></div>\"></i>\n";
+    + "><i class='ui icon save'></i></div></div>\"></i>\n";
 },"13":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
   return "        <i class=\"icon square calendar popup-button edit-deadline black inverted\" data-html=\"<div class='ui form'><input class='date' placeholder='MM/DD/YYYY' value="

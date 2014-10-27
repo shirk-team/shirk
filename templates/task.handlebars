@@ -24,9 +24,9 @@
 
     <div class="column right aligned no-margin six wide">
       {{#if task.notes}}
-        <i class="icon square text file outline popup-button edit-notes black inverted" data-html="<div class='ui form'><textarea>{{task.notes}}</textarea><div class='ui icon button save'><i class='ui save-notes icon save' task='{{task._id}}'></i></div></div>"></i>
+        <i class="icon square text file outline popup-button edit-notes black inverted" data-html="<div class='ui form'><textarea>{{task.notes}}</textarea><div class='ui icon button save-notes' task={{task._id}}><i class='ui icon save'></i></div></div>"></i>
       {{else}}
-        <i class="icon square text file outline popup-button edit-notes" data-html="<div class='ui form'><textarea>{{task.notes}}</textarea><div class='ui icon button save'><i class='ui save-notes icon save' task='{{task._id}}'></i></div></div>"></i>
+        <i class="icon square text file outline popup-button edit-notes" data-html="<div class='ui form'><textarea>{{task.notes}}</textarea><div class='ui icon button save-notes' task={{task._id}}><i class='ui icon save'></i></div></div>"></i>
       {{/if}}
 
       {{#if task.deadline}}
