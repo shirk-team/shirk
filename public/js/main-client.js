@@ -29,6 +29,17 @@ function list_get_filter(listid, querystring, callback) {
   });
 }
 
+function list_put(newName, listid, callback) {
+    $.ajax({
+        url : '/lists/' + listid,
+        type: 'PUT',
+        async: false,
+        contentType: "application/json",
+        data: JSON.stringify({list: {title: newName}}),
+        success: callback
+    });
+}
+
 //////////
 // TASK //
 //////////

@@ -23,6 +23,10 @@ function list_add(title, listid) {
   $('#list_lists').append(item);
 }
 
+function list_rename(title, listid) {
+  // TODO(tdivita)
+}
+
 function list_remove(listid) {
   $('.item_list#' + listid).remove();
 }
