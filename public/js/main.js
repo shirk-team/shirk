@@ -88,6 +88,7 @@ $(document).ready(function() {
 
     var selectedButton = $("#new-task-priority .active").first().attr('id');
     console.log(selectedButton);
+
     var priority;
     switch(selectedButton) {
       case "high-priority":
@@ -112,7 +113,7 @@ $(document).ready(function() {
     task_create(newTask, function(result, status, xhr) {
       $("#add-task").popup("hide");
       var listid = list_selected_get();
-      reloadTasks(listid);
+      reloadList(listid);
     });
   });
 
