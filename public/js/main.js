@@ -1,23 +1,15 @@
 Handlebars.registerPartial('tasks', Handlebars.templates['tasks']);
 Handlebars.registerPartial('task', Handlebars.templates['task']);
 
+var saveNotes = Handlebars.compile($("#save-notes-template").html());
+var saveDeadline = Handlebars.compile($("#save-deadline-template").html());
+
 Handlebars.registerHelper('saveNotes', function(task) {
-  return "<div class='ui form'>" + 
-    "<textarea>" + task.notes + "</textarea>" +
-    "<div class='ui icon button save-notes' task='" + task._id + "''>" +
-    "<i class='ui icon save'></i>" +
-    "</div>" +
-    "</div>";
+  return saveNotes({task: task});
 });
 
 Handlebars.registerHelper('saveDeadline', function(task) {
-  var deadline = task.deadline || '';
-  return "<div class='ui form'>" +
-    "<input class='date' placeholder='MM/DD/YYYY' value='" + deadline + "'></input>" +
-    "<div class='ui icon button save-deadline' task='" + task._id + "'>" +
-    "<i class='ui icon save'></i>" +
-    "</div>" +
-    "</div>";
+  return saveDeadline({task: task});
 });
 
 ////////////////////////
