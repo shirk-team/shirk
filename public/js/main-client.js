@@ -59,3 +59,14 @@ function task_get(taskid, callback) {
       success: callback
   });
 }
+
+function task_put(taskid, data, callback) {
+    console.log(data);
+    $.ajax({
+        url: '/tasks/' + taskid,
+        type: 'PUT',
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: callback
+    });
+}

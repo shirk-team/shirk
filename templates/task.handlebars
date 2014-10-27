@@ -1,0 +1,12 @@
+<div id="{{task._id}}" class="item item_task ui two column grid middle aligned">
+    <span class="column left aligned no-margin">
+        <i class="icon empty checkbox"></i>
+        <span>{{task.title}}</span>
+    </span>
+
+    <span class="column right aligned no-margin">
+      <i class="icon square text file outline popup-button edit-notes" data-html="<div class='ui form'><textarea>{{task.notes}}</textarea><button class='ui button save-notes' task='{{task._id}}'>SAVE</button></div>"></i>
+      <i class="icon square calendar"></i>
+      <i class="icon square circle blank"></i>
+    </span>
+</div>

@@ -35,32 +35,6 @@ function tasks_clear() {
   $('#list_tasks').html("");
 }
 
-function task_add(title, taskid, priority, deadline, notes) {
-  var task = create_elem("div", taskid, "item item_task ui two column grid middle aligned"); // new row
-  
-  var left_column = create_elem("div", "", "column left aligned");
-  var checkbox = create_elem("i", "", "icon empty checkbox");
-  var titleElem = create_elem("span", "", "content"); // title
-  
-  titleElem.html(title);
-  left_column.append(checkbox);
-  left_column.append(titleElem);
-
-  var right_column = create_elem("div", "", "column right aligned no-margin");
-  var details = create_elem("i", "", "icon square text file outline");
-  var calendar = create_elem("i", "", "icon square calendar");
-  var priority = create_elem("i", "", "icon square circle blank");
-
-  right_column.append(details);
-  right_column.append(calendar);
-  right_column.append(priority);
-
-  task.append(left_column);
-  task.append(right_column);
-
-  $('#list_tasks').append(task);
-}
-
 function task_status(taskid, complete) {
   var item = $('.item_task#' + taskid); // select row
   var icon = item.children("i.icon").first(); // checkbox
@@ -90,6 +64,26 @@ function message_hide() {
   $('#message-text').html(""); // clear message
 }
 
+
+function attachJQuery() {
+    $('.popup-button').popup({
+        position:"bottom center",
+        on: "click"
+    });
+    $(document).on('click', '.save-notes', function() {
+      var textArea = $(this).siblings();
+      var newNotes = textArea.val();
+      var id = $(this).attr('task');
+      var task = {
+        task_id: id,
+        notes: newNotes
+      };
+      // TODO: error handling
+      task_put(id, {task: task});
+      // reloadTasks(list_selected_get());
+      $('#' + id + ' .edit-notes').popup('hide');
+    });
+}
 
 $(document).ready(function () {
   // Logout Label

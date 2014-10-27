@@ -1,3 +1,6 @@
+Handlebars.registerPartial('tasks', Handlebars.templates['tasks']);
+Handlebars.registerPartial('task', Handlebars.templates['task']);
+
 $(document).ready(function() {
   $('.button#logout').click(function() {
       $.ajax({
@@ -21,12 +24,17 @@ $(document).ready(function() {
     var selected = event.currentTarget;
     var listid = selected.id;
     // Retrieve and Display
-    list_get_filter(listid, "completed=0", function (result, status, xhr) {
-      var tasks = result.tasks;
-      for (var i = 0; i != tasks.length; i ++ ) {
-        var task = tasks[i];
-        task_add(task.title, task._id, task.priority, task.deadline, task.notes);
-      }
-    });
+    reloadTasks(listid);
   });
 });
+
+function reloadTasks(listid) {
+  list_get_filter(listid, "completed=0", function (result, status, xhr) {
+    var tasks = result.tasks;
+    for (var i = 0; i < tasks.length; i++) {
+      tasks[i] = {"task": tasks[i]};
+    }
+    $('#list_tasks').html(Handlebars.templates['tasks']({tasks: tasks}));
+    attachJQuery();
+  });
+}
