@@ -6,6 +6,8 @@ templates['task'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(d
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
     + "\" class=\"item item_task\">\n  <div class=\"ui two column grid middle aligned\">\n    <span class=\"column left aligned no-margin\">\n        <i class=\"icon empty checkbox\"></i>\n        <span>"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.title : stack1), depth0))
+    + "</span>&nbsp;&nbsp;\n        <span>"
+    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.deadline : stack1), depth0))
     + "</span>\n    </span>\n\n    <span class=\"column right aligned no-margin\">\n      <i class=\"icon square text file outline popup-button edit-notes\" data-html=\"<div class='ui form'><textarea>"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.notes : stack1), depth0))
     + "</textarea><button class='ui button save-notes' task='"
