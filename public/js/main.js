@@ -1,6 +1,25 @@
 Handlebars.registerPartial('tasks', Handlebars.templates['tasks']);
 Handlebars.registerPartial('task', Handlebars.templates['task']);
 
+Handlebars.registerHelper('saveNotes', function(task) {
+  return "<div class='ui form'>" + 
+    "<textarea>" + task.notes + "</textarea>" +
+    "<div class='ui icon button save-notes' task='" + task._id + "''>" +
+    "<i class='ui icon save'></i>" +
+    "</div>" +
+    "</div>";
+});
+
+Handlebars.registerHelper('saveDeadline', function(task) {
+  var deadline = task.deadline || '';
+  return "<div class='ui form'>" +
+    "<input class='date' placeholder='MM/DD/YYYY' value='" + deadline + "'></input>" +
+    "<div class='ui icon button save-deadline' task='" + task._id + "'>" +
+    "<i class='ui icon save'></i>" +
+    "</div>" +
+    "</div>";
+});
+
 ////////////////////////
 // Reload List/Filter //
 ////////////////////////
