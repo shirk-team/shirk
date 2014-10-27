@@ -87,3 +87,8 @@ h1#logo {
 .selected_list {
   background-color: lightgray !important;
 }
+
+.ui.popup .ui.button {
+  display: block;
+  width: inherit;
+}
