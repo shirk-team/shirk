@@ -83,7 +83,7 @@ function reloadTasks(listid) {
     var tasks = result.tasks;
 
     if (tasks.length == 0)
-      message_show("Empty List", "There are not tasks in this list to display.");
+      message_show("Empty List", "There are no tasks in this list to display.");
     else
       message_hide();
 

@@ -1,8 +1,8 @@
 <div id="{{task._id}}" class="item item_task">
   <div class="ui two column grid middle aligned">
     <span class="column left aligned no-margin">
-        <i class="icon empty checkbox"></i>
-        <span>{{task.title}}</span>&nbsp;&nbsp;
+        <i class="icon empty checkbox" task={{task._id}}></i>
+        <span class="title">{{task.title}}</span>&nbsp;&nbsp;
         <span>{{task.deadline}}</span>
     </span>
 

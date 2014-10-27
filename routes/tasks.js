@@ -92,8 +92,8 @@ router.post('/', function (req, res) {
 	// Only set deadline, priority, and completed if they were provided, otherwise let them
     // be decided by schema defaults.
 	if (req.body.task.deadline) newTask.deadline = req.body.task.deadline;
-	if (req.body.task.priority) newTask.priority = req.body.task.priority;
-	if (req.body.task.completed) newTask.completed = req.body.task.completed;
+	if (req.body.task.priority !== undefined) newTask.priority = req.body.task.priority;
+	if (req.body.task.completed !== undefined) newTask.completed = req.body.task.completed;
 
 	// Save the newly-created task and return it.
 	newTask.save(function(err) {
@@ -159,7 +159,7 @@ router.put('/:id', function (req, res) {
 		if (req.body.task.list) task.list = req.body.task.list;
 		if (req.body.task.deadline) task.deadline = req.body.task.deadline;
 		if (req.body.task.priority !== undefined) task.priority = req.body.task.priority;
-		if (req.body.task.completed) task.completed = req.body.task.completed;
+		if (req.body.task.completed !== undefined) task.completed = req.body.task.completed;
 
 		// Save the newly-edited task and return it.
 		task.save(function(err) {

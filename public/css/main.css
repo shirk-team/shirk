@@ -108,3 +108,11 @@ h1#logo {
 .hidden {
   visibility: hidden;
 }
+
+.complete {
+  background-color: #A1CF64;
+  border-radius: .25em;
+  opacity: .5;
+  text-decoration: line-through;
+
+}

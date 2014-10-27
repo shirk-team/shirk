@@ -4,7 +4,9 @@ templates['task'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(d
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
   return "<div id=\""
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
-    + "\" class=\"item item_task\">\n  <div class=\"ui two column grid middle aligned\">\n    <span class=\"column left aligned no-margin\">\n        <i class=\"icon empty checkbox\"></i>\n        <span>"
+    + "\" class=\"item item_task\">\n  <div class=\"ui two column grid middle aligned\">\n    <span class=\"column left aligned no-margin\">\n        <i class=\"icon empty checkbox\" task="
+    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
+    + "></i>\n        <span class=\"title\">"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.title : stack1), depth0))
     + "</span>&nbsp;&nbsp;\n        <span>"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.deadline : stack1), depth0))

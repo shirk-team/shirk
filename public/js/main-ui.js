@@ -99,65 +99,80 @@ function message_hide() {
 
 
 function attachJQuery() {
-    $('.popup-button').popup({
-        position:"bottom center",
-        on: "click"
-    });
+  $('.checkbox').click(function() {
+    $(this).toggleClass('checked');
+    var complete = $(this).hasClass('checked');
 
-    $('.ui.dropdown.edit-priority').dropdown({onChange: function(value, text) {
-      var id = $(this).attr('task');
+    var id = $(this).attr('task');
+    // TODO: error handling
+    task_put(id, {task: {task_id: id, completed: complete}});
 
-      // TODO: error handling
-      task_put(id, {task: {task_id: id, priority: value}});
+    if (complete) {
+      $('#' + id).addClass('complete');
+    } else {
+      $('#' + id).removeClass('complete');
+    }
+  });
 
-      $(this).removeClass();
-      switch(value) {
-        case 1:
-          $(this).addClass('icon square up ui dropdown edit-priority pointing');
-          break;
-        case 0: 
-          $(this).addClass('icon square circle blank ui dropdown edit-priority pointing');
-          break;
-        case -1: 
-          $(this).addClass('icon square down ui dropdown edit-priority pointing');
-          break;
-      }
-    }});
+  $('.popup-button').popup({
+      position:"bottom center",
+      on: "click"
+  });
 
-    var priorityDropdown = $('.edit-priority');
-    switch(priorityDropdown.attr('priority')) {
-      case '1':
-        priorityDropdown.addClass('up');
+  $('.ui.dropdown.edit-priority').dropdown({onChange: function(value, text) {
+    var id = $(this).attr('task');
+
+    // TODO: error handling
+    task_put(id, {task: {task_id: id, priority: value}});
+
+    $(this).removeClass();
+    switch(value) {
+      case 1:
+        $(this).addClass('icon square up ui dropdown edit-priority pointing');
         break;
-      case '0': 
-        priorityDropdown.addClass('circle blank');
+      case 0: 
+        $(this).addClass('icon square circle blank ui dropdown edit-priority pointing');
         break;
-      case '-1': 
-        priorityDropdown.addClass('down');
+      case -1: 
+        $(this).addClass('icon square down ui dropdown edit-priority pointing');
         break;
     }
+  }});
 
-    $(document).on('click', '.save-notes', function() {
-      var newNotes = $(this).siblings().val();
-      var id = $(this).attr('task');
+  var priorityDropdown = $('.edit-priority');
+  switch(priorityDropdown.attr('priority')) {
+    case '1':
+      priorityDropdown.addClass('up');
+      break;
+    case '0': 
+      priorityDropdown.addClass('circle blank');
+      break;
+    case '-1': 
+      priorityDropdown.addClass('down');
+      break;
+  }
 
-      // TODO: error handling
-      task_put(id, {task: {task_id: id, notes: newNotes}});
+  $(document).on('click', '.save-notes', function() {
+    var newNotes = $(this).siblings().val();
+    var id = $(this).attr('task');
 
-      $('#' + id + ' .edit-notes').popup('hide');
-      reloadTasks(list_selected_get());
-    });
+    // TODO: error handling
+    task_put(id, {task: {task_id: id, notes: newNotes}});
 
-    $(document).on('click', '.save-deadline', function() {
-      var newDeadline = $(this).siblings().val();
-      var id = $(this).attr('task');
+    $('#' + id + ' .edit-notes').popup('hide');
+    reloadTasks(list_selected_get());
+  });
 
-      // TODO: error handling
-      task_put(id, {task: {task_id: id, deadline: new Date(newDeadline)}});
+  $(document).on('click', '.save-deadline', function() {
+    var newDeadline = $(this).siblings().val();
+    var id = $(this).attr('task');
 
-      $('#' + id + ' .edit-deadline').popup('hide');
-      reloadTasks(list_selected_get());
-    });
+    // TODO: error handling
+    task_put(id, {task: {task_id: id, deadline: new Date(newDeadline)}});
+
+    $('#' + id + ' .edit-deadline').popup('hide');
+    reloadTasks(list_selected_get());
+  });
 }
 
 $(document).ready(function () {
