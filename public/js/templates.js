@@ -24,30 +24,30 @@ templates['task'] = template({"1":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
   return "        <i class=\"icon square text file outline popup-button edit-notes black inverted column two wide no-margin\" data-html=\"<div class='ui form'><textarea>"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.notes : stack1), depth0))
-    + "</textarea><div class='ui icon button save'><i class='ui save-notes icon save' task='"
+    + "</textarea><div class='ui icon button save-notes' task="
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
-    + "'></i></div></div>\"></i>\n";
+    + "><i class='ui icon save'></i></div></div>\"></i>\n";
 },"11":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
   return "        <i class=\"icon square text file outline popup-button edit-notes column two wide no-margin\" data-html=\"<div class='ui form'><textarea>"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.notes : stack1), depth0))
-    + "</textarea><div class='ui icon button save'><i class='ui save-notes icon save' task='"
+    + "</textarea><div class='ui icon button save-notes' task="
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
-    + "'></i></div></div>\"></i>\n";
+    + "><i class='ui icon save'></i></div></div>\"></i>\n";
 },"13":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
   return "        <i class=\"icon square calendar popup-button edit-deadline black inverted column two wide no-margin\" data-html=\"<div class='ui form'><input class='date' placeholder='MM/DD/YYYY' value="
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.deadline : stack1), depth0))
-    + "></input><div class='ui icon button save'><i class='ui save-deadline icon save' task='"
+    + "></input><div class='ui icon button save-deadline' task="
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
-    + "'></i></div></div>\"></i>\n";
+    + "><i class='ui icon save'></i></div></div>\"></i>\n";
 },"15":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
   return "        <i class=\"icon square calendar popup-button edit-deadline column two wide no-margin\" data-html=\"<div class='ui form'><input class='date' placeholder='MM/DD/YYYY' value="
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.deadline : stack1), depth0))
-    + "></input><div class='ui icon button save'><i class='ui save-deadline icon save' task='"
+    + "></input><div class='ui icon button save-deadline' task="
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
-    + "'></i></div></div>\"></i>\n";
+    + "><i class='ui icon save'></i></div></div>\"></i>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.completed : stack1), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.program(3, data),"data":data});
@@ -58,7 +58,7 @@ templates['task'] = template({"1":function(depth0,helpers,partials,data) {
   buffer += "    </div>\n\n    <div class=\"column left aligned no-margin seven wide\">\n      <div class=\"task-info\">\n        <span class=\"task-title\">"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.title : stack1), depth0))
     + "</span><br>\n        <span class=\"task-deadline\">"
-    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.deadline : stack1), depth0))
+    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.deadlineString : stack1), depth0))
     + "</span>\n      </div>\n    </div>\n\n    <div class=\"column right aligned no-margin seven wide\">\n";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.notes : stack1), {"name":"if","hash":{},"fn":this.program(9, data),"inverse":this.program(11, data),"data":data});
   if (stack1 != null) { buffer += stack1; }

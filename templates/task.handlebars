@@ -18,21 +18,21 @@
     <div class="column left aligned no-margin seven wide">
       <div class="task-info">
         <span class="task-title">{{task.title}}</span><br>
-        <span class="task-deadline">{{task.deadline}}</span>
+        <span class="task-deadline">{{task.deadlineString}}</span>
       </div>
     </div>
 
     <div class="column right aligned no-margin seven wide">
       {{#if task.notes}}
-        <i class="icon square text file outline popup-button edit-notes black inverted column two wide no-margin" data-html="<div class='ui form'><textarea>{{task.notes}}</textarea><div class='ui icon button save'><i class='ui save-notes icon save' task='{{task._id}}'></i></div></div>"></i>
+        <i class="icon square text file outline popup-button edit-notes black inverted column two wide no-margin" data-html="<div class='ui form'><textarea>{{task.notes}}</textarea><div class='ui icon button save-notes' task={{task._id}}><i class='ui icon save'></i></div></div>"></i>
       {{else}}
-        <i class="icon square text file outline popup-button edit-notes column two wide no-margin" data-html="<div class='ui form'><textarea>{{task.notes}}</textarea><div class='ui icon button save'><i class='ui save-notes icon save' task='{{task._id}}'></i></div></div>"></i>
+        <i class="icon square text file outline popup-button edit-notes column two wide no-margin" data-html="<div class='ui form'><textarea>{{task.notes}}</textarea><div class='ui icon button save-notes' task={{task._id}}><i class='ui icon save'></i></div></div>"></i>
       {{/if}}
 
       {{#if task.deadline}}
-        <i class="icon square calendar popup-button edit-deadline black inverted column two wide no-margin" data-html="<div class='ui form'><input class='date' placeholder='MM/DD/YYYY' value={{task.deadline}}></input><div class='ui icon button save'><i class='ui save-deadline icon save' task='{{task._id}}'></i></div></div>"></i>
+        <i class="icon square calendar popup-button edit-deadline black inverted column two wide no-margin" data-html="<div class='ui form'><input class='date' placeholder='MM/DD/YYYY' value={{task.deadline}}></input><div class='ui icon button save-deadline' task={{task._id}}><i class='ui icon save'></i></div></div>"></i>
       {{else}}
-        <i class="icon square calendar popup-button edit-deadline column two wide no-margin" data-html="<div class='ui form'><input class='date' placeholder='MM/DD/YYYY' value={{task.deadline}}></input><div class='ui icon button save'><i class='ui save-deadline icon save' task='{{task._id}}'></i></div></div>"></i>
+        <i class="icon square calendar popup-button edit-deadline column two wide no-margin" data-html="<div class='ui form'><input class='date' placeholder='MM/DD/YYYY' value={{task.deadline}}></input><div class='ui icon button save-deadline' task={{task._id}}><i class='ui icon save'></i></div></div>"></i>
       {{/if}}
 
       <i class="icon square ui dropdown edit-priority pointing column two wide no-margin" task={{task._id}} priority={{task.priority}}>

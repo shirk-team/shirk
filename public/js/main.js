@@ -162,7 +162,6 @@ $(document).ready(function() {
     if (deadlineInput) deadline = deadlineInput;
 
     var selectedButton = $("#new-task-priority .active").first().attr('id');
-    console.log(selectedButton);
 
     var priority;
     switch(selectedButton) {

@@ -116,13 +116,14 @@ function displayTasks(tasks) {
       var tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       if (deadline.toDateString() === today.toDateString()) // today
-        tasks[i].deadline = "Today";
+        tasks[i].deadlineString = "Today";
       else if (deadline.toDateString() === tomorrow.toDateString()) // tomorrow
-        tasks[i].deadline = "Tomorrow";
+        tasks[i].deadlineString = "Tomorrow";
       else if (deadline.valueOf() <= today.valueOf()) // overdue
-        tasks[i].deadline = moment(deadline).startOf('day').fromNow();
+        tasks[i].deadlineString = moment(deadline).startOf('day').fromNow();
       else // future
-        tasks[i].deadline = moment(deadline).format("ddd, MMM D YYYY");
+        tasks[i].deadlineString = moment(deadline).format("ddd, MMM D YYYY");
+      tasks[i].deadline = deadline.toLocaleDateString();
     }
     tasks[i] = {"task": tasks[i]};
   }
