@@ -96,3 +96,10 @@ h1#logo {
   display: block;
   width: inherit;
 }
+
+.ui.dropdown .menu .item .icon.menu-icon {
+  margin-right: 0;
+}
+
+
+

@@ -88,6 +88,39 @@ function attachJQuery() {
         on: "click"
     });
 
+    $('.ui.dropdown.edit-priority').dropdown({onChange: function(value, text) {
+      var id = $(this).attr('task');
+
+      // TODO: error handling
+      task_put(id, {task: {task_id: id, priority: value}});
+
+      $(this).removeClass();
+      switch(value) {
+        case 1:
+          $(this).addClass('icon square up ui dropdown edit-priority pointing');
+          break;
+        case 0: 
+          $(this).addClass('icon square circle blank ui dropdown edit-priority pointing');
+          break;
+        case -1: 
+          $(this).addClass('icon square down ui dropdown edit-priority pointing');
+          break;
+      }
+    }});
+
+    var priorityDropdown = $('.edit-priority');
+    switch(priorityDropdown.attr('priority')) {
+      case '1':
+        priorityDropdown.addClass('up');
+        break;
+      case '0': 
+        priorityDropdown.addClass('circle blank');
+        break;
+      case '-1': 
+        priorityDropdown.addClass('down');
+        break;
+    }
+
     $(document).on('click', '.save-notes', function() {
       var newNotes = $(this).siblings().val();
       var id = $(this).attr('task');
