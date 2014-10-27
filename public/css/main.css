@@ -56,16 +56,24 @@ h1#logo {
   height: 100% !important;
 }
 
+.full-height-min {
+  min-height: 100% !important;
+}
+
 .autoscroll {
   overflow: auto;
 }
 
 #col-left {
   width: 40% !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 #col-right {
   width: 60% !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .icon.square {

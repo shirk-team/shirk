@@ -42,8 +42,8 @@
       <div class="ui two column grid no-margin full-height">
 
         <!-- Lists - Left Column -->
-        <div id="col-left" class="column no-margin full-height">
-          <div class="ui raised segment autoscroll no-margin full-height">
+        <div id="col-left" class="column autoscroll no-margin full-height">
+          <div class="ui raised segment no-margin full-height-min">
             <!-- `Filters` Label -->
             <div class="ui ribbon teal label">
               <i class="ui icon list"></i>
@@ -76,10 +76,27 @@
                 </div>
               </div>
             </div>
-            <!-- `Lists` Label -->
-            <div class="ui ribbon teal label">
-              <i class="ui icon list"></i>
-              Lists
+            <div class="ui two column grid middle aligned">
+              <!-- `Lists` Label -->
+              <div class="column left aligned">
+                <div class="ui ribbon teal label">
+                  <i class="ui icon list"></i>
+                  Lists
+                </div>
+              </div>
+              <div class="column right aligned">
+                <div id="add-list" class="ui button tiny inverted blue popup-button" data-html='
+                  <div>
+                    <!-- TODO(tdivita): Make this popup have form contents and do stuff. -->
+                    Popup!
+                  </div>
+                '>
+                  <span>
+                    <i class="ui icon add"></i>
+                  </span>
+                </div>
+                
+              </div>
             </div>
             <div id="list_lists" class="ui celled selection list">
               <!-- "List" Items Appended Here -->
@@ -88,8 +105,8 @@
         </div>
 
         <!-- Tasks - Right Column -->
-        <div id="col-right" class="column no-margin full-height">
-          <div class="ui piled segment autoscroll no-margin full-height">
+        <div id="col-right" class="column autoscroll no-margin full-height">
+          <div class="ui piled segment no-margin full-height-min">
 
             <div class="ui column grid middle aligned">
               <div class="row">
@@ -112,16 +129,15 @@
 
                 <!-- Task Add Button -->
                 <div class="three wide column right aligned no-margin">
-                  <div id="add-task" class="ui button tiny inverted blue list_header">
-                    <span>
-                      <i class="ui icon add"></i>
-                    </span>
-                  </div>
-                  <div id="add-task-popup" class="ui popup">
+                  <div id="add-task" class="ui button tiny inverted blue list_header" data-html='
                     <div>
                       <!-- TODO(tdivita): Make this popup have form contents and do stuff. -->
                       Popup!
                     </div>
+                  '>
+                    <span>
+                      <i class="ui icon add"></i>
+                    </span>
                   </div>
                 </div>
 

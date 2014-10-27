@@ -31,9 +31,14 @@ $(document).ready(function() {
     reloadTasks(listid);
   });
 
+  // When the add list button is clicked, display a list creation popup
+  $('#add-list').popup({
+    on: "click",
+    position: "bottom center"
+  });
+
   // When the add task button is clicked, display a task creation popup
   $('#add-task').popup({
-    inline: true,
     on: "click",
     position: "bottom center"
   });
@@ -50,7 +55,11 @@ $(document).ready(function() {
   });
 
   // If the user clicks out of the edit box without saving, reset the title to what it was
-  // TODO(tdivita): This is broken and needs to be fixed.
+  /*
+  * TODO(tdivita): This is broken and needs to be fixed. It works except for that it looks
+  * for the wrong thing losing focus. Looking at the input doesn't work because then you
+  * can't click save with your new title.
+  */
   $("#task-list-title").blur(function() {
     var listid = list_selected_get();
     var oldTitle = $("#" + listid + " .header").html();
@@ -79,5 +88,3 @@ function reloadTasks(listid) {
     attachJQuery();
   });
 }
-
-// TODO(tdivita): Listener for Task Add Button
