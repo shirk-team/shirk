@@ -162,29 +162,30 @@ function attachJQuery() {
     $(this).removeClass();
     switch(value) {
       case 1:
-        $(this).addClass('icon square up ui dropdown edit-priority pointing');
+        $(this).addClass('icon square up ui dropdown edit-priority pointing black inverted');
         break;
       case 0:
         $(this).addClass('icon square circle blank ui dropdown edit-priority pointing');
         break;
       case -1:
-        $(this).addClass('icon square down ui dropdown edit-priority pointing');
+        $(this).addClass('icon square down ui dropdown edit-priority pointing black inverted');
         break;
     }
   }});
 
-  var priorityDropdown = $('.edit-priority');
-  switch(priorityDropdown.attr('priority')) {
-    case '1':
-      priorityDropdown.addClass('up');
-      break;
-    case '0':
-      priorityDropdown.addClass('circle blank');
-      break;
-    case '-1':
-      priorityDropdown.addClass('down');
-      break;
-  }
+  $('.edit-priority').each(function() {
+    switch($(this).attr('priority')) {
+      case '1':
+        $(this).addClass('up black inverted');
+        break;
+      case '0':
+        $(this).addClass('circle blank');
+        break;
+      case '-1':
+        $(this).addClass('down black inverted');
+        break;
+    }
+  });
 
   $(document).on('click', '.save-notes', function() {
     var newNotes = $(this).siblings().val();

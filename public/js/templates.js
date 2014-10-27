@@ -24,30 +24,30 @@ templates['task'] = template({"1":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
   return "        <i class=\"icon square text file outline popup-button edit-notes black inverted\" data-html=\"<div class='ui form'><textarea>"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.notes : stack1), depth0))
-    + "</textarea><button class='ui button save-notes' task='"
+    + "</textarea><div class='ui icon button save'><i class='ui save-notes icon save' task='"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
-    + "'>SAVE</button></div>\"></i>\n";
+    + "'></i></div></div>\"></i>\n";
 },"11":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
   return "        <i class=\"icon square text file outline popup-button edit-notes\" data-html=\"<div class='ui form'><textarea>"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.notes : stack1), depth0))
-    + "</textarea><button class='ui button save-notes' task='"
+    + "</textarea><div class='ui icon button save'><i class='ui save-notes icon save' task='"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
-    + "'>SAVE</button></div>\"></i>\n";
+    + "'></i></div></div>\"></i>\n";
 },"13":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "        <i class=\"icon square calendar popup-button edit-deadline black inverted\" data-html=\"<div class='ui form'><input placeholder='MM/DD/YYYY' value="
+  return "        <i class=\"icon square calendar popup-button edit-deadline black inverted\" data-html=\"<div class='ui form'><input class='date' placeholder='MM/DD/YYYY' value="
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.deadline : stack1), depth0))
-    + "></input><button class='ui button save-deadline' task='"
+    + "></input><div class='ui icon button save'><i class='ui save-deadline icon save' task='"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
-    + "'>SAVE</button></div>\"></i>\n";
+    + "'></i></div></div>\"></i>\n";
 },"15":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "        <i class=\"icon square calendar popup-button edit-deadline\" data-html=\"<div class='ui form'><input placeholder='MM/DD/YYYY' value="
+  return "        <i class=\"icon square calendar popup-button edit-deadline\" data-html=\"<div class='ui form'><input class='date' placeholder='MM/DD/YYYY' value="
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.deadline : stack1), depth0))
-    + "></input><button class='ui button save-deadline' task='"
+    + "></input><div class='ui icon button save'><i class='ui save-deadline icon save' task='"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1._id : stack1), depth0))
-    + "'>SAVE</button></div>\"></i>\n";
+    + "'></i></div></div>\"></i>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.completed : stack1), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.program(3, data),"data":data});
