@@ -9,6 +9,16 @@ function create_elem(elem, id, classes) {
   return new_elem;
 }
 
+/////////////
+// FILTERS //
+/////////////
+
+function filter_select(filterid) {
+  $('.selected_list').removeClass('selected_list'); // clear list selection
+  $('.selected_filter').removeClass('selected_filter'); // clear list selection
+  $('.item_filter#' + filterid).addClass('selected_filter');
+}
+
 ///////////
 // LISTS //
 ///////////
@@ -32,7 +42,8 @@ function list_remove(listid) {
 }
 
 function list_select(listid) {
-  $('.selected_list').removeClass('selected_list'); // clear selection
+  $('.selected_list').removeClass('selected_list'); // clear list selection
+  $('.selected_filter').removeClass('selected_filter'); // clear list selection
   $('.item_list#' + listid).addClass('selected_list');
 }
 
@@ -81,6 +92,17 @@ function message_hide() {
   $('#message-text').html(""); // clear message
 }
 
+// Render Tasks into Task Pane
+function displayTasks(tasks) {
+  for (var i = 0; i < tasks.length; i++) {
+    if (tasks[i].deadline) {
+      tasks[i].deadline = new Date(tasks[i].deadline).toLocaleDateString();
+    }
+    tasks[i] = {"task": tasks[i]};
+  }
+  $('#list_tasks').html(Handlebars.templates['tasks']({tasks: tasks}));
+  attachJQuery();
+}
 
 function attachJQuery() {
     $('.popup-button').popup({

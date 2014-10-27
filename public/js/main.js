@@ -21,7 +21,7 @@ $(document).ready(function() {
   // Welcome Message
   message_show("No List Selected", "Select a list or filter to view its tasks, or create a new list.");
 
-  // Fetch Tasks When List Selected
+  // List Selection
   $('.item_list').click(function (event) {
     tasks_clear(); // clear task list
     var selected = event.currentTarget;
@@ -29,6 +29,16 @@ $(document).ready(function() {
     list_select(listid); // highlight selected
     // Retrieve and Display
     reloadTasks(listid);
+  });
+
+  // Filter Selection
+  $('.item_filter').click(function (event) {
+    tasks_clear();
+    var selected = event.currentTarget;
+    var filterid = selected.id;
+    filter_select(filterid); // highlight selected
+    // Run Query and Display
+    reloadFilter(filterid);
   });
 
   // When the add list button is clicked, display a list creation popup
@@ -65,24 +75,59 @@ $(document).ready(function() {
   });
 });
 
+// TODO: refactor to reloadLists
 function reloadTasks(listid) {
-  list_get_filter(listid, "completed=0", function (result, status, xhr) {
+  list_get(listid, function (result, status, xhr) {
     $("#task-list-title-input").val(result.list.title); // list title
     $(".list_header").show(0);
     var tasks = result.tasks;
 
     if (tasks.length == 0)
-      message_show("Empty List", "There are not tasks in this list to display.");
+      message_show("No Tasks", "There are no tasks in this list to display.");
     else
       message_hide();
 
-    for (var i = 0; i < tasks.length; i++) {
-      if (tasks[i].deadline) {
-        tasks[i].deadline = new Date(tasks[i].deadline).toLocaleDateString();
-      }
-      tasks[i] = {"task": tasks[i]};
-    }
-    $('#list_tasks').html(Handlebars.templates['tasks']({tasks: tasks}));
-    attachJQuery();
+    displayTasks(tasks);
+  });
+}
+
+function reloadFilter(filterid) {
+  // synthesize filter query
+  var query_string;
+  var today = new Date();
+  var endDate = new Date();
+  switch(filterid) {
+    case "filter_shirked":
+      endDate.setDate(endDate.getDate() - 1);
+      query_string = "completed=0&endDate=" + endDate.toString();
+      break;
+    case "filter_today":
+      query_string = "completed=0&endDate=" + today.toString() + "&startDate=" + today.toString();
+      break;
+    case "filter_next7":
+      endDate.setDate(endDate.getDate() + 7);
+      query_string = "completed=0&startDate=" + today.toString() + "&endDate=" + endDate.toString();
+      break;
+    case "filter_next30":
+      endDate.setDate(endDate.getDate() + 30);
+      query_string = "completed=0&startDate=" + today.toString() + "&endDate=" + endDate.toString();
+      break;
+    default:
+      query_string = "completed=0";
+      break;
+  }
+  console.log(query_string);
+
+  $(".list_header").hide(0); // hide title and new
+
+  tasks_get_filter(query_string, function (result, status, xhr) {
+    var tasks = result.tasks;
+
+    if (tasks.length == 0)
+      message_show("No Tasks", "There are no tasks that meet this filter's criteria.");
+    else
+      message_hide();
+
+    displayTasks(tasks);
   });
 }

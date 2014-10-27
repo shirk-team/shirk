@@ -88,7 +88,7 @@ h1#logo {
 
 /* LISTS */
 
-.selected_list {
+.selected_list, .selected_filter {
   background-color: lightgray !important;
 }
 
