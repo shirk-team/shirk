@@ -9,6 +9,16 @@ function create_elem(elem, id, classes) {
   return new_elem;
 }
 
+/////////////
+// FILTERS //
+/////////////
+
+function filter_select(filterid) {
+  $('.selected_list').removeClass('selected_list'); // clear list selection
+  $('.selected_filter').removeClass('selected_filter'); // clear list selection
+  $('.item_filter#' + filterid).addClass('selected_filter');
+}
+
 ///////////
 // LISTS //
 ///////////
@@ -48,7 +58,8 @@ function list_remove(listid) {
 }
 
 function list_select(listid) {
-  $('.selected_list').removeClass('selected_list'); // clear selection
+  $('.selected_list').removeClass('selected_list'); // clear list selection
+  $('.selected_filter').removeClass('selected_filter'); // clear list selection
   $('.item_list#' + listid).addClass('selected_list');
 }
 
@@ -97,6 +108,17 @@ function message_hide() {
   $('#message-text').html(""); // clear message
 }
 
+// Render Tasks into Task Pane
+function displayTasks(tasks) {
+  for (var i = 0; i < tasks.length; i++) {
+    if (tasks[i].deadline) {
+      tasks[i].deadline = new Date(tasks[i].deadline).toLocaleDateString();
+    }
+    tasks[i] = {"task": tasks[i]};
+  }
+  $('#list_tasks').html(Handlebars.templates['tasks']({tasks: tasks}));
+  attachJQuery();
+}
 
 function attachJQuery() {
   $('.checkbox').click(function() {
@@ -130,10 +152,10 @@ function attachJQuery() {
       case 1:
         $(this).addClass('icon square up ui dropdown edit-priority pointing');
         break;
-      case 0: 
+      case 0:
         $(this).addClass('icon square circle blank ui dropdown edit-priority pointing');
         break;
-      case -1: 
+      case -1:
         $(this).addClass('icon square down ui dropdown edit-priority pointing');
         break;
     }
@@ -144,17 +166,17 @@ function attachJQuery() {
     case '1':
       priorityDropdown.addClass('up');
       break;
-    case '0': 
+    case '0':
       priorityDropdown.addClass('circle blank');
       break;
-    case '-1': 
+    case '-1':
       priorityDropdown.addClass('down');
       break;
   }
 
   $(document).on('click', '.save-notes', function() {
     var newNotes = $(this).siblings().val();
-    
+
     if (newNotes == '') {
       $(this).removeClass('black inverted');
     } else {
@@ -167,7 +189,7 @@ function attachJQuery() {
     task_put(id, {task: {task_id: id, notes: newNotes}});
 
     $('#' + id + ' .edit-notes').popup('hide');
-    reloadTasks(list_selected_get());
+    reloadList(list_selected_get());
   });
 
   $(document).on('click', '.save-deadline', function() {
@@ -185,7 +207,7 @@ function attachJQuery() {
     task_put(id, {task: {task_id: id, deadline: new Date(newDeadline)}});
 
     $('#' + id + ' .edit-deadline').popup('hide');
-    reloadTasks(list_selected_get());
+    reloadList(list_selected_get());
   });
 }
 
