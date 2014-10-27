@@ -115,3 +115,15 @@ h1#logo {
   opacity: .5;
   text-decoration: line-through;
 }
+
+.ui.popup .ui.button.save {
+  display: inline-block;
+}
+
+.ui.popup {
+  text-align: right;
+}
+
+.date {
+  margin-right: 1em;
+}
