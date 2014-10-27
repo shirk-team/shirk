@@ -83,17 +83,26 @@ function attachJQuery() {
         position:"bottom center",
         on: "click"
     });
+
     $(document).on('click', '.save-notes', function() {
-      var textArea = $(this).siblings();
-      var newNotes = textArea.val();
+      var newNotes = $(this).siblings().val();
       var id = $(this).attr('task');
-      var task = {
-        task_id: id,
-        notes: newNotes
-      };
+
       // TODO: error handling
-      task_put(id, {task: task});
+      task_put(id, {task: {task_id: id, notes: newNotes}});
+
       $('#' + id + ' .edit-notes').popup('hide');
+      reloadTasks(list_selected_get());
+    });
+
+    $(document).on('click', '.save-deadline', function() {
+      var newDeadline = $(this).siblings().val();
+      var id = $(this).attr('task');
+
+      // TODO: error handling
+      task_put(id, {task: {task_id: id, deadline: new Date(newDeadline)}});
+
+      $('#' + id + ' .edit-deadline').popup('hide');
       reloadTasks(list_selected_get());
     });
 }
