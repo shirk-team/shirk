@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="/vendor/jquery-2.1.1.js"></script>
     <script type="text/javascript" src="/vendor/semantic-ui/javascript/semantic.min.js"></script>
+    <script type="text/javascript" src="/vendor/handlebars.runtime.js"></script>
 
     <link rel='stylesheet' href='/vendor/semantic-ui/css/semantic.min.css' />
     <link rel='stylesheet' href='/css/main.css' />
 
+    <script type="text/javascript" src="/js/templates.js"></script>
     <script type="text/javascript" src="/js/helpers.js"></script>
     <script type="text/javascript" src="/js/main-client.js"></script>
     <script type="text/javascript" src="/js/main-ui.js"></script>
@@ -37,12 +39,44 @@
 
     <main>
       <div class="main-content">
-      <div class="ui two column grid listing">
+      <div class="ui two column grid no-margin full-height">
 
         <!-- Lists - Left Column -->
-        <div id="col-left" class="column listing">
-          <div class="ui raised segment listing">
-            <!-- `List` Label -->
+        <div id="col-left" class="column no-margin full-height">
+          <div class="ui raised segment autoscroll no-margin full-height">
+            <!-- `Filters` Label -->
+            <div class="ui ribbon teal label">
+              <i class="ui icon list"></i>
+              Filters
+            </div>
+            <div id="list_filters" class="ui celled animated selection list">
+              <!-- Filters -->
+              <div id="filter_shirked" class="item item_filter">
+                <i class="icon warning"></i>
+                <div class="content">
+                  <div class="header">Shirked</div>
+                </div>
+              </div>
+              <div id="filter_today" class="item item_filter">
+                <i class="icon bullseye"></i>
+                <div class="content">
+                  <div class="header">Today</div>
+                </div>
+              </div>
+              <div id="filter_next7" class="item item_filter">
+                <i class="icon time"></i>
+                <div class="content">
+                  <div class="header">Next 7 Days</div>
+                </div>
+              </div>
+              <div id="filter_next30" class="item item_filter">
+                <i class="icon time"></i>
+                <div class="content">
+                  <div class="header">Next 30 Days</div>
+                </div>
+              </div>
+            </div>
+            <!-- `Lists` Label -->
             <div class="ui ribbon teal label">
               <i class="ui icon list"></i>
               Lists
@@ -54,13 +88,13 @@
         </div>
 
         <!-- Tasks - Right Column -->
-        <div id="col-right" class="column listing">
-          <div class="ui piled segment listing">
+        <div id="col-right" class="column no-margin full-height">
+          <div class="ui piled segment autoscroll no-margin full-height">
 
             <div class="ui column grid middle aligned">
               <div class="row">
 
-                <!-- `Task` Label -->
+                <!-- `Tasks` Label -->
                 <div class="five wide column left aligned no-margin">
                   <div class="ui ribbon teal label">
                     <i class="ui icon checked checkbox"></i>

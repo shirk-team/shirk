@@ -48,16 +48,6 @@ function tasks_clear() {
   $('#list_tasks').html("");
 }
 
-function task_add(title, taskid, priority, deadline, notes) {
-  var item = create_elem("div", taskid, "item item_task"); // new row
-  var icon = create_elem("i", "", "icon empty checkbox"); // checkbox
-  var content = create_elem("div", "", "content"); // title
-  content.html(title);
-  item.append(icon);
-  item.append(content);
-  $('#list_tasks').append(item);
-}
-
 // TODO(tdivita): Task Add Button Behaviors
 
 function task_status(taskid, complete) {
@@ -91,6 +81,26 @@ function message_hide() {
   $('#message-text').html(""); // clear message
 }
 
+
+function attachJQuery() {
+    $('.popup-button').popup({
+        position:"bottom center",
+        on: "click"
+    });
+    $(document).on('click', '.save-notes', function() {
+      var textArea = $(this).siblings();
+      var newNotes = textArea.val();
+      var id = $(this).attr('task');
+      var task = {
+        task_id: id,
+        notes: newNotes
+      };
+      // TODO: error handling
+      task_put(id, {task: task});
+      $('#' + id + ' .edit-notes').popup('hide');
+      reloadTasks(list_selected_get());
+    });
+}
 
 $(document).ready(function () {
   // Logout Label
