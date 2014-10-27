@@ -82,6 +82,17 @@ function task_get(taskid, callback) {
   });
 }
 
+function task_create(task, callback) {
+    $.ajax({
+        url : '/tasks/',
+        type: 'POST',
+        async: false,
+        contentType: "application/json",
+        data: JSON.stringify({"task": task}),
+        success: callback
+    });
+}
+
 function task_put(taskid, data, callback) {
     $.ajax({
         url: '/tasks/' + taskid,
