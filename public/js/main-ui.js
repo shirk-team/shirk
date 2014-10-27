@@ -75,8 +75,6 @@ function tasks_clear() {
   $('#list_tasks').html("");
 }
 
-// TODO(tdivita): Task Add Button Behaviors
-
 function task_status(taskid, complete) {
   var item = $('.item_task#' + taskid); // select row
   var icon = item.children("i.icon").first(); // checkbox
@@ -221,6 +219,13 @@ function attachJQuery() {
 
     $('#' + id + ' .edit-deadline').popup('hide');
     reloadList(list_selected_get());
+  });
+
+  $(document).on('click', '.delete-task', function() {
+    var id = $(this).attr('task');
+    task_delete(id, function(result, status, xhr) {
+      task_remove(id);
+    });
   });
 }
 
