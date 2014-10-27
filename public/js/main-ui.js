@@ -111,8 +111,20 @@ function message_hide() {
 // Render Tasks into Task Pane
 function displayTasks(tasks) {
   for (var i = 0; i < tasks.length; i++) {
+    // format date
     if (tasks[i].deadline) {
-      tasks[i].deadline = new Date(tasks[i].deadline).toLocaleDateString();
+      var deadline = new Date(tasks[i].deadline);
+      var today = new Date();
+      var tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      if (deadline.toDateString() === today.toDateString()) // today
+        tasks[i].deadline = "Today";
+      else if (deadline.toDateString() === tomorrow.toDateString()) // tomorrow
+        tasks[i].deadline = "Tomorrow";
+      else if (deadline.valueOf() <= today.valueOf()) // overdue
+        tasks[i].deadline = moment(deadline).startOf('day').fromNow();
+      else // future
+        tasks[i].deadline = moment(deadline).format("ddd, MMM D YYYY");
     }
     tasks[i] = {"task": tasks[i]};
   }
@@ -200,7 +212,7 @@ function attachJQuery() {
     } else {
       $(this).addClass('black inverted');
     }
-    
+
     var id = $(this).attr('task');
 
     // TODO: error handling

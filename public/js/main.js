@@ -1,14 +1,80 @@
 Handlebars.registerPartial('tasks', Handlebars.templates['tasks']);
 Handlebars.registerPartial('task', Handlebars.templates['task']);
 
-$(document).ready(function() {
-  $('.button#logout').click(function() {
-      $.ajax({
-          url : '/logout',
-          type: 'POST',
-          success: overwritePage
-      });
+////////////////////////
+// Reload List/Filter //
+////////////////////////
+
+function reloadList(listid) {
+  list_get(listid, function (result, status, xhr) {
+    $("#task-list-title-input").val(result.list.title); // list title
+    $(".list_header").show(0);
+    var tasks = result.tasks;
+
+    if (tasks.length == 0)
+      message_show("No Tasks", "There are no tasks in this list to display.");
+    else
+      message_hide();
+
+    displayTasks(tasks);
   });
+}
+
+function reloadFilter(filterid) {
+  // synthesize filter query
+  var query_string;
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  switch(filterid) {
+    case "filter_shirked":
+      endDate.setDate(endDate.getDate() - 1);
+      query_string = "completed=0&endDate=\"" + endDate.toString() + "\"";
+      break;
+    case "filter_today":
+      query_string = "completed=0&endDate=\"" + today.toString() + "\"&startDate=\"" + today.toString() + "\"";
+      break;
+    case "filter_next7":
+      endDate.setDate(endDate.getDate() + 7);
+      query_string = "completed=0&startDate=\"" + today.toString() + "\"&endDate=\"" + endDate.toString() + "\"";
+      break;
+    case "filter_next30":
+      endDate.setDate(endDate.getDate() + 30);
+      query_string = "completed=0&startDate=\"" + today.toString() + "\"&endDate=\"" + endDate.toString() + "\"";
+      break;
+    case "filter_completed":
+      query_string = "completed=1";
+      break;
+    default:
+      query_string = "completed=0";
+      break;
+  }
+  console.log(query_string);
+  $(".list_header").hide(0); // hide title and new
+
+  tasks_get_filter(query_string, function (result, status, xhr) {
+    var tasks = result.tasks;
+
+    if (tasks.length == 0)
+      message_show("No Tasks", "There are no tasks that meet this filter's criteria.");
+    else
+      message_hide();
+
+    displayTasks(tasks);
+  });
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+////////////////////
+// READY FUNCTION //
+////////////////////
+
+$(document).ready(function() {
+
+  ///////////
+  // Inits //
+  ///////////
 
   // Load Lists
   lists_get(function (result, status, xhr) {
@@ -20,7 +86,17 @@ $(document).ready(function() {
 
   // Welcome Message
   message_show("No List Selected", "Select a list or filter to view its tasks, or create a new list.");
+  $('.button#logout').click(function() {
+      $.ajax({
+          url : '/logout',
+          type: 'POST',
+          success: overwritePage
+      });
+  });
 
+  ///////////////
+  // Listeners //
+  ///////////////
 
   // List Selection
   $(document).on("click", ".item_list", function(event) {
@@ -42,19 +118,18 @@ $(document).ready(function() {
     reloadFilter(filterid);
   });
 
-  // When the add list button is clicked, display a list creation popup
+  // Popup Add List/Task
   $('#add-list').popup({
     on: "click",
     position: "bottom center"
   });
 
-  // When the add task button is clicked, display a task creation popup
   $('#add-task').popup({
     on: "click",
     position: "bottom center"
   });
 
-  // Treat the new task priority buttons as a group where only one can be selected at a time
+  // New Task - Priority
   $(document).on("click", ".create-priority-button", function(event) {
     var clickedId = event.currentTarget.id;
     var button = $("#" + clickedId);
@@ -67,7 +142,7 @@ $(document).ready(function() {
     });
   });
 
-  // When the new list save button is clicked, create the new list and add it to the UI
+  // New List - Save
   $(document).on("click", "#new-list-save", function() {
     var title = $("#new-list-title").val();
     list_create(title, function(result, status, xhr) {
@@ -76,7 +151,7 @@ $(document).ready(function() {
     });
   });
 
-  // When the new task save button is clicked, create the new task and add it to the UI
+  // New Task - Save
   $(document).on("click", "#new-task-save", function() {
     var title = $("#new-task-title").val();
     var notes = $("#new-task-notes").val();
@@ -94,10 +169,10 @@ $(document).ready(function() {
       case "high-priority":
         priority = 1;
         break;
-      case "neutral-priority": 
+      case "neutral-priority":
         priority = 0;
         break;
-      case "low-priority": 
+      case "low-priority":
         priority = -1;
         break;
     }
@@ -117,7 +192,7 @@ $(document).ready(function() {
     });
   });
 
-  // When the list title save button is clicked, save the title and update it in the display
+  // List - Rename
   $('#list-title-save').click(function(event){
     var listid = list_selected_get();
     var newTitle = $("#task-list-title-input").val();
@@ -128,73 +203,10 @@ $(document).ready(function() {
     });
   });
 
-  // If the user clicks out of the edit box without saving, reset the title to what it was
-  /*
-  * TODO(tdivita): This is broken and needs to be fixed. It works except for that it looks
-  * for the wrong thing losing focus. Looking at the input doesn't work because then you
-  * can't click save with your new title.
-  */
+  // List - Revert Rename
   $("#task-list-title").blur(function() {
     var listid = list_selected_get();
     var oldTitle = $("#" + listid + " .header").html();
     $("#task-list-title-input").val(oldTitle);
   });
 });
-
-function reloadList(listid) {
-  list_get(listid, function (result, status, xhr) {
-    $("#task-list-title-input").val(result.list.title); // list title
-    $(".list_header").show(0);
-    var tasks = result.tasks;
-
-    if (tasks.length == 0)
-      message_show("No Tasks", "There are no tasks in this list to display.");
-    else
-      message_hide();
-
-    displayTasks(tasks);
-  });
-}
-
-function reloadFilter(filterid) {
-  // synthesize filter query
-  var query_string;
-  var today = new Date();
-  var endDate = new Date();
-  switch(filterid) {
-    case "filter_shirked":
-      endDate.setDate(endDate.getDate() - 1);
-      query_string = "completed=0&endDate=" + endDate.toString();
-      break;
-    case "filter_today":
-      query_string = "completed=0&endDate=" + today.toString() + "&startDate=" + today.toString();
-      break;
-    case "filter_next7":
-      endDate.setDate(endDate.getDate() + 7);
-      query_string = "completed=0&startDate=" + today.toString() + "&endDate=" + endDate.toString();
-      break;
-    case "filter_next30":
-      endDate.setDate(endDate.getDate() + 30);
-      query_string = "completed=0&startDate=" + today.toString() + "&endDate=" + endDate.toString();
-      break;
-    case "filter_completed":
-      query_string = "completed=1";
-      break;
-    default:
-      query_string = "completed=0";
-      break;
-  }
-
-  $(".list_header").hide(0); // hide title and new
-
-  tasks_get_filter(query_string, function (result, status, xhr) {
-    var tasks = result.tasks;
-
-    if (tasks.length == 0)
-      message_show("No Tasks", "There are no tasks that meet this filter's criteria.");
-    else
-      message_hide();
-
-    displayTasks(tasks);
-  });
-}

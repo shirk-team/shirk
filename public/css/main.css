@@ -30,7 +30,7 @@ main {
   left: 0;
   bottom: 0;
 
-  width: 750px;
+  width: 800px;
   margin: 20px auto;
   padding: 0 20px;
 }
@@ -60,18 +60,23 @@ h1#logo {
   min-height: 100% !important;
 }
 
+.full-width {
+  width: 100%;
+}
+
 .autoscroll {
   overflow: auto;
 }
 
+
 #col-left {
-  width: 40% !important;
+  width: 35% !important;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
 #col-right {
-  width: 60% !important;
+  width: 65% !important;
   padding-top: 10px;
   padding-bottom: 10px;
 }
@@ -84,6 +89,21 @@ h1#logo {
 
 #task-list-title-input {
   text-align: center;
+}
+
+.task-info {
+  display: inline-block;
+  line-height: 12px;
+}
+
+.task-title {
+  font-weight: 400;
+  line-height: initial;
+}
+
+.task-deadline {
+  font-style: italic;
+  font-size: 0.6em;
 }
 
 /* LISTS */
@@ -101,10 +121,6 @@ h1#logo {
   margin-right: 0;
 }
 
-.full-width {
-  width: 100%;
-}
-
 .hidden {
   visibility: hidden;
 }
@@ -113,5 +129,5 @@ h1#logo {
   background-color: #A1CF64;
   border-radius: .25em;
   opacity: .5;
-  text-decoration: line-through;
+  /*text-decoration: line-through;*/
 }
