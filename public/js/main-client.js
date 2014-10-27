@@ -102,3 +102,11 @@ function task_put(taskid, data, callback) {
     success: callback
   });
 }
+
+function task_delete(taskid, callback) {
+  $.ajax({
+    url: '/tasks/' + taskid,
+    type: 'DELETE',
+    success: callback
+  });
+}

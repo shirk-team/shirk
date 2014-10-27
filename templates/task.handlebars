@@ -15,27 +15,27 @@
       {{/if}}
     </div>
 
-    <div class="column left aligned no-margin eight wide">
+    <div class="column left aligned no-margin seven wide">
       <div class="task-info">
         <span class="task-title">{{task.title}}</span><br>
         <span class="task-deadline">{{task.deadlineString}}</span>
       </div>
     </div>
 
-    <div class="column right aligned no-margin six wide">
+    <div class="column right aligned no-margin seven wide">
       {{#if task.notes}}
-        <i class="icon square text file outline popup-button edit-notes black inverted" data-html='{{saveNotes task}}'></i>
+        <i class="icon square text file outline popup-button edit-notes black inverted column two wide no-margin" data-html='{{saveNotes task}}'></i>
       {{else}}
-        <i class="icon square text file outline popup-button edit-notes" data-html='{{saveNotes task}}'></i>
+        <i class="icon square text file outline popup-button edit-notes column two wide no-margin" data-html='{{saveNotes task}}'></i>
       {{/if}}
 
       {{#if task.deadline}}
-        <i class="icon square calendar popup-button edit-deadline black inverted" data-html="{{saveDeadline task}}"></i>
+        <i class="icon square calendar popup-button edit-deadline black inverted column two wide no-margin" data-html="{{saveDeadline task}}"></i>
       {{else}}
-        <i class="icon square calendar popup-button edit-deadline" data-html="{{saveDeadline task}}"></i>
+        <i class="icon square calendar popup-button edit-deadline column two wide no-margin" data-html="{{saveDeadline task}}"></i>
       {{/if}}
 
-      <i class="icon square ui dropdown edit-priority pointing" task={{task._id}} priority={{task.priority}}>
+      <i class="icon square ui dropdown edit-priority pointing column two wide no-margin" task={{task._id}} priority={{task.priority}}>
         <div class="menu ui transition hidden">
           <div class="item" data-value="1">
             <i class="icon up menu-icon"></i>
@@ -47,6 +47,8 @@
             <i class="icon down menu-icon"></i>
           </div>
         </div>
+      </i>
+      <i class="icon square remove delete-task column one wide no-margin" task={{task._id}}>
       </i>
     </div>
   </div>
