@@ -75,6 +75,12 @@
                   <div class="header">Next 30 Days</div>
                 </div>
               </div>
+              <div id="filter_completed" class="item item_filter">
+                <i class="icon checked checkbox"></i>
+                <div class="content">
+                  <div class="header">Completed</div>
+                </div>
+              </div>
             </div>
             <div class="ui two column grid middle aligned">
               <!-- `Lists` Label -->
@@ -85,17 +91,19 @@
                 </div>
               </div>
               <div class="column right aligned">
-                <div id="add-list" class="ui button tiny inverted blue">
+                <div id="add-list" class="ui button tiny inverted blue popup-button" data-html="
+                    <div class='ui form'>
+                      <div class='ui action input list_header'>
+                        <input id='new-list-title' type='text' placeholder='List Title'>
+                        <div id='new-list-save' class='ui icon button'><i class='save icon'></i></div>
+                      </div>
+                    </div>
+                  ">
                   <span>
                     <i class="ui icon add"></i>
                   </span>
                 </div>
-                <div id="add-list-popup" class="ui popup">
-                  <div>
-                    <!-- TODO(tdivita): Make this popup have form contents and do stuff. -->
-                    Popup!
-                  </div>
-                </div>
+                
               </div>
             </div>
             <div id="list_lists" class="ui celled selection list">
@@ -129,16 +137,15 @@
 
                 <!-- Task Add Button -->
                 <div class="three wide column right aligned no-margin">
-                  <div id="add-task" class="ui button tiny inverted blue list_header">
-                    <span>
-                      <i class="ui icon add"></i>
-                    </span>
-                  </div>
-                  <div id="add-task-popup" class="ui popup">
+                  <div id="add-task" class="ui button tiny inverted blue list_header" data-html='
                     <div>
                       <!-- TODO(tdivita): Make this popup have form contents and do stuff. -->
                       Popup!
                     </div>
+                  '>
+                    <span>
+                      <i class="ui icon add"></i>
+                    </span>
                   </div>
                 </div>
 
@@ -163,7 +170,5 @@
       </div>
       </div>
     </main>
-
-
   </body>
 </html>

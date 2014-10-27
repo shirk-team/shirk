@@ -96,3 +96,22 @@ h1#logo {
   display: block;
   width: inherit;
 }
+
+.ui.dropdown .menu .item .icon.menu-icon {
+  margin-right: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.complete {
+  background-color: #A1CF64;
+  border-radius: .25em;
+  opacity: .5;
+  text-decoration: line-through;
+}

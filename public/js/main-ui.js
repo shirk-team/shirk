@@ -25,11 +25,27 @@ function filter_select(filterid) {
 
 function list_add(title, listid) {
   var item = create_elem("div", listid, "item item_list"); // new row
-  var content = create_elem("div", "", "content");
-  var header = create_elem("div", "", "header"); // list title
+  var content = create_elem("div", "", "content ui column grid middle aligned full-width");
+  var header = create_elem("span", "", "header column fifteen wide no-margin"); // list title
+  var deleteButton = create_elem("i", "", "icon remove delete-list column one wide no-margin hidden");
   header.html(title);
   content.append(header);
+  content.append(deleteButton);
   item.append(content);
+
+  item.hover(function() {
+    deleteButton.css({visibility: 'visible'});
+  }, function() {
+    deleteButton.css({visibility: 'hidden'});
+  });
+
+  deleteButton.click(function(event) {
+    // TODO: error handling
+    list_delete(listid);
+    item.remove();
+    event.stopPropagation();
+  });
+
   $('#list_lists').append(item);
 }
 
@@ -105,32 +121,87 @@ function displayTasks(tasks) {
 }
 
 function attachJQuery() {
-    $('.popup-button').popup({
-        position:"bottom center",
-        on: "click"
-    });
+  $('.checkbox').click(function() {
+    $(this).toggleClass('checked');
+    var complete = $(this).hasClass('checked');
 
-    $(document).on('click', '.save-notes', function() {
-      var newNotes = $(this).siblings().val();
-      var id = $(this).attr('task');
+    var id = $(this).attr('task');
+    // TODO: error handling
+    task_put(id, {task: {task_id: id, completed: complete}});
 
-      // TODO: error handling
-      task_put(id, {task: {task_id: id, notes: newNotes}});
+    if (complete) {
+      $('#' + id).addClass('complete');
+    } else {
+      $('#' + id).removeClass('complete');
+    }
+  });
 
-      $('#' + id + ' .edit-notes').popup('hide');
-      reloadTasks(list_selected_get());
-    });
+  $('.popup-button').popup({
+    position:"bottom center",
+    on: "click"
+  });
 
-    $(document).on('click', '.save-deadline', function() {
-      var newDeadline = $(this).siblings().val();
-      var id = $(this).attr('task');
+  $('.ui.dropdown.edit-priority').dropdown({onChange: function(value, text) {
+    var id = $(this).attr('task');
 
-      // TODO: error handling
-      task_put(id, {task: {task_id: id, deadline: new Date(newDeadline)}});
+    // TODO: error handling
+    task_put(id, {task: {task_id: id, priority: value}});
 
-      $('#' + id + ' .edit-deadline').popup('hide');
-      reloadTasks(list_selected_get());
-    });
+    $(this).removeClass();
+    switch(value) {
+      case 1:
+        $(this).addClass('icon square up ui dropdown edit-priority pointing');
+        break;
+      case 0: 
+        $(this).addClass('icon square circle blank ui dropdown edit-priority pointing');
+        break;
+      case -1: 
+        $(this).addClass('icon square down ui dropdown edit-priority pointing');
+        break;
+    }
+  }});
+
+  var priorityDropdown = $('.edit-priority');
+  switch(priorityDropdown.attr('priority')) {
+    case '1':
+      priorityDropdown.addClass('up');
+      break;
+    case '0': 
+      priorityDropdown.addClass('circle blank');
+      break;
+    case '-1': 
+      priorityDropdown.addClass('down');
+      break;
+  }
+
+  $(document).on('click', '.save-notes', function() {
+    var newNotes = $(this).siblings().val();
+    
+    if (newNotes == '') {
+      $(this).removeClass('black inverted');
+    } else {
+      $(this).addClass('black inverted');
+    }
+
+    var id = $(this).attr('task');
+
+    // TODO: error handling
+    task_put(id, {task: {task_id: id, notes: newNotes}});
+
+    $('#' + id + ' .edit-notes').popup('hide');
+    reloadTasks(list_selected_get());
+  });
+
+  $(document).on('click', '.save-deadline', function() {
+    var newDeadline = $(this).siblings().val();
+    var id = $(this).attr('task');
+
+    // TODO: error handling
+    task_put(id, {task: {task_id: id, deadline: new Date(newDeadline)}});
+
+    $('#' + id + ' .edit-deadline').popup('hide');
+    reloadTasks(list_selected_get());
+  });
 }
 
 $(document).ready(function () {
