@@ -152,10 +152,10 @@ function attachJQuery() {
       case 1:
         $(this).addClass('icon square up ui dropdown edit-priority pointing');
         break;
-      case 0: 
+      case 0:
         $(this).addClass('icon square circle blank ui dropdown edit-priority pointing');
         break;
-      case -1: 
+      case -1:
         $(this).addClass('icon square down ui dropdown edit-priority pointing');
         break;
     }
@@ -166,17 +166,17 @@ function attachJQuery() {
     case '1':
       priorityDropdown.addClass('up');
       break;
-    case '0': 
+    case '0':
       priorityDropdown.addClass('circle blank');
       break;
-    case '-1': 
+    case '-1':
       priorityDropdown.addClass('down');
       break;
   }
 
   $(document).on('click', '.save-notes', function() {
     var newNotes = $(this).siblings().val();
-    
+
     if (newNotes == '') {
       $(this).removeClass('black inverted');
     } else {
@@ -189,7 +189,7 @@ function attachJQuery() {
     task_put(id, {task: {task_id: id, notes: newNotes}});
 
     $('#' + id + ' .edit-notes').popup('hide');
-    reloadTasks(list_selected_get());
+    reloadList(list_selected_get());
   });
 
   $(document).on('click', '.save-deadline', function() {
@@ -200,7 +200,7 @@ function attachJQuery() {
     task_put(id, {task: {task_id: id, deadline: new Date(newDeadline)}});
 
     $('#' + id + ' .edit-deadline').popup('hide');
-    reloadTasks(list_selected_get());
+    reloadList(list_selected_get());
   });
 }
 

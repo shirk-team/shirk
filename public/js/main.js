@@ -29,7 +29,7 @@ $(document).ready(function() {
     var listid = selected.id;
     list_select(listid); // highlight selected
     // Retrieve and Display
-    reloadTasks(listid);
+    reloadList(listid);
   });
 
   // Filter Selection
@@ -87,8 +87,7 @@ $(document).ready(function() {
   });
 });
 
-// TODO: refactor to reloadLists
-function reloadTasks(listid) {
+function reloadList(listid) {
   list_get(listid, function (result, status, xhr) {
     $("#task-list-title-input").val(result.list.title); // list title
     $(".list_header").show(0);
@@ -124,11 +123,13 @@ function reloadFilter(filterid) {
       endDate.setDate(endDate.getDate() + 30);
       query_string = "completed=0&startDate=" + today.toString() + "&endDate=" + endDate.toString();
       break;
+    case "filter_completed":
+      query_string = "completed=1";
+      break;
     default:
       query_string = "completed=0";
       break;
   }
-  console.log(query_string);
 
   $(".list_header").hide(0); // hide title and new
 
