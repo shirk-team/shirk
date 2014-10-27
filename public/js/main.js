@@ -49,7 +49,7 @@ function reloadFilter(filterid) {
       query_string = "completed=0";
       break;
   }
-  console.log(query_string);
+
   $(".list_header").hide(0); // hide title and new
 
   tasks_get_filter(query_string, function (result, status, xhr) {
