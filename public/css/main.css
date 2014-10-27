@@ -106,6 +106,14 @@ h1#logo {
   font-size: 0.6em;
 }
 
+.item_task {
+  /* prevent text selection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 /* LISTS */
 
 .selected_list, .selected_filter {
@@ -146,10 +154,6 @@ h1#logo {
 
 .ui.popup .ui.button.save {
   display: inline-block;
-}
-
-.ui.popup {
-  text-align: right;
 }
 
 .date {
