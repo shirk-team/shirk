@@ -31,6 +31,13 @@ $(document).ready(function() {
     reloadTasks(listid);
   });
 
+  // When the add list button is clicked, display a list creation popup
+  $('#add-list').popup({
+    inline: true,
+    on: "click",
+    position: "bottom center"
+  });
+
   // When the add task button is clicked, display a task creation popup
   $('#add-task').popup({
     inline: true,
@@ -79,5 +86,3 @@ function reloadTasks(listid) {
     attachJQuery();
   });
 }
-
-// TODO(tdivita): Listener for Task Add Button
