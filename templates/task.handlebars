@@ -1,4 +1,5 @@
-<div id="{{task._id}}" class="item item_task ui two column grid middle aligned">
+<div id="{{task._id}}" class="item item_task">
+  <div class="ui two column grid middle aligned">
     <span class="column left aligned no-margin">
         <i class="icon empty checkbox"></i>
         <span>{{task.title}}</span>
@@ -7,6 +8,19 @@
     <span class="column right aligned no-margin">
       <i class="icon square text file outline popup-button edit-notes" data-html="<div class='ui form'><textarea>{{task.notes}}</textarea><button class='ui button save-notes' task='{{task._id}}'>SAVE</button></div>"></i>
       <i class="icon square calendar popup-button edit-deadline" data-html="<div class='ui form'><input placeholder='MM/DD/YYYY' value={{task.deadline}}></input><button class='ui button save-deadline' task='{{task._id}}'>SAVE</button></div>"></i>
-      <i class="icon square circle blank"></i>
+      <i class="icon square ui dropdown edit-priority pointing" task={{task._id}} priority={{task.priority}}>
+        <div class="menu ui transition hidden">
+          <div class="item" data-value="1">
+            <i class="icon up menu-icon"></i>
+          </div>
+          <div class="item" data-value="0">
+            <i class="icon circle blank menu-icon"></i>
+          </div>
+          <div class="item" data-value="-1">
+            <i class="icon down menu-icon"></i>
+          </div>
+        </div>
+      </i>
     </span>
+  </div>
 </div>

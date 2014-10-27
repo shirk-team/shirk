@@ -158,7 +158,7 @@ router.put('/:id', function (req, res) {
 		if (req.body.task.notes) task.notes = req.body.task.notes;
 		if (req.body.task.list) task.list = req.body.task.list;
 		if (req.body.task.deadline) task.deadline = req.body.task.deadline;
-		if (req.body.task.priority) task.priority = req.body.task.priority;
+		if (req.body.task.priority !== undefined) task.priority = req.body.task.priority;
 		if (req.body.task.completed) task.completed = req.body.task.completed;
 
 		// Save the newly-edited task and return it.
