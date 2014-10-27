@@ -101,5 +101,10 @@ h1#logo {
   margin-right: 0;
 }
 
+.full-width {
+  width: 100%;
+}
 
-
+.hidden {
+  visibility: hidden;
+}

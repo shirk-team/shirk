@@ -15,11 +15,18 @@ function create_elem(elem, id, classes) {
 
 function list_add(title, listid) {
   var item = create_elem("div", listid, "item item_list"); // new row
-  var content = create_elem("div", "", "content");
-  var header = create_elem("div", "", "header"); // list title
+  var content = create_elem("div", "", "content ui column grid middle aligned full-width");
+  var header = create_elem("span", "", "header column fifteen wide no-margin"); // list title
+  var deleteButton = create_elem("i", "", "icon remove delete-list column one wide no-margin hidden");
   header.html(title);
   content.append(header);
+  content.append(deleteButton);
   item.append(content);
+  item.hover(function() {
+    deleteButton.css({visibility: 'visible'});
+  }, function() {
+    deleteButton.css({visibility: 'hidden'});
+  });
   $('#list_lists').append(item);
 }
 
