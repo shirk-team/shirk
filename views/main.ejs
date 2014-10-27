@@ -85,12 +85,14 @@
                 </div>
               </div>
               <div class="column right aligned">
-                <div id="add-list" class="ui button tiny inverted blue popup-button" data-html='
-                  <div>
-                    <!-- TODO(tdivita): Make this popup have form contents and do stuff. -->
-                    Popup!
-                  </div>
-                '>
+                <div id="add-list" class="ui button tiny inverted blue popup-button" data-html="
+                    <div class='ui form'>
+                      <div class='ui action input list_header'>
+                        <input id='new-list-title' type='text' placeholder='List Title'>
+                        <div id='new-list-save' class='ui icon button'><i class='save icon'></i></div>
+                      </div>
+                    </div>
+                  ">
                   <span>
                     <i class="ui icon add"></i>
                   </span>

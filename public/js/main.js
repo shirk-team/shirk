@@ -22,7 +22,7 @@ $(document).ready(function() {
   message_show("No List Selected", "Select a list or filter to view its tasks, or create a new list.");
 
   // Fetch Tasks When List Selected
-  $('.item_list').click(function (event) {
+  $(document).on("click", ".item_list", function(event) {
     tasks_clear(); // clear task list
     var selected = event.currentTarget;
     var listid = selected.id;
@@ -41,6 +41,15 @@ $(document).ready(function() {
   $('#add-task').popup({
     on: "click",
     position: "bottom center"
+  });
+
+  // When the new list save button is clicked, create the new task and add it to the UI
+  $(document).on("click", "#new-list-save", function() {
+    var title = $("#new-list-title").val();
+    list_create(title, function(result, status, xhr) {
+      list_add(result.list.title, result.list._id);
+      $("#add-list").popup("hide");
+    });
   });
 
   // When the list title save button is clicked, save the title and update it in the display
