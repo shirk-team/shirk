@@ -22,11 +22,20 @@ function list_add(title, listid) {
   content.append(header);
   content.append(deleteButton);
   item.append(content);
+
   item.hover(function() {
     deleteButton.css({visibility: 'visible'});
   }, function() {
     deleteButton.css({visibility: 'hidden'});
   });
+
+  deleteButton.click(function(event) {
+    // TODO: error handling
+    list_delete(listid);
+    item.remove();
+    event.stopPropagation();
+  });
+
   $('#list_lists').append(item);
 }
 

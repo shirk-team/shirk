@@ -51,6 +51,14 @@ function list_put(newName, listid, callback) {
     });
 }
 
+function list_delete(listid, callback) {
+  $.ajax({
+    url: '/lists/' + listid,
+    type: 'DELETE',
+    success: callback
+  });
+}
+
 //////////
 // TASK //
 //////////
