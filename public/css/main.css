@@ -88,7 +88,7 @@ h1#logo {
 
 /* LISTS */
 
-.selected_list {
+.selected_list, .selected_filter {
   background-color: lightgray !important;
 }
 
@@ -101,5 +101,17 @@ h1#logo {
   margin-right: 0;
 }
 
+.full-width {
+  width: 100%;
+}
 
+.hidden {
+  visibility: hidden;
+}
 
+.complete {
+  background-color: #A1CF64;
+  border-radius: .25em;
+  opacity: .5;
+  text-decoration: line-through;
+}

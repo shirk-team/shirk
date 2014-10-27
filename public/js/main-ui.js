@@ -9,17 +9,43 @@ function create_elem(elem, id, classes) {
   return new_elem;
 }
 
+/////////////
+// FILTERS //
+/////////////
+
+function filter_select(filterid) {
+  $('.selected_list').removeClass('selected_list'); // clear list selection
+  $('.selected_filter').removeClass('selected_filter'); // clear list selection
+  $('.item_filter#' + filterid).addClass('selected_filter');
+}
+
 ///////////
 // LISTS //
 ///////////
 
 function list_add(title, listid) {
   var item = create_elem("div", listid, "item item_list"); // new row
-  var content = create_elem("div", "", "content");
-  var header = create_elem("div", "", "header"); // list title
+  var content = create_elem("div", "", "content ui column grid middle aligned full-width");
+  var header = create_elem("span", "", "header column fifteen wide no-margin"); // list title
+  var deleteButton = create_elem("i", "", "icon remove delete-list column one wide no-margin hidden");
   header.html(title);
   content.append(header);
+  content.append(deleteButton);
   item.append(content);
+
+  item.hover(function() {
+    deleteButton.css({visibility: 'visible'});
+  }, function() {
+    deleteButton.css({visibility: 'hidden'});
+  });
+
+  deleteButton.click(function(event) {
+    // TODO: error handling
+    list_delete(listid);
+    item.remove();
+    event.stopPropagation();
+  });
+
   $('#list_lists').append(item);
 }
 
@@ -32,7 +58,8 @@ function list_remove(listid) {
 }
 
 function list_select(listid) {
-  $('.selected_list').removeClass('selected_list'); // clear selection
+  $('.selected_list').removeClass('selected_list'); // clear list selection
+  $('.selected_filter').removeClass('selected_filter'); // clear list selection
   $('.item_list#' + listid).addClass('selected_list');
 }
 
@@ -81,67 +108,100 @@ function message_hide() {
   $('#message-text').html(""); // clear message
 }
 
+// Render Tasks into Task Pane
+function displayTasks(tasks) {
+  for (var i = 0; i < tasks.length; i++) {
+    if (tasks[i].deadline) {
+      tasks[i].deadline = new Date(tasks[i].deadline).toLocaleDateString();
+    }
+    tasks[i] = {"task": tasks[i]};
+  }
+  $('#list_tasks').html(Handlebars.templates['tasks']({tasks: tasks}));
+  attachJQuery();
+}
 
 function attachJQuery() {
-    $('.popup-button').popup({
-        position:"bottom center",
-        on: "click"
-    });
+  $('.checkbox').click(function() {
+    $(this).toggleClass('checked');
+    var complete = $(this).hasClass('checked');
 
-    $('.ui.dropdown.edit-priority').dropdown({onChange: function(value, text) {
-      var id = $(this).attr('task');
+    var id = $(this).attr('task');
+    // TODO: error handling
+    task_put(id, {task: {task_id: id, completed: complete}});
 
-      // TODO: error handling
-      task_put(id, {task: {task_id: id, priority: value}});
+    if (complete) {
+      $('#' + id).addClass('complete');
+    } else {
+      $('#' + id).removeClass('complete');
+    }
+  });
 
-      $(this).removeClass();
-      switch(value) {
-        case 1:
-          $(this).addClass('icon square up ui dropdown edit-priority pointing');
-          break;
-        case 0: 
-          $(this).addClass('icon square circle blank ui dropdown edit-priority pointing');
-          break;
-        case -1: 
-          $(this).addClass('icon square down ui dropdown edit-priority pointing');
-          break;
-      }
-    }});
+  $('.popup-button').popup({
+    position:"bottom center",
+    on: "click"
+  });
 
-    var priorityDropdown = $('.edit-priority');
-    switch(priorityDropdown.attr('priority')) {
-      case '1':
-        priorityDropdown.addClass('up');
+  $('.ui.dropdown.edit-priority').dropdown({onChange: function(value, text) {
+    var id = $(this).attr('task');
+
+    // TODO: error handling
+    task_put(id, {task: {task_id: id, priority: value}});
+
+    $(this).removeClass();
+    switch(value) {
+      case 1:
+        $(this).addClass('icon square up ui dropdown edit-priority pointing');
         break;
-      case '0': 
-        priorityDropdown.addClass('circle blank');
+      case 0:
+        $(this).addClass('icon square circle blank ui dropdown edit-priority pointing');
         break;
-      case '-1': 
-        priorityDropdown.addClass('down');
+      case -1:
+        $(this).addClass('icon square down ui dropdown edit-priority pointing');
         break;
     }
+  }});
 
-    $(document).on('click', '.save-notes', function() {
-      var newNotes = $(this).siblings().val();
-      var id = $(this).attr('task');
+  var priorityDropdown = $('.edit-priority');
+  switch(priorityDropdown.attr('priority')) {
+    case '1':
+      priorityDropdown.addClass('up');
+      break;
+    case '0':
+      priorityDropdown.addClass('circle blank');
+      break;
+    case '-1':
+      priorityDropdown.addClass('down');
+      break;
+  }
 
-      // TODO: error handling
-      task_put(id, {task: {task_id: id, notes: newNotes}});
+  $(document).on('click', '.save-notes', function() {
+    var newNotes = $(this).siblings().val();
 
-      $('#' + id + ' .edit-notes').popup('hide');
-      reloadTasks(list_selected_get());
-    });
+    if (newNotes == '') {
+      $(this).removeClass('black inverted');
+    } else {
+      $(this).addClass('black inverted');
+    }
 
-    $(document).on('click', '.save-deadline', function() {
-      var newDeadline = $(this).siblings().val();
-      var id = $(this).attr('task');
+    var id = $(this).attr('task');
 
-      // TODO: error handling
-      task_put(id, {task: {task_id: id, deadline: new Date(newDeadline)}});
+    // TODO: error handling
+    task_put(id, {task: {task_id: id, notes: newNotes}});
 
-      $('#' + id + ' .edit-deadline').popup('hide');
-      reloadTasks(list_selected_get());
-    });
+    $('#' + id + ' .edit-notes').popup('hide');
+    reloadList(list_selected_get());
+  });
+
+  $(document).on('click', '.save-deadline', function() {
+    var newDeadline = $(this).siblings().val();
+    var id = $(this).attr('task');
+
+    // TODO: error handling
+    task_put(id, {task: {task_id: id, deadline: new Date(newDeadline)}});
+
+    $('#' + id + ' .edit-deadline').popup('hide');
+    reloadList(list_selected_get());
+  });
 }
 
 $(document).ready(function () {
