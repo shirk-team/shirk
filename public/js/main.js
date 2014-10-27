@@ -42,11 +42,30 @@ $(document).ready(function() {
     });
   });
 
-  // When the Add Task button is clicked, display a task creation popup
+  // When the add task button is clicked, display a task creation popup
   $('#add-task').popup({
     inline: true,
     on: "click",
     position: "bottom center"
+  });
+
+  // When the list title save button is clicked, save the title and update it in the display
+  $('#list-title-save').click(function(event){
+    var listid = list_selected_get();
+    var newTitle = $("#task-list-title-input").val();
+
+    list_put(newTitle, listid, function(result, status, xhr) {
+      // Update the title in the sidebar list of lists
+      $("#" + listid + " .header").html(result.list.title);
+    });
+  });
+
+  // If the user clicks out of the edit box without saving, reset the title to what it was
+  // TODO(tdivita): This is broken and needs to be fixed.
+  $("#task-list-title").blur(function() {
+    var listid = list_selected_get();
+    var oldTitle = $("#" + listid + " .header").html();
+    $("#task-list-title-input").val(oldTitle);
   });
 });
 
