@@ -1,8 +1,16 @@
-<div id="{{task._id}}" class="item item_task">
+{{#if task.completed}}
+  <div id="{{task._id}}" class="item item_task complete">
+{{else}}
+  <div id="{{task._id}}" class="item item_task">
+{{/if}}
   <div class="ui grid middle aligned full-width">
 
     <span class="column left aligned no-margin ten wide">
-      <i class="icon empty checkbox" task={{task._id}}></i>
+      {{#if task.completed}}
+        <i class="icon empty checkbox checked" task={{task._id}}></i>
+      {{else}}
+        <i class="icon empty checkbox" task={{task._id}}></i>
+      {{/if}}
       <span class="title">{{task.title}}</span>&nbsp;&nbsp;
       <span>{{task.deadline}}</span>
     </span>
