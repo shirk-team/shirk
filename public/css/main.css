@@ -56,6 +56,10 @@ h1#logo {
   height: 100% !important;
 }
 
+.full-height-min {
+  min-height: 100% !important;
+}
+
 .autoscroll {
   overflow: auto;
 }
