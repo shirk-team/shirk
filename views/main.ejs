@@ -93,7 +93,7 @@
               <div class="column right aligned">
                 <div id="add-list" class="ui button tiny inverted blue popup-button" data-html="
                     <div class='ui form'>
-                      <div class='ui action input list_header'>
+                      <div class='ui action input'>
                         <input id='new-list-title' type='text' placeholder='List Title'>
                         <div id='new-list-save' class='ui icon button'><i class='save icon'></i></div>
                       </div>
@@ -137,12 +137,34 @@
 
                 <!-- Task Add Button -->
                 <div class="three wide column right aligned no-margin">
-                  <div id="add-task" class="ui button tiny inverted blue list_header" data-html='
-                    <div>
-                      <!-- TODO(tdivita): Make this popup have form contents and do stuff. -->
-                      Popup!
+                  <div id="add-task" class="ui button tiny inverted blue list_header" data-html="
+                    <div class='ui form'>
+                      <div class='ui action input'>
+                        <input id='new-task-title' type='text' placeholder='Task Title'>
+                      </div>
+                      <div class='ui action input'>
+                        <textarea id='new-task-notes' type='text' placeholder='Notes about this task'></textarea>
+                      </div>
+                      <div class='ui action input'>
+                        <input id='new-task-deadline' type='text' placeholder='Deadline (MM/DD/YYYY)'>
+                      </div>
+                      <div class='ui action input'>
+                        Priority:
+                        <div id='new-task-priority' class='ui icon buttons'>
+                          <div id='high-priority' class='ui button create-priority-button'>
+                            <i class='icon up'></i>
+                          </div>
+                          <div id='neutral-priority' class='ui active button create-priority-button'>
+                            <i class='icon circle blank'></i>
+                          </div>
+                          <div id='low-priority' class='ui button create-priority-button'>
+                            <i class='icon down'></i>
+                          </div>
+                        </div>
+                      </div>  
+                      <div id='new-task-save' class='ui icon button'><i class='save icon'></i></div>
                     </div>
-                  '>
+                  ">
                     <span>
                       <i class="ui icon add"></i>
                     </span>

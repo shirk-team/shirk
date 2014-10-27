@@ -54,12 +54,66 @@ $(document).ready(function() {
     position: "bottom center"
   });
 
-  // When the new list save button is clicked, create the new task and add it to the UI
+  // Treat the new task priority buttons as a group where only one can be selected at a time
+  $(document).on("click", ".create-priority-button", function(event) {
+    var clickedId = event.currentTarget.id;
+    var button = $("#" + clickedId);
+    button.toggleClass("active");
+    var priorityButtons = ["high-priority", "neutral-priority", "low-priority"];
+    priorityButtons.forEach(function(buttonName) {
+      if (buttonName !== clickedId) {
+        $("#" + buttonName).removeClass("active");
+      }
+    });
+  });
+
+  // When the new list save button is clicked, create the new list and add it to the UI
   $(document).on("click", "#new-list-save", function() {
     var title = $("#new-list-title").val();
     list_create(title, function(result, status, xhr) {
       list_add(result.list.title, result.list._id);
       $("#add-list").popup("hide");
+    });
+  });
+
+  // When the new task save button is clicked, create the new task and add it to the UI
+  $(document).on("click", "#new-task-save", function() {
+    var title = $("#new-task-title").val();
+    var notes = $("#new-task-notes").val();
+    var listid = list_selected_get();
+
+    var deadlineInput = $("#new-task-deadline").val();
+    var deadline = undefined;
+    if (deadlineInput) deadline = deadlineInput;
+
+    var selectedButton = $("#new-task-priority .active").first().attr('id');
+    console.log(selectedButton);
+
+    var priority;
+    switch(selectedButton) {
+      case "high-priority":
+        priority = 1;
+        break;
+      case "neutral-priority": 
+        priority = 0;
+        break;
+      case "low-priority": 
+        priority = -1;
+        break;
+    }
+
+    var newTask = {
+      "title": title,
+      "notes": notes,
+      "list": listid,
+      "deadline": deadline,
+      "priority": priority
+    }
+
+    task_create(newTask, function(result, status, xhr) {
+      $("#add-task").popup("hide");
+      var listid = list_selected_get();
+      reloadList(listid);
     });
   });
 
