@@ -93,8 +93,8 @@ function attachJQuery() {
       };
       // TODO: error handling
       task_put(id, {task: task});
-      // reloadTasks(list_selected_get());
       $('#' + id + ' .edit-notes').popup('hide');
+      reloadTasks(list_selected_get());
     });
 }
 
