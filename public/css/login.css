@@ -1,17 +1,28 @@
 body {
     /* source: Semantic UI */
     font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif/*rtl:prepend:"Droid Arabic Kufi","Droid Sans", */;
-    padding: 6em;
+    padding: 4em;
     text-align: center;
+    overflow: hidden;
+}
+
+#logo {
+    margin-right: 0;
 }
 
 #title {
     font-size: 5em;
+    margin-bottom: 0;
+    margin-top: 30px;
+    margin-left: 20px;
 }
 
 #subtitle {
     color: dimgray;
     font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 30px;
+    margin-left: 20px;
 }
 
 #login-signup-form {
