@@ -97,9 +97,9 @@ router.post('/', function (req, res) {
 
 	// Save the newly-created task and return it.
 	newTask.save(function(err) {
-        if (err) return res.status(500).json(err);
-        return res.status(200).json({task: newTask});
-    });
+    if (err) return res.status(500).json(err);
+    return res.status(200).json({task: newTask});
+  });
 });
 
 /**
@@ -117,17 +117,17 @@ router.post('/', function (req, res) {
  * Author: aandre@mit.edu
  */
 router.get('/:id', function (req, res) {
-    Task.findById(req.params.id, function (err, task) {
-        // Validate Result
-        if (err) return res.status(500).send(err);
-        if (!task) return res.status(404).send(req.params.id);
+  Task.findById(req.params.id, function (err, task) {
+    // Validate Result
+    if (err) return res.status(500).send(err);
+    if (!task) return res.status(404).send(req.params.id);
 
-        // Check Tasl Ownership
-        if (task.owner.toString() !== req.user._id.toString())
-            return res.status(401).send('Unauthorized');
+    // Check Tasl Ownership
+    if (task.owner.toString() !== req.user._id.toString())
+      return res.status(401).send('Unauthorized');
 
-        return res.json({task: task});
-    });
+    return res.json({task: task});
+  });
 });
 
 /**
@@ -163,9 +163,9 @@ router.put('/:id', function (req, res) {
 
 		// Save the newly-edited task and return it.
 		task.save(function(err) {
-	        if (err) return res.status(500).send(err);
-	        return res.status(200).json({task: task});
-	    });
+      if (err) return res.status(500).send(err);
+      return res.status(200).json({task: task});
+    });
 	});
 });
 
@@ -184,18 +184,18 @@ router.put('/:id', function (req, res) {
  * Author: seropian@mit.edu
  */
 router.delete('/:id', function (req, res) {
-    Task.findById(req.params.id, function(err, task) {
-        if (err) return res.status(500).send(err);
-        if (!task) return res.status(404).send(req.params.id);
+  Task.findById(req.params.id, function(err, task) {
+    if (err) return res.status(500).send(err);
+    if (!task) return res.status(404).send(req.params.id);
 
-        if (task.owner.toString() !== req.user.id.toString())
-            return res.status(401).send('Unauthorized');
+    if (task.owner.toString() !== req.user.id.toString())
+      return res.status(401).send('Unauthorized');
 
-        task.remove(function(err) {
-            if (err) return res.status(500).send(err);
-            res.status(200).json({taskID: req.params.id});
-        });
+    task.remove(function(err) {
+      if (err) return res.status(500).send(err);
+      res.status(200).json({taskID: req.params.id});
     });
+  });
 });
 
 module.exports = router;
