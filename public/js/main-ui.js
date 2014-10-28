@@ -205,7 +205,7 @@ function attachJQuery() {
   });
 
   $(document).on('click', '.save-deadline', function() {
-    var newDeadline = $(this).siblings().val();
+    var newDeadline = $(this).siblings().find('.date').val();
 
     if (newDeadline == '') {
       $(this).removeClass('black inverted');
@@ -215,11 +215,17 @@ function attachJQuery() {
 
     var id = $(this).attr('task');
 
-    // TODO: error handling
-    task_put(id, {task: {task_id: id, deadline: new Date(newDeadline)}});
+    var deadline = new Date(newDeadline);
+    if (deadline == 'Invalid Date' && newDeadline !== '') {
+      $(this).parents('.deadline-input').addClass('error')
+    } else {
+      $(this).parents('.deadline-input').removeClass('error');
 
-    $('#' + id + ' .edit-deadline').popup('hide');
-    reloadList(list_selected_get());
+      task_put(id, {task: {task_id: id, deadline: deadline}});
+
+      $('#' + id + ' .edit-deadline').popup('hide');
+      reloadList(list_selected_get());
+    }
   });
 
   $(document).on('click', '.delete-task', function() {

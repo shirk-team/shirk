@@ -22,9 +22,13 @@
 
     <script id="save-deadline-template" type="text/x-handlebars-template">
       <div class='ui form'>
-        <input class='date' placeholder='MM/DD/YYYY' value={{task.deadline}}></input>
-        <div class='ui icon button save-deadline' task={{task._id}}>
-          <i class='ui icon save'></i>
+        <div class='field deadline-input'>
+          <div class='ui input'>
+            <input class='date' placeholder='MM/DD/YYYY' value="{{task.deadline}}" type="text"></input>
+          </div>
+          <div class='ui icon button save-deadline' task={{task._id}}>
+            <i class='ui icon save'></i>
+          </div>
         </div>
       </div>
     </script>
