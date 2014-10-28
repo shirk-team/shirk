@@ -187,7 +187,9 @@ function attachJQuery() {
   });
 
   $(document).on('click', '.save-notes', function() {
-    var newNotes = $(this).siblings().val();
+    // Do not allow a blank new title. Undefined will not overwrite the current title.
+    var newTitle = $(this).siblings('.task-title-edit-field').val() || undefined;
+    var newNotes = $(this).siblings('.task-notes-edit-field').val();
 
     if (newNotes == '') {
       $(this).removeClass('black inverted');
@@ -198,7 +200,7 @@ function attachJQuery() {
     var id = $(this).attr('task');
 
     // TODO: error handling
-    task_put(id, {task: {task_id: id, notes: newNotes}});
+    task_put(id, {task: {task_id: id, title: newTitle, notes: newNotes}});
 
     $('#' + id + ' .edit-notes').popup('hide');
     reloadList(list_selected_get());

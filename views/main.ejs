@@ -13,7 +13,8 @@
 
     <script id="save-notes-template" type="text/x-handlebars-template">
       <div class='ui form'>
-        <textarea>{{task.notes}}</textarea>
+        <input class='task-title-edit-field' placeholder='Task Title' value="{{task.title}}" type="text"></input>
+        <textarea class='task-notes-edit-field'>{{task.notes}}</textarea>
         <div class='ui icon button save-notes' task={{task._id}}>
           <i class='ui icon save'></i>
         </div>
