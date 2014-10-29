@@ -167,25 +167,32 @@ $(document).ready(function() {
 
   // New Task - Save
   $(document).on("click", "#new-task-save", function() {
+    var submit = true;
+
     // Pull all the input from the modal
+    
     var title = $("#new-task-title").val();
+    if (title == '') {
+      $('#new-task-title-field').addClass('error');
+      submit = false;
+    } else {
+      $('#new-task-title-field').removeClass('error');
+    }
+
     var notes = $("#new-task-notes").val();
     var listid = list_selected_get();
 
-    var deadlineInput = $("#new-task-deadline").val();
-    var deadline = undefined;
-    if (deadlineInput) deadline = deadlineInput;
+    var newDeadline = $("#new-task-deadline").val();
+    var deadline = new Date(newDeadline);
+    // Check that new deadline is valid; only set valid deadlines
+    if (deadline == 'Invalid Date' && newDeadline !== '') {
+      $("#new-task-deadline-field").addClass('error');
+      submit = false;
+    } else {
+      $("#new-task-deadline-field").removeClass('error');
+    }
 
     var selectedButton = $("#new-task-priority .active").first().attr('id');
-
-    // Clear the modal
-    $("#new-task-title").val("");
-    $("#new-task-notes").val("");
-    $("#new-task-deadline").val("");
-    $("#new-task-title").val("");
-    $("#high-priority").removeClass("active");
-    $("#low-priority").removeClass("active");
-    $("#neutral-priority").addClass("active");
 
     // Determine the selected priority level
     var priority;
@@ -201,19 +208,34 @@ $(document).ready(function() {
         break;
     }
 
-    // Create the new task object
-    var newTask = {
-      "title": title,
-      "notes": notes,
-      "list": listid,
-      "deadline": deadline,
-      "priority": priority
-    }
+    if (submit) {
+      // Create the new task object
+      var newTask = {
+        "title": title,
+        "notes": notes,
+        "list": listid,
+        "deadline": deadline,
+        "priority": priority
+      }
 
-    task_create(newTask, function(result, status, xhr) {
-      var listid = list_selected_get();
-      reloadList(listid);
-    });
+      task_create(newTask, function(result, status, xhr) {
+        // Close the modal
+        $('#task-add-modal').modal('hide');
+
+        // Clear the modal
+        $("#new-task-title").val("");
+        $("#new-task-notes").val("");
+        $("#new-task-deadline").val("");
+        $("#new-task-title").val("");
+        $("#high-priority").removeClass("active");
+        $("#low-priority").removeClass("active");
+        $("#neutral-priority").addClass("active");
+
+        // Reload the list so it has the new task
+        var listid = list_selected_get();
+        reloadList(listid);
+      });
+    }
   });
 
   // List - Rename
