@@ -252,7 +252,7 @@ function attachJQuery() {
 
     var deadline = new Date(newDeadline);
     // Check that new deadline is valid; only set valid deadlines
-    if (deadline == 'Invalid Date' && newDeadline !== '') {
+    if (!/\d{1,2}\/\d{1,2}\/\d{4}/.test(newDeadline) || deadline == 'Invalid Date' && newDeadline !== '') {
       $(this).parents('.deadline-input').addClass('error')
     } else {
       $(this).parents('.deadline-input').removeClass('error');

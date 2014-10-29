@@ -188,7 +188,7 @@ $(document).ready(function() {
     var newDeadline = $("#new-task-deadline").val();
     var deadline = new Date(newDeadline);
     // Check that new deadline is valid; only set valid deadlines
-    if (deadline == 'Invalid Date' && newDeadline !== '') {
+    if (!/\d{1,2}\/\d{1,2}\/\d{4}/.test(newDeadline) || deadline == 'Invalid Date' && newDeadline !== '') {
       $("#new-task-deadline-field").addClass('error');
       submit = false;
     } else {
