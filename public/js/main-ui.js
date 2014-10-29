@@ -94,16 +94,23 @@ function task_remove(taskid) {
   $('.item_task#' + taskid).remove();
 }
 
-function message_show(title, message) {
+function message_show(title, message, isError) {
+  // Clear any existing messages and formatting
+  message_hide()
+  // Display new message
   $('#message-title').html(title);
   $('#message-text').html(message);
   $('#message-box').show(0);
+  if (isError) {
+    $('#message-box').addClass("red");
+  }
 }
 
 function message_hide() {
   $('#message-box').hide(0);
   $('#message-title').html(""); // clear title
   $('#message-text').html(""); // clear message
+  $('#message-box').removeClass("red"); // remove error coloring
 }
 
 // Render Tasks into Task Pane
