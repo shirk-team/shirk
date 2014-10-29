@@ -16,6 +16,7 @@ Handlebars.registerHelper('saveDeadline', function(task) {
 // Reload List/Filter //
 ////////////////////////
 
+// Reload the list, and redisplay all its associated tasks
 function reloadList(listid) {
   list_get(listid, function (result, status, xhr) {
     $("#task-list-title-input").val(result.list.title); // list title
@@ -31,6 +32,7 @@ function reloadList(listid) {
   });
 }
 
+// Reload the filter, and redisplay all its associated tasks
 function reloadFilter(filterid) {
   // synthesize filter query
   var query_string;
@@ -144,6 +146,7 @@ $(document).ready(function() {
   $(document).on("click", ".create-priority-button", function(event) {
     var clickedId = event.currentTarget.id;
     var button = $("#" + clickedId);
+    // Make the clicked button active, and the others inactive
     button.toggleClass("active");
     var priorityButtons = ["high-priority", "neutral-priority", "low-priority"];
     priorityButtons.forEach(function(buttonName) {
@@ -220,7 +223,7 @@ $(document).ready(function() {
 
     list_put(newTitle, listid, function(result, status, xhr) {
       // Update the title in the sidebar list of lists
-      $("#" + listid + " .header").html(result.list.title);
+      list_rename(result.list.title, listid);
     });
   });
 
