@@ -50,7 +50,7 @@ function list_add(title, listid) {
 }
 
 function list_rename(title, listid) {
-  // TODO(tdivita)
+  $("#" + listid + " .header").html(title);
 }
 
 function list_remove(listid) {
@@ -147,6 +147,7 @@ function attachJQuery() {
     }
   });
 
+  // Attach popups to edit buttons
   $('.popup-button').popup({
     position:"bottom center",
     on: "click"
@@ -191,6 +192,7 @@ function attachJQuery() {
     var newTitle = $(this).siblings('.task-title-edit-field').val() || undefined;
     var newNotes = $(this).siblings('.task-notes-edit-field').val();
 
+    // Button is darker if notes are provided
     if (newNotes == '') {
       $(this).removeClass('black inverted');
     } else {
@@ -209,6 +211,7 @@ function attachJQuery() {
   $(document).on('click', '.save-deadline', function() {
     var newDeadline = $(this).siblings().find('.date').val();
 
+    // Button is darker if deadline is set
     if (newDeadline == '') {
       $(this).removeClass('black inverted');
     } else {
@@ -218,6 +221,7 @@ function attachJQuery() {
     var id = $(this).attr('task');
 
     var deadline = new Date(newDeadline);
+    // Check that new deadline is valid; only set valid deadlines
     if (deadline == 'Invalid Date' && newDeadline !== '') {
       $(this).parents('.deadline-input').addClass('error')
     } else {
