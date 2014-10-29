@@ -73,6 +73,7 @@ h1#logo {
   width: 35% !important;
   padding-top: 10px;
   padding-bottom: 10px;
+  overflow-x: hidden;
 }
 
 #col-right {
