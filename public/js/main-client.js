@@ -2,6 +2,10 @@
 // LIST //
 //////////
 
+/**
+ * Author: aandre
+ */
+
 function lists_get(callback) {
   $.ajax({
     url : '/lists/',
@@ -25,6 +29,10 @@ function list_get_filter(listid, querystring, callback) {
     success: callback
   });
 }
+
+/**
+ * Author: tdivita
+ */
 
 function list_create(name, callback, errorcallback) {
   $.ajax({
@@ -59,6 +67,10 @@ function list_delete(listid, callback) {
 // TASK //
 //////////
 
+/**
+ * Author: aandre
+ */
+
 function tasks_get(callback) {
   $.ajax({
     url : '/tasks/',
@@ -83,6 +95,10 @@ function task_get(taskid, callback) {
   });
 }
 
+/**
+ * Author: tdivita
+ */
+
 function task_create(task, callback) {
     $.ajax({
         url : '/tasks/',
@@ -94,6 +110,10 @@ function task_create(task, callback) {
     });
 }
 
+/**
+ * Author: seropian
+ */
+
 function task_put(taskid, data, callback) {
   $.ajax({
     url: '/tasks/' + taskid,
@@ -103,6 +123,10 @@ function task_put(taskid, data, callback) {
     success: callback
   });
 }
+
+/**
+ * Author: tdivita
+ */
 
 function task_delete(taskid, callback) {
   $.ajax({

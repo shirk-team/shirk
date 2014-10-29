@@ -1,3 +1,7 @@
+/**
+ * Author: aandre
+ */
+
 /////////////
 // HELPERS //
 /////////////
@@ -49,6 +53,10 @@ function list_add(title, listid) {
   $('#list_lists').append(item);
 }
 
+/**
+ * Author: tdivita
+ */
+
 function list_rename(title, listid) {
   $("#" + listid + " .header").html(title);
 }
@@ -56,6 +64,11 @@ function list_rename(title, listid) {
 function list_remove(listid) {
   $('.item_list#' + listid).remove();
 }
+
+/**
+ * Author: aandre
+ * Smaller Parts: tdivita
+ */
 
 function list_select(listid) {
   $('.selected_list').removeClass('selected_list'); // clear list selection
@@ -160,6 +173,11 @@ function displayTasks(tasks) {
   $('#list_tasks').html(Handlebars.templates['tasks']({tasks: tasks}));
   attachJQuery();
 }
+
+  /**
+   * Author: seropian
+   * Smaller Parts: tdivita
+   */
 
 function attachJQuery() {
   $('.checkbox').click(function() {

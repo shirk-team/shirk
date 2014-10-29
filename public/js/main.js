@@ -14,6 +14,7 @@ Handlebars.registerHelper('saveDeadline', function(task) {
 
 ////////////////////////
 // Reload List/Filter //
+// Author: aandre     //
 ////////////////////////
 
 // Reload the list, and redisplay all its associated tasks
@@ -111,6 +112,10 @@ $(document).ready(function() {
   // Listeners //
   ///////////////
 
+  /**
+   * Author: aandre
+   */
+
   // List Selection
   $(document).on("click", ".item_list", function(event) {
     tasks_clear(); // clear task list
@@ -130,6 +135,10 @@ $(document).ready(function() {
     // Run Query and Display
     reloadFilter(filterid);
   });
+
+  /**
+   * Author: tdivita
+   */
 
   // Popup for Add List
   $('#add-list').popup({
@@ -259,6 +268,10 @@ $(document).ready(function() {
       list_rename(result.list.title, listid);
     });
   });
+
+  /**
+   * Author: seropian
+   */
 
   // List - Revert Rename
   $("#task-list-title").blur(function() {

@@ -19,6 +19,6 @@ NOTE: the tests might take a little while to run (~10 seconds).
 * File Structure - Lily/Andre
 * Filtering Tasks - Andre (Andre's Feature)
 * Deleting Lists and Tasks - Lily (Lily's Feature)
-* Editing Lists and Tasks - Tricia (Tricia's Feature)
-* Creating Lists and Tasks - Tricia
+* Editing Lists and Tasks - Tricia
+* Creating Lists and Tasks - Tricia (Tricia's Feature)
 * Testing - all, for our own parts
