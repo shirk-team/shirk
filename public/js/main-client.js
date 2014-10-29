@@ -26,13 +26,14 @@ function list_get_filter(listid, querystring, callback) {
   });
 }
 
-function list_create(name, callback) {
+function list_create(name, callback, errorcallback) {
   $.ajax({
     url : '/lists/',
     type: 'POST',
     contentType: "application/json",
     data: JSON.stringify({"list": {"title": name}}),
-    success: callback
+    success: callback,
+    error: errorcallback
   });
 }
 

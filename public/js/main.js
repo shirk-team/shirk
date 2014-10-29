@@ -159,6 +159,9 @@ $(document).ready(function() {
   // New List - Save
   $(document).on("click", "#new-list-save", function() {
     var title = $("#new-list-title").val();
+    if (!title) {
+      message_show("Cannot Set Empty List Title", "The list must have a non-empty name.", true);
+    }
     list_create(title, function(result, status, xhr) {
       list_add(result.list.title, result.list._id);
       $("#add-list").popup("hide");
@@ -242,6 +245,14 @@ $(document).ready(function() {
   $('#list-title-save').click(function(event){
     var listid = list_selected_get();
     var newTitle = $("#task-list-title-input").val();
+
+    // Lists must have titles
+    if (!newTitle) {
+      message_show("Cannot Set Empty List Title", "The list must have a non-empty name.", true);
+      // Reset to show the old title again
+      var oldTitle = $("#" + listid + " .header").html();
+      $("#task-list-title-input").val(oldTitle);
+    }
 
     list_put(newTitle, listid, function(result, status, xhr) {
       // Update the title in the sidebar list of lists
