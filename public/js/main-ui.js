@@ -19,6 +19,10 @@ function filter_select(filterid) {
   $('.item_filter#' + filterid).addClass('selected_filter');
 }
 
+function filter_selected_get() {
+  return $('.selected_filter').first().attr('id');
+}
+
 ///////////
 // LISTS //
 ///////////
