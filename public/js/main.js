@@ -129,15 +129,15 @@ $(document).ready(function() {
     reloadFilter(filterid);
   });
 
-  // Popup Add List/Task
+  // Popup for Add List
   $('#add-list').popup({
     on: "click",
     position: "bottom center"
   });
 
-  $('#add-task').popup({
-    on: "click",
-    position: "bottom center"
+  // Modal for Add Task
+  $(document).on("click", "#add-task", function(event){
+    $("#task-add-modal").modal("show");
   });
 
   // New Task - Priority
@@ -164,6 +164,7 @@ $(document).ready(function() {
 
   // New Task - Save
   $(document).on("click", "#new-task-save", function() {
+    // Pull all the input from the modal
     var title = $("#new-task-title").val();
     var notes = $("#new-task-notes").val();
     var listid = list_selected_get();
@@ -174,6 +175,16 @@ $(document).ready(function() {
 
     var selectedButton = $("#new-task-priority .active").first().attr('id');
 
+    // Clear the modal
+    $("#new-task-title").val("");
+    $("#new-task-notes").val("");
+    $("#new-task-deadline").val("");
+    $("#new-task-title").val("");
+    $("#high-priority").removeClass("active");
+    $("#low-priority").removeClass("active");
+    $("#neutral-priority").addClass("active");
+
+    // Determine the selected priority level
     var priority;
     switch(selectedButton) {
       case "high-priority":
@@ -187,6 +198,7 @@ $(document).ready(function() {
         break;
     }
 
+    // Create the new task object
     var newTask = {
       "title": title,
       "notes": notes,
@@ -196,7 +208,6 @@ $(document).ready(function() {
     }
 
     task_create(newTask, function(result, status, xhr) {
-      $("#add-task").popup("hide");
       var listid = list_selected_get();
       reloadList(listid);
     });

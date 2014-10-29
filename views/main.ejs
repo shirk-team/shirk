@@ -134,7 +134,7 @@
 
               </div>
             </div>
-            <div id="list_lists" class="ui celled selection list">
+            <div id="list_lists" class="ui celled animated selection list">
               <!-- "List" Items Appended Here -->
             </div>
           </div>
@@ -165,40 +165,48 @@
 
                 <!-- Task Add Button -->
                 <div class="three wide column right aligned no-margin">
-                  <div id="add-task" class="ui button tiny inverted blue list_header" data-html="
-                    <div class='ui form'>
-                      <div class='ui action input'>
-                        <input id='new-task-title' type='text' placeholder='Task Title'>
-                      </div>
-                      <div class='ui action input'>
-                        <textarea id='new-task-notes' type='text' placeholder='Notes about this task'></textarea>
-                      </div>
-                      <div class='ui action input'>
-                        <input id='new-task-deadline' type='text' placeholder='Deadline (MM/DD/YYYY)'>
-                      </div>
-                      <div class='ui action input'>
-                        Priority:
-                        <div id='new-task-priority' class='ui icon buttons'>
-                          <div id='high-priority' class='ui button create-priority-button'>
-                            <i class='icon up'></i>
-                          </div>
-                          <div id='neutral-priority' class='ui active button create-priority-button'>
-                            <i class='icon circle blank'></i>
-                          </div>
-                          <div id='low-priority' class='ui button create-priority-button'>
-                            <i class='icon down'></i>
-                          </div>
-                        </div>
-                      </div>
-                      <div id='new-task-save' class='ui icon button'><i class='save icon'></i></div>
-                    </div>
-                  ">
+                  <div id="add-task" class="ui button tiny inverted blue list_header">
                     <span>
                       <i class="ui icon add"></i>
                     </span>
                   </div>
+                  <div id="task-add-modal" class="ui modal">
+                    <i class="close icon"></i>
+                    <div class="header">
+                      Create a New Task
+                    </div>
+                    <div class="content">
+                      <div id="task-add-form" class='ui form'>
+                        <div class='ui action input'>
+                          <input id='new-task-title' type='text' placeholder='Task Title'>
+                        </div>
+                        <div class='ui action input'>
+                          <textarea id='new-task-notes' type='text' placeholder='Notes about this task'></textarea>
+                        </div>
+                        <div class='ui action input'>
+                          <input id='new-task-deadline' type='text' placeholder='Deadline (MM/DD/YYYY)'>
+                        </div>
+                        <div class='ui action input'>
+                          Priority:
+                          <div id='new-task-priority' class='ui icon buttons'>
+                            <div id='high-priority' class='ui button create-priority-button'>
+                              <i class='icon up'></i>
+                            </div>
+                            <div id='neutral-priority' class='ui active button create-priority-button'>
+                              <i class='icon circle blank'></i>
+                            </div>
+                            <div id='low-priority' class='ui button create-priority-button'>
+                              <i class='icon down'></i>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="actions">
+                          <div id='new-task-save' class='ui icon button'><i class='save icon'></i></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
               </div>
             </div>
 
