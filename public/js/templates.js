@@ -41,13 +41,13 @@ templates['task'] = template({"1":function(depth0,helpers,partials,data) {
     + escapeExpression(((helpers.saveDeadline || (depth0 && depth0.saveDeadline) || helperMissing).call(depth0, (depth0 != null ? depth0.task : depth0), {"name":"saveDeadline","hash":{},"data":data})))
     + "\"></i>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "";
+  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "\n";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.completed : stack1), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.program(3, data),"data":data});
   if (stack1 != null) { buffer += stack1; }
   buffer += "\n\n  <div class=\"ui grid middle aligned\">\n    <div class=\"column center aligned no-margin two wide\">\n";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.completed : stack1), {"name":"if","hash":{},"fn":this.program(5, data),"inverse":this.program(7, data),"data":data});
   if (stack1 != null) { buffer += stack1; }
-  buffer += "    </div>\n\n    <div class=\"column left aligned no-margin seven wide\">\n      <div class=\"task-info\">\n        <span class=\"task-title\">"
+  buffer += "    </div>\n\n    <div class=\"column left aligned no-margin seven wide overflow-hide\">\n      <div class=\"task-info\">\n        <span class=\"task-title\">"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.title : stack1), depth0))
     + "</span><br>\n        <span class=\"task-deadline\">"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.task : depth0)) != null ? stack1.deadlineString : stack1), depth0))

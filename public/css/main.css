@@ -68,6 +68,9 @@ h1#logo {
   overflow: auto;
 }
 
+.overflow-hide {
+  overflow: hidden;
+}
 
 #col-left {
   width: 35% !important;
@@ -132,6 +135,10 @@ h1#logo {
 
 .hidden {
   visibility: hidden;
+}
+
+.item_list {
+  overflow: hidden;
 }
 
 .complete {
