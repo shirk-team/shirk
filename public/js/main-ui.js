@@ -235,7 +235,13 @@ function attachJQuery() {
     task_put(id, {task: {task_id: id, title: newTitle, notes: newNotes}});
 
     $('#' + id + ' .edit-notes').popup('hide');
-    reloadList(list_selected_get());
+
+    var id = list_selected_get();
+    if (id !== undefined) {
+      reloadList(id);
+    } else {
+      reloadFilter(filter_selected_get());
+    }
   });
 
   $(document).on('click', '.save-deadline', function() {
@@ -260,7 +266,13 @@ function attachJQuery() {
       task_put(id, {task: {task_id: id, deadline: deadline}});
 
       $('#' + id + ' .edit-deadline').popup('hide');
-      reloadList(list_selected_get());
+      
+      var id = list_selected_get();
+      if (id !== undefined) {
+        reloadList(id);
+      } else {
+        reloadFilter(filter_selected_get());
+      }
     }
   });
 
