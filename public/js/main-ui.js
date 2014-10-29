@@ -115,6 +115,10 @@ function message_hide() {
 
 // Render Tasks into Task Pane
 function displayTasks(tasks) {
+  var tasks_scheduled = [],
+      tasks_unscheduled = [],
+      tasks_completed = [];
+
   for (var i = 0; i < tasks.length; i++) {
     // format date
     if (tasks[i].deadline) {
@@ -132,8 +136,27 @@ function displayTasks(tasks) {
         tasks[i].deadlineString = moment(deadline).format("ddd, MMM D YYYY");
       tasks[i].deadline = deadline.toLocaleDateString();
     }
-    tasks[i] = {"task": tasks[i]};
+
+    // append task to group
+    if (tasks[i].completed) // completed
+      tasks_completed.push({"task": tasks[i]});
+    else if (tasks[i].deadline) // scheduled
+      tasks_scheduled.push({"task": tasks[i]});
+    else // unscheduled
+      tasks_unscheduled.push({"task": tasks[i]});
   }
+
+  // sort scheduled tasks by date
+  tasks_scheduled.sort( function(a,b) {
+    return ((new Date(a.task.deadline)).getTime() - (new Date(b.task.deadline)).getTime());
+  });
+
+  // sort unscheduled tasks by priority
+  tasks_unscheduled.sort( function(a,b) {
+    return -(a.task.priority - b.task.priority);
+  });
+
+  tasks = tasks_scheduled.concat(tasks_unscheduled, tasks_completed); // ordering
   $('#list_tasks').html(Handlebars.templates['tasks']({tasks: tasks}));
   attachJQuery();
 }
