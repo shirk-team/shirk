@@ -62,14 +62,14 @@ function checkField(field) {
  * @param  {String} url       The URL to post to.
  * @param  {Function} onError A handler for if the server returns an error.
  */
-function userAJAX(username, password, url, onError) {
+function userAJAX(username, password, url, onSuccess, onError) {
     $.ajax({
         url: url,
         data: {
             username: username,
             password: password
         },
-        success: overwritePage,
+        success: onSuccess,
         error: onError,
         type: 'POST'
     });
@@ -81,7 +81,12 @@ function userAJAX(username, password, url, onError) {
  * @param  {String} password The password for the new account.
  */
 function signup(username, password) {
-    userAJAX(username, password, '/users', function(xhr, status, error) {
+    userAJAX(username, password, '/users', function() {
+        // login user upon successful account creation
+        userAJAX(username, password, '/login', overwritePage, function(xhr, status, error) {
+            throw new Error(xhr.responseText);
+        });
+    }, function(xhr, status, error) {
         if (xhr.responseText.indexOf('dup key') !== -1) {
             showError('username', 'username taken');
         }
@@ -95,7 +100,7 @@ function signup(username, password) {
  * @param  {String} password The password for the account to log into.
  */
 function login(username, password) {
-    userAJAX(username, password, '/login', function(xhr, status, error) {
+    userAJAX(username, password, '/login', overwritePage, function(xhr, status, error) {
         if (xhr.responseText === 'Incorrect username') {
             showError('username', 'incorrect username');
         } else if (xhr.responseText === 'Incorrect password') {
